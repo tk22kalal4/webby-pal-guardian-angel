@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,11 +7,11 @@
   <title>NEXTPULSE - NEET PG Preparation Platform | Medical Video Lectures</title>
   <meta name="description" content="NEXTPULSE - Your comprehensive NEET PG preparation platform. Access video lectures from top institutes like Marrow, DAMS, and PrepLadder. Prepare for medical entrance exams with expert faculty.">
   <meta name="keywords" content="NEET PG, medical entrance, video lectures, Marrow, DAMS, PrepLadder, medical preparation, NEET PG coaching">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="src/home/home.css">
-  <link rel="manifest" href="app.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./src/home/home.css">
+  <link rel="manifest" href="./app.webmanifest">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="access-control.js"></script>
+  <script src="./access-control.js"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5920367457745298"
      crossorigin="anonymous"></script>
 </head>
@@ -28,7 +29,7 @@
       <p class="header-subtitle">Your Path to NEET-PG Success</p>
       <div class="search-bar">
         <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search topics, lectures..." id="searchInput" onfocus="window.location.href='search.html'">
+        <input type="text" placeholder="Search topics, lectures..." id="searchInput" onfocus="window.location.href='./search.html'">
       </div>
     </div>
   </header>
@@ -58,11 +59,11 @@
       <div class="quick-actions">
         <h3>Quick Actions</h3>
         <div class="action-buttons">
-          <button class="action-btn" onclick="window.location.href='platforms.html'">
+          <button class="action-btn" onclick="window.location.href='./platforms.html'">
             <i class="fas fa-video"></i>
             Browse Videos
           </button>
-          <button class="action-btn" onclick="window.location.href='search.html'">
+          <button class="action-btn" onclick="window.location.href='./search.html'">
             <i class="fas fa-search"></i>
             Search Content
           </button>
@@ -91,16 +92,16 @@
     </div>
   </main>
   <nav class="bottom-nav">
-    <a href="app.html" class="active"><i class="fas fa-lightbulb"></i><span>Home</span></a>
-    <a href="platforms.html"><i class="fas fa-play-circle"></i><span>Videos</span></a>
-    <a href="search.html"><i class="fas fa-search"></i><span>Search</span></a>
-    <a href="quiz/app.html"><i class="fas fa-question-circle"></i><span>Q Bank</span></a>
+    <a href="./app.html" class="active"><i class="fas fa-lightbulb"></i><span>Home</span></a>
+    <a href="./platforms.html"><i class="fas fa-play-circle"></i><span>Videos</span></a>
+    <a href="./search.html"><i class="fas fa-search"></i><span>Search</span></a>
+    <a href="./quiz/index.html"><i class="fas fa-question-circle"></i><span>Q Bank</span></a>
   </nav>
   <script>
         // Register service worker for the installed app page as well
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js', { scope: '/' })
+                navigator.serviceWorker.register('./sw.js', { scope: './' })
                     .then(registration => {
                         console.log('Service Worker registered with scope:', registration.scope);
                     })

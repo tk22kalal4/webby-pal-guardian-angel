@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#2c5282">
     <meta name="description" content="Latest medical education news in India">
     <title>NextPulse | Medical Education News</title>
-    <link rel="manifest" href="app.webmanifest">
-    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <link rel="manifest" href="./app.webmanifest">
+    <link rel="apple-touch-icon" href="./icon-192.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -428,8 +428,8 @@
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                // Register service worker with scope at root
-                navigator.serviceWorker.register('sw.js', { scope: '/' })
+                // Register service worker with relative path and scope
+                navigator.serviceWorker.register('./sw.js', { scope: './' })
                 .then(registration => {
                     console.log('Service Worker registered with scope:', registration.scope);
                 })

@@ -68,11 +68,14 @@ class AccessControl {
 
   // Redirect to index.html with PWA install prompt
   redirectToIndex() {
-    if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
-      // Add a parameter to show PWA install prompt
-      const newUrl = new URL('/', window.location.origin);
+    const currentPath = window.location.pathname;
+    const indexPaths = ['/', '/index.html'];
+    
+    if (!indexPaths.includes(currentPath)) {
+      // Create relative URL to index.html
+      const newUrl = new URL('./index.html', window.location.href);
       newUrl.searchParams.set('pwa-required', 'true');
-      newUrl.searchParams.set('attempted-page', window.location.pathname);
+      newUrl.searchParams.set('attempted-page', currentPath);
       
       // Use replace to avoid back button issues
       window.location.replace(newUrl.toString());
