@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2c5282">
+    <meta name="description" content="Latest medical education news in India">
+    <title>NextPulse | Medical Education News</title>
+    <link rel="manifest" href="app.webmanifest">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #2c5282;
+            --dark-blue: #1a365d;
+            --dark-gray: #2d3748;
+            --medium-gray: #4a5568;
+            --light-gray: #718096;
+            --bg-light: #f0f4f8;
+            --border-light: #e2e8f0;
+            --card-white: #fff;
+            --accent-red: #e53e3e;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            padding-bottom: 60px; /* Space for install button */
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Install Button */
+        #installBtn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: none;
+        }
+
+        #installBtn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .page-title {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .page-title h2 {
+            font-size: 2rem;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-title p {
+            color: var(--medium-gray);
+            max-width: 800px;
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .news-card {
+            background-color: var(--card-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 1.2rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .card-content li {
+            margin-bottom: 0.8rem;
+        }
+
+        .card-content .background {
+            background-color: #f8fafc;
+            border-left: 3px solid var(--primary-blue);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* Notification Styles */
+        #notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 1000;
+            max-width: 90%;
+            animation: slideIn 0.5s ease-out;
+            display: none;
+        }
+
+        @keyframes slideIn {
+            from { bottom: -100px; }
+            to { bottom: 20px; }
+        }
+
+        #notification span {
+            flex-grow: 1;
+            font-size: 1rem;
+        }
+
+        #notification button {
+            background: white;
+            color: var(--primary-blue);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        #notification button:hover {
+            background-color: #f0f4f8;
+        }
+
+        #dismissBtn {
+            background: transparent !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.5) !important;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: white;
+            padding: 2rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            color: #a0aec0;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            #notification {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+                gap: 10px;
+            }
+            
+            #notification button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>NextPulse</h1>
+        </div>
+        <button id="installBtn">Install App</button>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-title">
+            <h2>Indian Medical Education Updates</h2>
+            <p>Latest news and developments in India's medical education sector</p>
+        </div>
+
+        <!-- News Grid -->
+        <div class="news-grid">
+            <!-- News Card 1 -->
+            <div class="news-card">
+                <div class="card-header">
+                    <h3>RG Kar rape appeal</h3>
+                </div>
+                <div class="card-content">
+                    <p><strong>Sanjay Roy</strong>, convicted in the brutal August 9, 2024 rape-murder of a postgraduate trainee at Kolkata's RG Kar Medical College, has appealed his life sentence in the Calcutta High Court; hearing scheduled for July 16, 2025.</p>
+                    <ul>
+                        <li>The CBI and state sought a death penalty</li>
+                        <li>Roy's defense cited "reformative and rehabilitative" grounds</li>
+                    </ul>
+                    <div class="background">
+                        <strong>Background:</strong> The 2024 incident triggered nationwide doctor strikes due to safety concerns. The former principal and a police officer were also later arrested for evidence tampering.
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Card 2 -->
+            <div class="news-card">
+                <div class="card-header">
+                    <h3>Udaipur electrocution</h3>
+                </div>
+                <div class="card-content">
+                    <p>On June 18, 2025, <strong>Dr Ravi Sharma</strong>, a senior resident at RNT Medical College Udaipur, died after electrocution from a faulty water cooler in hostel premises.</p>
+                    <ul>
+                        <li>Resident doctors launched an indefinite strike demanding accountability and compensation</li>
+                        <li>Strike resumed after 11 days following preliminary assurances</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- News Card 3 -->
+            <div class="news-card">
+                <div class="card-header">
+                    <h3>Jabalpur ragging suicide</h3>
+                </div>
+                <div class="card-content">
+                    <p>A first-year student at Netaji Subhash Chandra Medical College in Jabalpur died by suicide, allegedly due to ragging; jumped from the 4th floor on June [exact date reported last month].</p>
+                    <ul>
+                        <li>Family alleged ragging via phone call</li>
+                        <li>Police are investigating both ragging and possible personal-relationship issues</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- News Card 4 -->
+            <div class="news-card">
+                <div class="card-header">
+                    <h3>₹1,000 Cr scam</h3>
+                </div>
+                <div class="card-content">
+                    <p>CBI has exposed one of India's largest medical-college scams involving high-level officials and middlemen, allegedly receiving crores in bribes for illegal accreditations across over 40 colleges in multiple states.</p>
+                    <ul>
+                        <li>Estimated bribery amount: ₹1,000-1,300 Cr</li>
+                        <li>National Medical Commission (NMC) has frozen all new medical-college approvals and seat increases for 2025-26 pending investigation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- News Card 5 -->
+            <div class="news-card">
+                <div class="card-header">
+                    <h3>Kottayam ragging horror</h3>
+                </div>
+                <div class="card-content">
+                    <p>On February 11, 2025, five senior students at the Government College of Nursing, Kottayam, Kerala violently assaulted a junior—tying, slashing, stabbing with a metal divider and applying lotion to wounds.</p>
+                    <ul>
+                        <li>The assault went viral via video</li>
+                        <li>The next day an FIR was registered and five accused were arrested and suspended</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <span>Install this app for a better experience?</span>
+        <button id="installPromptBtn">Install Now</button>
+        <button id="dismissBtn">Dismiss</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>Your trusted source for the latest medical education news</p>
+            <div class="copyright">
+                <p>&copy; 2025 NextPulse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // PWA Installation Handling
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+        const installPromptBtn = document.getElementById('installPromptBtn');
+        const dismissBtn = document.getElementById('dismissBtn');
+        const notification = document.getElementById('notification');
+        
+        // Show install button when PWA is installable
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button in header
+            installBtn.style.display = 'block';
+            
+            // Show notification after delay
+            setTimeout(() => {
+                if (deferredPrompt) {
+                    notification.style.display = 'flex';
+                }
+            }, 5000);
+        });
+        
+        // Handle install button click
+        installBtn.addEventListener('click', () => {
+            showInstallPrompt();
+        });
+        
+        // Handle notification install button
+        installPromptBtn.addEventListener('click', () => {
+            showInstallPrompt();
+            notification.style.display = 'none';
+        });
+        
+        // Handle dismiss button
+        dismissBtn.addEventListener('click', () => {
+            notification.style.display = 'none';
+        });
+        
+        // Function to show install prompt
+        function showInstallPrompt() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted install');
+                        installBtn.style.display = 'none';
+                        notification.style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
+        
+        // Hide install button after app is installed
+        window.addEventListener('appinstalled', () => {
+            console.log('App was installed');
+            installBtn.style.display = 'none';
+            notification.style.display = 'none';
+        });
+        
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Register service worker with scope at root
+                navigator.serviceWorker.register('sw.js', { scope: '/' })
+                .then(registration => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
