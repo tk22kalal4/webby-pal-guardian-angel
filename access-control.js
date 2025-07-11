@@ -72,8 +72,9 @@ class AccessControl {
     const indexPaths = ['/', '/index.html'];
     
     if (!indexPaths.includes(currentPath)) {
-      // Create relative URL to index.html
-      const newUrl = new URL('./index.html', window.location.href);
+      // Create URL to index.html with current domain
+      const baseUrl = window.location.origin;
+      const newUrl = new URL(baseUrl);
       newUrl.searchParams.set('pwa-required', 'true');
       newUrl.searchParams.set('attempted-page', currentPath);
       
@@ -163,6 +164,10 @@ class AccessControl {
       window.deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
           console.log('User accepted the PWA install prompt');
+          // After successful install, redirect to the app
+          setTimeout(() => {
+            window.location.href = './app.html';
+          }, 1000);
         }
         window.deferredPrompt = null;
       });
@@ -189,4 +194,15 @@ window.accessControl = new AccessControl();
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   window.deferredPrompt = e;
+});
+
+// Listen for app installed event
+window.addEventListener('appinstalled', (evt) => {
+  console.log('PWA was installed');
+  // Redirect to app.html after installation
+  setTimeout(() => {
+    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+      window.location.href = './app.html';
+    }
+  }, 500);
 });
