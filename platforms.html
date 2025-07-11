@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +8,16 @@
   <meta name="keywords" content="NEET PG, medical entrance, Marrow, DAMS, PrepLadder, video lectures, medical preparation">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="access-control.js"></script>
 </head>
 <body>
+  <script>
+    // Initialize access control for protected page
+    if (!accessControl.initProtectedPage()) {
+      // Page will redirect, so we can stop execution here
+      throw new Error('Access denied - redirecting to index.html');
+    }
+  </script>
   <header>
     <div class="header-content">
       <button onclick="window.location.href='app.html'" class="back-button">
