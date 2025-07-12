@@ -10,10 +10,21 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="src/search/search.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="access-control.js"></script>
 </head>
 <body>
+  <script>
+    // Initialize access control for protected page
+    if (!accessControl.initProtectedPage()) {
+      // Page will redirect, so we can stop execution here
+      throw new Error('Access denied - redirecting to index.html');
+    }
+  </script>
   <header>
     <div class="header-content">
+      <button onclick="window.location.href='app.html'" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+      </button>
       <h1>Search</h1>
       <p class="header-subtitle">Find Your Medical Content</p>
       <div class="search-bar">
@@ -42,7 +53,7 @@
     <a href="app.html"><i class="fas fa-lightbulb"></i><span>Home</span></a>
     <a href="platforms.html"><i class="fas fa-play-circle"></i><span>Videos</span></a>
     <a href="search.html" class="active"><i class="fas fa-search"></i><span>Search</span></a>
-    <a href="quiz/app.html"><i class="fas fa-question-circle"></i><span>Q Bank</span></a>
+    <a href="quiz/index.html"><i class="fas fa-question-circle"></i><span>Q Bank</span></a>
   </nav>
   <script>
     // Data loading functionality
