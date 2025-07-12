@@ -164,10 +164,7 @@ class AccessControl {
       window.deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
           console.log('User accepted the PWA install prompt');
-          // After successful install, redirect to the app
-          setTimeout(() => {
-            window.location.href = './app.html';
-          }, 1000);
+          // PWA will now launch directly to app.html via manifest
         }
         window.deferredPrompt = null;
       });
@@ -196,13 +193,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   window.deferredPrompt = e;
 });
 
-// Listen for app installed event
+// Listen for app installed event - no redirect needed since manifest handles start_url
 window.addEventListener('appinstalled', (evt) => {
   console.log('PWA was installed');
-  // Redirect to app.html after installation
-  setTimeout(() => {
-    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-      window.location.href = './app.html';
-    }
-  }, 500);
 });
