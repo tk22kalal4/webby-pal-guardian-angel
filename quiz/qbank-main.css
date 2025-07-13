@@ -7,8 +7,8 @@
 /* Back Button Styling */
 .back-button {
   position: absolute;
-  top: 1rem;    /* Add this to set the distance from the top */
-  left: 1rem; 
+  top: 0.5rem;    /* Add this to set the distance from the top */
+  left: 0.5rem; 
   padding: 0.5rem;
   margin-bottom: 1rem;
   background: #2c5282;
