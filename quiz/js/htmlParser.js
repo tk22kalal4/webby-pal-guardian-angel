@@ -5,77 +5,219 @@ class HTMLParser {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, 'text/html');
     
-    // Extract title
-    const titleElement = doc.querySelector('h1, .title, .main-title') || 
-                        doc.querySelector('title') || 
-                        doc.querySelector('h2');
-    const title = titleElement ? titleElement.textContent.trim() : 'Untitled Quiz';
+    // Extract main title from the first h1
+    const mainTitle = doc.querySelector('h1')?.textContent?.trim() || 'Untitled Quiz';
     
-    // Extract chapter/test names
-    const chapterElements = doc.querySelectorAll('h2, h3, .chapter, .test-name, .section-title');
-    const chapters = Array.from(chapterElements).map(el => el.textContent.trim()).filter(text => text);
+    // Extract test chapters from navigation buttons
+    const testButtons = doc.querySelectorAll('button[onclick*="showTest"]');
+    const chapters = Array.from(testButtons).map(btn => {
+      const testName = btn.textContent.trim().replace(/_/g, ' ');
+      return testName;
+    }).filter(name => name);
     
-    // Extract questions - looking for common patterns
-    const questions = this.extractQuestions(doc);
+    // Extract questions from embedded iframe content
+    const questions = this.extractQuestionsFromIframes(htmlContent);
     
     return {
-      title,
+      title: mainTitle,
       chapters: chapters.length > 0 ? chapters : ['Main Chapter'],
       questions,
       source: 'html'
     };
   }
   
-  static extractQuestions(doc) {
+  static extractQuestionsFromIframes(htmlContent) {
     const questions = [];
     
-    // Method 1: Look for numbered questions
+    // Find all iframe sections with test content
+    const iframeMatches = htmlContent.match(/<iframe[^>]*srcdoc="([^"]*)"[^>]*>/g);
+    
+    if (!iframeMatches) {
+      return this.extractFallbackQuestions(htmlContent);
+    }
+    
+    iframeMatches.forEach((iframeTag, testIndex) => {
+      try {
+        // Extract srcdoc content
+        const srcdocMatch = iframeTag.match(/srcdoc="([^"]*)"/);
+        if (!srcdocMatch) return;
+        
+        // Decode HTML entities
+        let iframeContent = srcdocMatch[1]
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .replace(/&quot;/g, '"')
+          .replace(/&#x27;/g, "'")
+          .replace(/&amp;/g, '&');
+        
+        // Parse the iframe content to find questions
+        const testQuestions = this.parseIframeQuestions(iframeContent, testIndex);
+        questions.push(...testQuestions);
+        
+      } catch (error) {
+        console.error('Error parsing iframe content:', error);
+      }
+    });
+    
+    return questions.length > 0 ? questions : this.extractFallbackQuestions(htmlContent);
+  }
+  
+  static parseIframeQuestions(iframeContent, testIndex) {
+    const questions = [];
+    
+    // Look for the questions array in JavaScript
+    const questionsMatch = iframeContent.match(/questions\s*=\s*\[([\s\S]*?)\];/);
+    
+    if (questionsMatch) {
+      try {
+        // Try to extract questions from the JavaScript array
+        const questionsArrayContent = questionsMatch[1];
+        
+        // Look for question objects in the array
+        const questionObjects = this.extractQuestionObjects(questionsArrayContent);
+        questions.push(...questionObjects);
+        
+      } catch (error) {
+        console.error('Error parsing questions from JavaScript:', error);
+      }
+    }
+    
+    // If no questions found in JS, look for fallback questions
+    if (questions.length === 0) {
+      questions.push(...this.extractFallbackFromIframe(iframeContent, testIndex));
+    }
+    
+    return questions;
+  }
+  
+  static extractQuestionObjects(jsContent) {
+    const questions = [];
+    
+    // Look for question object patterns
+    const questionPattern = /\{\s*text:\s*["']([^"']*?)["'][\s\S]*?options:\s*\[([\s\S]*?)\][\s\S]*?\}/g;
+    let match;
+    let questionNumber = 1;
+    
+    while ((match = questionPattern.exec(jsContent)) !== null) {
+      const questionText = match[1];
+      const optionsContent = match[2];
+      
+      // Parse options
+      const options = this.parseOptionsFromJS(optionsContent);
+      
+      if (questionText && options.length > 0) {
+        const correctOption = options.find(opt => opt.correct);
+        
+        questions.push({
+          q_no: questionNumber++,
+          question: questionText,
+          options: {
+            A: options[0]?.text || "Option A",
+            B: options[1]?.text || "Option B",
+            C: options[2]?.text || "Option C",
+            D: options[3]?.text || "Option D"
+          },
+          correct_answer: correctOption?.label || "A",
+          explanation: "No explanation provided",
+          image: null,
+          explanation_image: null,
+          chapter_heading: "HTML Import"
+        });
+      }
+    }
+    
+    return questions;
+  }
+  
+  static parseOptionsFromJS(optionsContent) {
+    const options = [];
+    const optionPattern = /\{\s*label:\s*["']([^"']*?)["'][\s\S]*?text:\s*["']([^"']*?)["'][\s\S]*?correct:\s*(true|false)/g;
+    let match;
+    
+    while ((match = optionPattern.exec(optionsContent)) !== null) {
+      options.push({
+        label: match[1],
+        text: match[2],
+        correct: match[3] === 'true'
+      });
+    }
+    
+    return options;
+  }
+  
+  static extractFallbackFromIframe(iframeContent, testIndex) {
+    // Extract test title from iframe content
+    const titleMatch = iframeContent.match(/<title>([^<]*)<\/title>/) || 
+                      iframeContent.match(/<h1[^>]*>([^<]*)<\/h1>/);
+    
+    const testTitle = titleMatch ? titleMatch[1].trim() : `Test ${testIndex + 1}`;
+    
+    // Create sample questions based on the test
+    return [{
+      q_no: testIndex + 1,
+      question: `Sample question from ${testTitle}`,
+      options: {
+        A: "Option A",
+        B: "Option B",
+        C: "Option C",
+        D: "Option D"
+      },
+      correct_answer: "A",
+      explanation: `This is a sample question extracted from ${testTitle}. The actual questions may need manual review.`,
+      image: null,
+      explanation_image: null,
+      chapter_heading: testTitle
+    }];
+  }
+  
+  static extractFallbackQuestions(htmlContent) {
+    // Fallback method for when iframe parsing fails
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, 'text/html');
+    
+    const questions = [];
+    
+    // Try to find any question-like content
     const questionElements = doc.querySelectorAll('p, div, li');
-    let currentQuestionData = null;
     let questionNumber = 1;
     
     questionElements.forEach(element => {
       const text = element.textContent.trim();
       
-      // Check if this looks like a question (starts with number or question pattern)
       if (this.isQuestionStart(text)) {
-        // Save previous question if exists
-        if (currentQuestionData && currentQuestionData.question) {
-          questions.push(this.formatQuestion(currentQuestionData, questionNumber - 1));
-        }
-        
-        // Start new question
-        currentQuestionData = {
+        questions.push({
+          q_no: questionNumber++,
           question: this.cleanQuestionText(text),
-          options: {},
-          optionTexts: []
-        };
-        questionNumber++;
-      }
-      // Check if this looks like an option (A), B), etc.)
-      else if (this.isOption(text) && currentQuestionData) {
-        const optionData = this.parseOption(text);
-        if (optionData) {
-          currentQuestionData.options[optionData.key] = optionData.value;
-          currentQuestionData.optionTexts.push(optionData.value);
-        }
-      }
-      // Check if this looks like an answer or explanation
-      else if (this.isAnswer(text) && currentQuestionData) {
-        const answerData = this.parseAnswer(text);
-        if (answerData) {
-          currentQuestionData.correct_answer = answerData.answer;
-          currentQuestionData.explanation = answerData.explanation;
-        }
+          options: {
+            A: "Option A",
+            B: "Option B",
+            C: "Option C",
+            D: "Option D"
+          },
+          correct_answer: "A",
+          explanation: "No explanation provided",
+          image: null,
+          explanation_image: null,
+          chapter_heading: "HTML Import"
+        });
       }
     });
     
-    // Don't forget the last question
-    if (currentQuestionData && currentQuestionData.question) {
-      questions.push(this.formatQuestion(currentQuestionData, questionNumber - 1));
-    }
-    
-    return questions;
+    return questions.length > 0 ? questions : [{
+      q_no: 1,
+      question: "Sample question from HTML file",
+      options: {
+        A: "Option A",
+        B: "Option B",
+        C: "Option C",
+        D: "Option D"
+      },
+      correct_answer: "A",
+      explanation: "This is a sample question. The HTML file structure may need manual review for proper question extraction.",
+      image: null,
+      explanation_image: null,
+      chapter_heading: "HTML Import"
+    }];
   }
   
   static isQuestionStart(text) {

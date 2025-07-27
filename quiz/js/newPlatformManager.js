@@ -63,7 +63,7 @@ class NewPlatformManager {
   
   async scanNewFolder() {
     // Try to load known HTML files from the new folder
-    const knownFiles = ['a']; // Add more filenames as needed
+    const knownFiles = ['a', 'Prep_RR_Qb_Anaesthesia.html']; // Add more filenames as needed
     const availableFiles = [];
     
     for (const filename of knownFiles) {
