@@ -5,8 +5,6 @@ const scripts = [
   'js/state.js',
   'js/bookmarks.js',
   'js/navigation.js',
-  'js/htmlParser.js',
-  'js/newPlatformManager.js',
   'js/chapters.js',
   'js/quiz.js',
   'js/results.js',

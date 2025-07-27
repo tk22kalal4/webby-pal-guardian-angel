@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,53 +29,57 @@
   </header>
 
   <main>
-    <div class="selection-container">
+    <div class="qbank-main-container">
       <div class="welcome-section">
-        <h2>Welcome to Q Bank</h2>
-        <p>Test your knowledge with our comprehensive question bank</p>
+        <h2>Q Bank Options</h2>
       </div>
 
-      <div class="action-buttons">
-        <button onclick="startQuiz()" class="primary-btn">
-          <i class="fas fa-play"></i>
-          Start Quiz
-        </button>
-        
-        <button onclick="viewBookmarks()" class="secondary-btn">
-          <i class="fas fa-bookmark"></i>
-          Bookmarked Questions
-          <span id="bookmark-count" class="bookmark-count">0</span>
-        </button>
+      <div class="main-options-grid">
+        <div class="option-card bookmark-card" onclick="window.location.href='bookmarks.html'">
+          <div class="option-icon">
+            <i class="fas fa-bookmark"></i>
+          </div>
+          <div class="option-content">
+            <h3>Bookmarked Questions</h3>
+            <p>Review your saved questions</p>
+            <span id="bookmark-count" class="count-badge">0 questions saved</span>
+          </div>
+          <div class="option-arrow">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+
+        <div class="option-card quiz-card" onclick="window.location.href='platforms.html'">
+          <div class="option-icon">
+            <i class="fas fa-play-circle"></i>
+          </div>
+          <div class="option-content">
+            <h3>Start New Quiz</h3>
+            <p>Select platform and subject</p>
+            <span class="count-badge">Multiple platforms available</span>
+          </div>
+          <div class="option-arrow">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
       </div>
 
       <div class="stats-section">
-        <div class="stat-card">
-          <div class="stat-icon">
+        <div class="stats-grid">
+          <div class="stat-item">
             <i class="fas fa-question-circle"></i>
+            <span class="stat-number">500+</span>
+            <span class="stat-label">Questions</span>
           </div>
-          <div class="stat-info">
-            <h3>Total Questions</h3>
-            <p id="total-questions">1000+</p>
-          </div>
-        </div>
-        
-        <div class="stat-card">
-          <div class="stat-icon">
+          <div class="stat-item">
             <i class="fas fa-graduation-cap"></i>
+            <span class="stat-number">3</span>
+            <span class="stat-label">Platforms</span>
           </div>
-          <div class="stat-info">
-            <h3>Platforms</h3>
-            <p>3 Available</p>
-          </div>
-        </div>
-        
-        <div class="stat-card">
-          <div class="stat-icon">
+          <div class="stat-item">
             <i class="fas fa-book"></i>
-          </div>
-          <div class="stat-info">
-            <h3>Subjects</h3>
-            <p>Multiple</p>
+            <span class="stat-number">19+</span>
+            <span class="stat-label">Subjects</span>
           </div>
         </div>
       </div>
@@ -89,14 +94,6 @@
   </nav>
 
   <script>
-    function startQuiz() {
-      window.location.href = 'new-platforms.html';
-    }
-
-    function viewBookmarks() {
-      window.location.href = 'bookmarks.html';
-    }
-
     // Load bookmark count on page load
     function loadBookmarkCount() {
       const saved = localStorage.getItem('quizBookmarks');
