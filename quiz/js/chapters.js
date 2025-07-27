@@ -1,8 +1,12 @@
-
 // Chapter loading and management
 const ChapterManager = {
   async loadChapters() {
     try {
+      // Handle "new" platform specially
+      if (QuizState.selectedPlatform === 'new') {
+        return await this.loadNewPlatformChapters();
+      }
+      
       const response = await fetch(`${QuizState.selectedPlatform}/${QuizState.selectedSubject}/`);
       if (!response.ok) {
         // If directory listing is not available, try to load a known file
@@ -19,6 +23,29 @@ const ChapterManager = {
       // Fallback to known files
       const knownFiles = await this.getKnownFiles();
       this.displayChapters(knownFiles);
+    }
+  },
+
+  async loadNewPlatformChapters() {
+    try {
+      if (!window.NewPlatformManager) {
+        throw new Error('NewPlatformManager not loaded');
+      }
+      
+      const manager = new NewPlatformManager();
+      const availableFiles = await manager.scanNewFolder();
+      
+      const chapters = availableFiles.map(file => ({
+        name: file.title,
+        filename: file.filename,
+        questionCount: file.questions.length,
+        chapters: file.chapters
+      }));
+      
+      this.displayChapters(chapters);
+    } catch (error) {
+      console.error('Error loading new platform chapters:', error);
+      this.displayChapters([]);
     }
   },
 
@@ -70,7 +97,21 @@ const ChapterManager = {
     chapters.forEach(chapter => {
       const button = document.createElement('button');
       button.className = 'chapter-btn';
-      button.innerHTML = `<i class="fas fa-book"></i> ${chapter.name}`;
+      
+      // Special handling for new platform
+      if (QuizState.selectedPlatform === 'new') {
+        button.innerHTML = `
+          <i class="fas fa-file-code"></i> 
+          <div>
+            <div class="chapter-title">${chapter.name}</div>
+            <div class="chapter-info">${chapter.questionCount} questions</div>
+            ${chapter.chapters.length > 1 ? `<div class="chapter-sections">Sections: ${chapter.chapters.join(', ')}</div>` : ''}
+          </div>
+        `;
+      } else {
+        button.innerHTML = `<i class="fas fa-book"></i> ${chapter.name}`;
+      }
+      
       button.onclick = () => this.selectChapter(chapter.filename, chapter.name);
       chapterList.appendChild(button);
     });
@@ -80,6 +121,11 @@ const ChapterManager = {
     QuizState.selectedChapter = filename;
     
     try {
+      // Handle "new" platform specially
+      if (QuizState.selectedPlatform === 'new') {
+        return await this.selectNewPlatformChapter(filename, chapterName);
+      }
+      
       const response = await fetch(`${QuizState.selectedPlatform}/${QuizState.selectedSubject}/${filename}`);
       if (!response.ok) {
         throw new Error('Failed to load chapter data');
@@ -109,6 +155,36 @@ const ChapterManager = {
       QuizManager.loadQuestion();
     } catch (error) {
       console.error('Error loading chapter:', error);
+      alert('Error loading chapter. Please try again.');
+    }
+  },
+
+  async selectNewPlatformChapter(filename, chapterName) {
+    try {
+      const manager = new NewPlatformManager();
+      const fileData = manager.getFileData(filename);
+      
+      if (!fileData) {
+        throw new Error('File data not found');
+      }
+      
+      QuizState.questions = fileData.questions;
+      
+      if (QuizState.questions.length === 0) {
+        alert('No questions found in this file.');
+        return;
+      }
+      
+      // Initialize quiz
+      QuizState.currentQuestionIndex = 0;
+      QuizState.userAnswers = [];
+      QuizState.score = 0;
+      QuizState.isReviewMode = false;
+      
+      NavigationManager.showScreen('quiz-container');
+      QuizManager.loadQuestion();
+    } catch (error) {
+      console.error('Error loading new platform chapter:', error);
       alert('Error loading chapter. Please try again.');
     }
   },
