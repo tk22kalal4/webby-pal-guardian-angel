@@ -1,225 +1,371 @@
-/* Quiz App Theme Override */
-/* This CSS will override the existing styles in HTML quiz files */
+/* Quiz App Theme Override - Complete Integration */
+/* This CSS completely overrides existing styles and matches your app theme */
 
+/* Reset and base styles with highest priority */
 * {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
+/* Remove all existing styles and apply our theme */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  background: hsl(var(--background)) !important;
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
   margin: 0 !important;
-  padding: 20px !important;
+  padding: 1rem !important;
   min-height: 100vh !important;
-  color: #333 !important;
+  color: hsl(var(--foreground)) !important;
+  line-height: 1.5 !important;
 }
 
-/* Container */
-.container {
-  max-width: 900px !important;
-  margin: 0 auto !important;
-}
-
-/* Header Override */
-header {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px) !important;
-  border-radius: 15px !important;
-  padding: 25px !important;
-  margin-bottom: 20px !important;
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37) !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  color: #333 !important;
-}
-
-header h1 {
-  color: #2563eb !important;
-  margin: 0 0 10px 0 !important;
-  font-size: 2rem !important;
-  font-weight: 700 !important;
-}
-
-header p {
-  color: #666 !important;
-  margin: 5px 0 !important;
-}
-
-/* Sections */
-section {
-  margin-bottom: 20px !important;
-}
-
-/* Cards */
-.bg-white, section > div {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px) !important;
-  border-radius: 15px !important;
-  padding: 25px !important;
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37) !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-}
-
-/* Buttons */
-button {
-  border-radius: 12px !important;
-  padding: 12px 24px !important;
-  font-weight: 600 !important;
-  border: none !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  font-size: 14px !important;
-}
-
-button:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-}
-
-/* Primary buttons */
-.bg-blue-500, button[class*="bg-blue"] {
-  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
-  color: white !important;
-}
-
-.bg-blue-500:hover, button[class*="bg-blue"]:hover {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
-}
-
-/* Success buttons */
-.bg-green-500, button[class*="bg-green"] {
-  background: linear-gradient(135deg, #10b981, #059669) !important;
-  color: white !important;
-}
-
-/* Warning buttons */
-.bg-yellow-300, button[class*="bg-yellow"] {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
-  color: #1f2937 !important;
-}
-
-/* Secondary buttons */
-.bg-gray-500, button[class*="bg-gray"] {
-  background: linear-gradient(135deg, #6b7280, #4b5563) !important;
-  color: white !important;
-}
-
-/* Option buttons */
-.option-btn {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border: 2px solid #e5e7eb !important;
-  color: #374151 !important;
-  margin: 8px 0 !important;
-  text-align: left !important;
-  width: 100% !important;
-  padding: 16px !important;
-  border-radius: 12px !important;
-}
-
-.option-btn:hover {
-  border-color: #3b82f6 !important;
-  background: rgba(59, 130, 246, 0.1) !important;
-}
-
-.option-btn.selected {
-  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
-  color: white !important;
-  border-color: #2563eb !important;
-}
-
-/* Progress bar */
-.progress-bar {
-  background: linear-gradient(90deg, #3b82f6, #10b981) !important;
-  border-radius: 8px !important;
-}
-
-/* Navigation buttons */
-.question-nav-btn {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border: 2px solid #e5e7eb !important;
-  color: #374151 !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-}
-
-.question-nav-btn.answered {
-  background: linear-gradient(135deg, #10b981, #059669) !important;
-  color: white !important;
-  border-color: #059669 !important;
-}
-
-.question-nav-btn.unanswered {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border-color: #d1d5db !important;
-}
-
-.question-nav-btn.marked-nav {
-  border-color: #f59e0b !important;
-  background: rgba(251, 191, 36, 0.1) !important;
-}
-
-/* Text colors */
-.text-gray-700, .text-gray-800 {
-  color: #374151 !important;
-}
-
-/* Hide original styles by targeting specific classes */
+/* Hide original background */
 .bg-gray-100 {
   background: transparent !important;
 }
 
-/* Modals */
+/* Container styles */
+.container {
+  max-width: 900px !important;
+  margin: 0 auto !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Card/Section styles with glassmorphism */
+.bg-white, 
+section > div,
+#instructions > div,
+#quiz > div,
+#results > div,
+.nav-panel,
+.results-nav-panel {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  margin-bottom: 1.5rem !important;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Header specific styling */
+header {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 20px !important;
+  padding: 2rem !important;
+  margin-bottom: 2rem !important;
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.3) !important;
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
+  position: relative !important;
+  z-index: 20 !important;
+}
+
+header h1 {
+  color: hsl(217, 91%, 60%) !important;
+  margin: 0 0 0.75rem 0 !important;
+  font-size: 2.25rem !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+header p {
+  color: hsl(215, 20%, 55%) !important;
+  margin: 0.5rem 0 !important;
+  font-weight: 500 !important;
+}
+
+/* Button system matching your app */
+button {
+  border-radius: 12px !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 600 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-size: 0.875rem !important;
+  position: relative !important;
+  z-index: 15 !important;
+  outline: none !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+}
+
+button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+button:active {
+  transform: translateY(0) !important;
+}
+
+/* Primary button variant */
+.bg-blue-500,
+.bg-blue-600,
+button[class*="bg-blue"],
+#start-test,
+#next-btn,
+#submit-test {
+  background: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 91%, 55%)) !important;
+  color: white !important;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4) !important;
+}
+
+.bg-blue-500:hover,
+.bg-blue-600:hover,
+button[class*="bg-blue"]:hover,
+#start-test:hover,
+#next-btn:hover,
+#submit-test:hover {
+  background: linear-gradient(135deg, hsl(217, 91%, 55%), hsl(217, 91%, 50%)) !important;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Success/Green buttons */
+.bg-green-500,
+.bg-green-600,
+button[class*="bg-green"],
+#confirm-submit {
+  background: linear-gradient(135deg, hsl(142, 76%, 36%), hsl(142, 76%, 31%)) !important;
+  color: white !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4) !important;
+}
+
+/* Warning/Yellow buttons */
+.bg-yellow-300,
+.bg-yellow-400,
+button[class*="bg-yellow"],
+#mark-review {
+  background: linear-gradient(135deg, hsl(45, 93%, 58%), hsl(45, 93%, 53%)) !important;
+  color: hsl(222, 84%, 12%) !important;
+  box-shadow: 0 4px 14px rgba(251, 191, 36, 0.4) !important;
+}
+
+/* Secondary/Gray buttons */
+.bg-gray-500,
+.bg-gray-300,
+button[class*="bg-gray"],
+#previous-btn,
+#nav-toggle,
+#cancel-submit {
+  background: linear-gradient(135deg, hsl(215, 14%, 52%), hsl(215, 14%, 47%)) !important;
+  color: white !important;
+  box-shadow: 0 4px 14px rgba(107, 114, 128, 0.4) !important;
+}
+
+/* Option buttons with enhanced styling */
+.option-btn {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 2px solid hsl(215, 20%, 85%) !important;
+  color: hsl(215, 25%, 27%) !important;
+  margin: 0.5rem 0 !important;
+  text-align: left !important;
+  width: 100% !important;
+  padding: 1rem 1.25rem !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(10px) !important;
+  position: relative !important;
+  z-index: 12 !important;
+}
+
+.option-btn:hover {
+  border-color: hsl(217, 91%, 60%) !important;
+  background: rgba(59, 130, 246, 0.08) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2) !important;
+}
+
+.option-btn.selected {
+  background: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 91%, 55%)) !important;
+  color: white !important;
+  border-color: hsl(217, 91%, 55%) !important;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4) !important;
+}
+
+/* Progress bar */
+.progress-bar {
+  background: linear-gradient(90deg, hsl(217, 91%, 60%), hsl(142, 76%, 36%)) !important;
+  border-radius: 9999px !important;
+  height: 0.75rem !important;
+  transition: width 0.5s ease !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
+}
+
+.w-full.bg-gray-200 {
+  background: hsl(215, 16%, 92%) !important;
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+}
+
+/* Navigation buttons */
+.question-nav-btn,
+.result-nav-btn-grid {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 2px solid hsl(215, 20%, 85%) !important;
+  color: hsl(215, 25%, 27%) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  backdrop-filter: blur(10px) !important;
+  position: relative !important;
+  z-index: 14 !important;
+}
+
+.question-nav-btn.answered,
+.result-nav-btn-grid.answered {
+  background: linear-gradient(135deg, hsl(142, 76%, 36%), hsl(142, 76%, 31%)) !important;
+  color: white !important;
+  border-color: hsl(142, 76%, 31%) !important;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+}
+
+.question-nav-btn.unanswered,
+.result-nav-btn-grid.unanswered {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: hsl(215, 20%, 85%) !important;
+}
+
+.question-nav-btn.marked-nav,
+.result-nav-btn-grid.marked-nav {
+  border-color: hsl(45, 93%, 58%) !important;
+  background: rgba(251, 191, 36, 0.1) !important;
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2) !important;
+}
+
+/* Text overrides */
+.text-gray-700,
+.text-gray-800,
+p, h1, h2, h3, h4, h5, h6 {
+  color: hsl(215, 25%, 27%) !important;
+}
+
+/* Modal styling */
 .fixed {
-  backdrop-filter: blur(5px) !important;
+  backdrop-filter: blur(8px) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  z-index: 50 !important;
 }
 
 .fixed > div {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px) !important;
-  border-radius: 15px !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3) !important;
+  position: relative !important;
+  z-index: 51 !important;
 }
 
-/* Navigation panels */
-.nav-panel, .results-nav-panel {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px) !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.18) !important;
+/* Navigation panels with higher z-index */
+.nav-panel,
+.results-nav-panel {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  height: 100vh !important;
+  width: 320px !important;
+  z-index: 40 !important;
+  overflow-y: auto !important;
+  backdrop-filter: blur(20px) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 0 !important;
 }
 
-/* Results */
+/* Results backgrounds */
 .bg-green-50 {
   background: rgba(16, 185, 129, 0.1) !important;
   border: 1px solid rgba(16, 185, 129, 0.2) !important;
+  border-radius: 12px !important;
 }
 
 .bg-red-50 {
   background: rgba(239, 68, 68, 0.1) !important;
   border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  border-radius: 12px !important;
 }
 
 .bg-gray-50 {
   background: rgba(107, 114, 128, 0.1) !important;
   border: 1px solid rgba(107, 114, 128, 0.2) !important;
+  border-radius: 12px !important;
 }
 
-/* Responsive */
+/* Input and select styling */
+select, input {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 2px solid hsl(215, 20%, 85%) !important;
+  border-radius: 8px !important;
+  padding: 0.5rem !important;
+  color: hsl(215, 25%, 27%) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+select:focus, input:focus {
+  border-color: hsl(217, 91%, 60%) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
   body {
-    padding: 10px !important;
+    padding: 0.75rem !important;
   }
   
-  header, .bg-white, section > div {
-    padding: 20px !important;
+  .container {
+    padding: 0 !important;
+  }
+  
+  header,
+  .bg-white,
+  section > div {
+    padding: 1.5rem !important;
     border-radius: 12px !important;
+    margin-bottom: 1rem !important;
   }
   
   button {
-    padding: 12px 16px !important;
-    font-size: 14px !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.875rem !important;
+  }
+  
+  .nav-panel,
+  .results-nav-panel {
+    width: 100vw !important;
+    left: 0 !important;
+  }
+  
+  .question-nav-btn,
+  .result-nav-btn-grid {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 0.875rem !important;
   }
 }
 
-/* Override any existing gradients or backgrounds */
-.bg-blue-600 {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+/* Force override any existing styles */
+body * {
+  font-family: inherit !important;
+}
+
+/* Remove any conflicting styles */
+.bg-blue-600,
+.hover\:bg-blue-600:hover,
+.hover\:bg-blue-800:hover {
+  background: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(217, 91%, 55%)) !important;
 }

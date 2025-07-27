@@ -4,22 +4,17 @@
   <meta charset="UTF-8">
   <title>Prep RR Qb Anaesthesia - Combined Tests</title>
   <style>
-    /* Original styles - minimized */
+    /* Original styles - completely overridden */
     body { font-family: Arial, sans-serif; padding: 20px; }
-    button {
-      margin: 5px;
-      padding: 10px 15px;
-      background: #f0f0f0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+    button { margin: 5px; padding: 10px 15px; background: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; }
     button:hover { background: #ddd; }
     .iframe-container { margin-top: 20px; }
     .iframe-container iframe { display: block; }
   </style>
-  <!-- Override with our app theme -->
+  <!-- Our app theme with complete override -->
   <link rel="stylesheet" href="quiz-theme.css">
+  <!-- Enhanced functionality integration -->
+  <script src="quiz-integration.js"></script>
   <script>
     function showTest(id) {
       if (document.querySelector('.iframe-container:not([style*="display: none"])') !== document.getElementById(id)) {
