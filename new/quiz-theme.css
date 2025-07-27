@@ -1,0 +1,225 @@
+/* Quiz App Theme Override */
+/* This CSS will override the existing styles in HTML quiz files */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  margin: 0 !important;
+  padding: 20px !important;
+  min-height: 100vh !important;
+  color: #333 !important;
+}
+
+/* Container */
+.container {
+  max-width: 900px !important;
+  margin: 0 auto !important;
+}
+
+/* Header Override */
+header {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: 15px !important;
+  padding: 25px !important;
+  margin-bottom: 20px !important;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #333 !important;
+}
+
+header h1 {
+  color: #2563eb !important;
+  margin: 0 0 10px 0 !important;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+}
+
+header p {
+  color: #666 !important;
+  margin: 5px 0 !important;
+}
+
+/* Sections */
+section {
+  margin-bottom: 20px !important;
+}
+
+/* Cards */
+.bg-white, section > div {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: 15px !important;
+  padding: 25px !important;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Buttons */
+button {
+  border-radius: 12px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  font-size: 14px !important;
+}
+
+button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Primary buttons */
+.bg-blue-500, button[class*="bg-blue"] {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  color: white !important;
+}
+
+.bg-blue-500:hover, button[class*="bg-blue"]:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+}
+
+/* Success buttons */
+.bg-green-500, button[class*="bg-green"] {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: white !important;
+}
+
+/* Warning buttons */
+.bg-yellow-300, button[class*="bg-yellow"] {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+  color: #1f2937 !important;
+}
+
+/* Secondary buttons */
+.bg-gray-500, button[class*="bg-gray"] {
+  background: linear-gradient(135deg, #6b7280, #4b5563) !important;
+  color: white !important;
+}
+
+/* Option buttons */
+.option-btn {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 2px solid #e5e7eb !important;
+  color: #374151 !important;
+  margin: 8px 0 !important;
+  text-align: left !important;
+  width: 100% !important;
+  padding: 16px !important;
+  border-radius: 12px !important;
+}
+
+.option-btn:hover {
+  border-color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+.option-btn.selected {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  color: white !important;
+  border-color: #2563eb !important;
+}
+
+/* Progress bar */
+.progress-bar {
+  background: linear-gradient(90deg, #3b82f6, #10b981) !important;
+  border-radius: 8px !important;
+}
+
+/* Navigation buttons */
+.question-nav-btn {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 2px solid #e5e7eb !important;
+  color: #374151 !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+.question-nav-btn.answered {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: white !important;
+  border-color: #059669 !important;
+}
+
+.question-nav-btn.unanswered {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: #d1d5db !important;
+}
+
+.question-nav-btn.marked-nav {
+  border-color: #f59e0b !important;
+  background: rgba(251, 191, 36, 0.1) !important;
+}
+
+/* Text colors */
+.text-gray-700, .text-gray-800 {
+  color: #374151 !important;
+}
+
+/* Hide original styles by targeting specific classes */
+.bg-gray-100 {
+  background: transparent !important;
+}
+
+/* Modals */
+.fixed {
+  backdrop-filter: blur(5px) !important;
+}
+
+.fixed > div {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: 15px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Navigation panels */
+.nav-panel, .results-nav-panel {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Results */
+.bg-green-50 {
+  background: rgba(16, 185, 129, 0.1) !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+}
+
+.bg-red-50 {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+}
+
+.bg-gray-50 {
+  background: rgba(107, 114, 128, 0.1) !important;
+  border: 1px solid rgba(107, 114, 128, 0.2) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    padding: 10px !important;
+  }
+  
+  header, .bg-white, section > div {
+    padding: 20px !important;
+    border-radius: 12px !important;
+  }
+  
+  button {
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* Override any existing gradients or backgrounds */
+.bg-blue-600 {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+}
