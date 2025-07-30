@@ -25,8 +25,8 @@ export class HomePage {
     container.className = 'home-page';
     container.innerHTML = `
       <div class="welcome-section">
-        <h2>Welcome to Silent Scalpel</h2>
-        <p>If he is a God than I am a Bloody Doctor</p>
+        <h2>Welcome to LASTPULSE</h2>
+        <p style="font-style: italic; font-size: 1.1em; color: #666; margin-top: 1rem;">„If he is a God than I am a Bloody Doctor"</p>
       </div>
       <div class="stats-grid">
         <div class="stat-card">
