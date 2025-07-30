@@ -129,7 +129,7 @@ class AccessControl {
     
     promptDiv.innerHTML = `
       <div style="max-width: 600px; margin: 0 auto;">
-        <h3 style="margin: 0 0 8px 0; font-size: 18px;">Install NEXTPULSE App</h3>
+        <h3 style="margin: 0 0 8px 0; font-size: 18px;">Install Silent Scalpel App</h3>
         <p style="margin: 0 0 12px 0; font-size: 14px;">
           To access ${attemptedPage ? attemptedPage.replace('/', '') : 'all features'}, please install our PWA app.
         </p>
@@ -170,7 +170,7 @@ class AccessControl {
       });
     } else {
       // Show manual install instructions
-      alert('To install:\n\nChrome/Edge: Menu > Install NEXTPULSE\nSafari: Share > Add to Home Screen\nFirefox: Menu > Install');
+      alert('To install:\n\nChrome/Edge: Menu > Install Silent Scalpel\nSafari: Share > Add to Home Screen\nFirefox: Menu > Install');
     }
     this.dismissPrompt();
   }

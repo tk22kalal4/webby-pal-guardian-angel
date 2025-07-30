@@ -25,8 +25,8 @@ export class HomePage {
     container.className = 'home-page';
     container.innerHTML = `
       <div class="welcome-section">
-        <h2>Welcome to NEXTPULSE</h2>
-        <p>Your comprehensive NEET-PG preparation platform</p>
+        <h2>Welcome to Silent Scalpel</h2>
+        <p>If he is a God than I am a Bloody Doctor</p>
       </div>
       <div class="stats-grid">
         <div class="stat-card">
