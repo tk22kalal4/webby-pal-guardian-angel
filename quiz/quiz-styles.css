@@ -108,59 +108,47 @@ header .header-content {
   position: relative;
 }
 
-/* Quiz controls positioned at bottom-right of question container */
-.quiz-controls {
+/* Bookmark button positioned at top-right of question container */
+.question-container .bookmark-question-btn {
   position: absolute;
-  bottom: 1rem;
+  top: 1rem;
   right: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 0.75rem 1rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(44, 82, 130, 0.1);
-}
-
-.quiz-controls .quiz-progress {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #2c5282;
-  margin: 0;
-}
-
-.quiz-controls .bookmark-question-btn,
-.quiz-controls .exit-btn {
-  background: transparent;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 6px;
+  background: white;
+  border: 2px solid #f59e0b;
+  padding: 0.75rem;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   color: #2c5282;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
-.quiz-controls .bookmark-question-btn:hover,
-.quiz-controls .exit-btn:hover {
-  background: #f1f5f9;
-  transform: scale(1.1);
+.question-container .bookmark-question-btn:hover {
+  background: #fef3c7;
+  transform: scale(1.05);
+  border-color: #d97706;
 }
 
-.quiz-controls .bookmark-question-btn i {
+.question-container .bookmark-question-btn i {
   color: #f59e0b;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
-.quiz-controls .exit-btn i {
-  color: #ef4444;
-  font-size: 1.1rem;
+/* Quiz progress at bottom of question container */
+.question-container .quiz-progress {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2c5282;
 }
 
 .question-text {
@@ -168,7 +156,7 @@ header .header-content {
   line-height: 1.6;
   color: #374151;
   margin-bottom: 1.5rem;
-  padding-bottom: 4rem; /* Add padding to prevent overlap with controls */
+  padding-right: 4rem; /* Add padding to prevent overlap with bookmark */
 }
 
 .question-image {
@@ -185,21 +173,21 @@ header .header-content {
 
 .options-container {
   display: grid;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
 }
 
 .option-btn {
   background: white;
   border: 2px solid #e5e7eb;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: left;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .option-btn:hover {
@@ -384,34 +372,25 @@ header .header-content {
     padding: 1.5rem;
   }
 
-  .quiz-controls {
-    bottom: 0.5rem;
-    right: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    gap: 0.75rem;
+  .question-container .bookmark-question-btn {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 40px;
+    height: 40px;
+    padding: 0.5rem;
   }
 
-  .quiz-controls .quiz-progress {
-    font-size: 0.8rem;
-  }
-
-  .quiz-controls .bookmark-question-btn,
-  .quiz-controls .exit-btn {
-    width: 32px;
-    height: 32px;
-  }
-
-  .quiz-controls .bookmark-question-btn i,
-  .quiz-controls .exit-btn i {
-    font-size: 1rem;
+  .question-container .bookmark-question-btn i {
+    font-size: 1.1rem;
   }
 
   .question-text {
-    padding-bottom: 3rem;
+    padding-right: 3rem;
   }
 
   .option-btn {
-    padding: 0.75rem;
+    padding: 0.6rem;
+    gap: 0.6rem;
   }
 
   .option-label {
