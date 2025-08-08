@@ -124,8 +124,8 @@ header .header-content h1 {
 }
 
 .bookmark-card .option-icon {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: var(--app-primary);  /* Set icon color to theme */
+  background: var(--app-primary);
+  color: #ffffff;  /* Set icon color to theme */
 }
 
 .bookmark-card .option-icon i {
@@ -133,8 +133,8 @@ header .header-content h1 {
 }
 
 .quiz-card .option-icon {
-  background: linear-gradient(135deg, #16a34a, #15803d);
-  color: var(--app-primary);  /* Set icon color to theme */
+  background: var(--app-primary);
+  color: #ffffff;  /* Set icon color to theme */
 }
 
 .option-content {
