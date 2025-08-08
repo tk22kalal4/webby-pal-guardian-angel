@@ -1,3 +1,7 @@
+:root {
+  --app-primary: #2c5282; /* Your app's main theme color */
+}
+
 .qbank-main-container, .selection-container, .bookmarks-container, .questions-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -121,10 +125,16 @@ header .header-content h1 {
 
 .bookmark-card .option-icon {
   background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: var(--app-primary);  /* Set icon color to theme */
+}
+
+.bookmark-card .option-icon i {
+  color: inherit;
 }
 
 .quiz-card .option-icon {
   background: linear-gradient(135deg, #16a34a, #15803d);
+  color: var(--app-primary);  /* Set icon color to theme */
 }
 
 .option-content {
