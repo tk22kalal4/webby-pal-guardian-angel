@@ -137,6 +137,12 @@ header .header-content h1 {
   color: #ffffff;  /* Set icon color to theme */
 }
 
+.test-card .option-icon {
+  background: var(--app-primary);
+  color: #ffffff;  /* Set icon color to theme */
+}
+
+
 .option-content {
   flex: 1;
 }
