@@ -92,6 +92,7 @@ header .header-content h1 {
   border: 2px solid transparent;
 }
 
+/* Your original unchanged styles */
 .option-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -157,34 +158,46 @@ header .header-content h1 {
   font-size: 1.2rem;
 }
 
-/* Stats Section */
+/* Modified stats section only */
 .stats-section {
   background: white;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1rem; /* Reduced from 2rem */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 2rem;
+  gap: 1rem; /* Reduced from 2rem */
 }
 
 .stat-item {
   text-align: center;
-  padding: 1rem;
+  padding: 0.75rem; /* Reduced from 1rem */
+  position: relative;
+}
+
+/* Add right border to all stat items except last */
+.stat-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -0.5rem; /* Half of gap */
+  top: 25%;
+  height: 50%;
+  width: 1px;
+  background-color: #e5e7eb;
 }
 
 .stat-item i {
   font-size: 2rem;
   color: #2c5282;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem; /* Reduced from 1rem */
 }
 
 .stat-number {
   display: block;
-  font-size: 2rem;
+  font-size: 1.75rem; /* Slightly reduced from 2rem */
   font-weight: 700;
   color: #2d3748;
   margin-bottom: 0.25rem;
@@ -195,7 +208,6 @@ header .header-content h1 {
   font-size: 0.875rem;
   font-weight: 500;
 }
-
 /* Platforms Grid */
 .platforms-grid, .subjects-grid {
   display: grid;
