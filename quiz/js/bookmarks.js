@@ -201,8 +201,8 @@ const BookmarkManager = {
       QuizState.userAnswers = [];
       QuizState.isReviewMode = true;
       
-      NavigationManager.showScreen('quiz-container');
-      QuizManager.loadQuestion();
+      // Navigate to quiz page with bookmark flag
+      window.location.href = `quiz.html?fromBookmarks=true&platform=${platform}&subject=${subject}`;
     }
   }
 };

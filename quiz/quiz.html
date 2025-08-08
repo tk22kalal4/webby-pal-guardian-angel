@@ -68,6 +68,13 @@
     </div>
   </main>
 
+  <!-- Include modular quiz system -->
+  <script src="js/state.js"></script>
+  <script src="js/bookmarks.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/results.js"></script>
+  <script src="js/quiz.js"></script>
+
   <script>
     let currentQuiz = null;
     let currentQuestionIndex = 0;
@@ -329,7 +336,26 @@
       goBack();
     }
 
-    window.addEventListener('load', loadQuiz);
+    // Check if this is a bookmarked question review
+    function checkBookmarkMode() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromBookmarks = urlParams.get('fromBookmarks');
+      
+      if (fromBookmarks === 'true' && QuizState && QuizState.questions.length > 0) {
+        // Use the modular quiz system for bookmark reviews
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('quiz-container').style.display = 'block';
+        QuizManager.loadQuestion();
+        return true;
+      }
+      return false;
+    }
+
+    window.addEventListener('load', () => {
+      if (!checkBookmarkMode()) {
+        loadQuiz();
+      }
+    });
   </script>
 </body>
 </html>
