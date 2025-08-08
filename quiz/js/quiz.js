@@ -4,6 +4,16 @@ const QuizManager = {
   loadQuestion() {
     const question = QuizState.questions[QuizState.currentQuestionIndex];
     
+    // Debug logging for bookmark issues
+    console.log('Loading question:', question);
+    console.log('Question keys:', Object.keys(question || {}));
+    
+    if (!question) {
+      console.error('No question found at index:', QuizState.currentQuestionIndex);
+      alert('No question found. Please try again.');
+      return;
+    }
+    
     // Update progress
     document.getElementById('current-question').textContent = QuizState.currentQuestionIndex + 1;
     document.getElementById('total-questions').textContent = QuizState.questions.length;
