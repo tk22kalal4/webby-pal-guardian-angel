@@ -1,13 +1,13 @@
 
 {
-  "name": "PWA Install Demo",
-  "short_name": "PWA Demo",
-  "description": "A complete Progressive Web App wit install prompt",
+  "name": "LASTPULSE - Medical Education",
+  "short_name": "LASTPULSE",
+  "description": "Latest medical education news and resources in India",
   "start_url": "./app.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#4a6cf7",
-  "theme_color": "#4a6cf7",
+  "background_color": "#2c5282",
+  "theme_color": "#2c5282",
   "icons": [
     {
       "src": "./icon-192.png",
@@ -20,6 +20,13 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "splash_pages": [
+    {
+      "src": "./splash-screen.png",
+      "sizes": "1920x1080",
+      "type": "image/png"
     }
   ]
 }
