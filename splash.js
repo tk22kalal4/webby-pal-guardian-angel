@@ -1,22 +1,37 @@
-// splash.js
+// splash.js - PWA Splash Screen Handler
 document.addEventListener('DOMContentLoaded', function() {
-    // Show splash screen initially
+    // Ensure splash screen is visible
     const splashContainer = document.querySelector('.splash-container');
-    splashContainer.style.display = 'flex';
-    
-    setTimeout(function() {
-        document.querySelector('.loading-text').textContent = "Initialization complete!";
+    if (splashContainer) {
+        splashContainer.style.display = 'flex';
+        
+        // Update loading text progressively
+        setTimeout(function() {
+            const loadingText = document.querySelector('.loading-text');
+            if (loadingText) {
+                loadingText.textContent = "Loading resources...";
+            }
+        }, 1000);
         
         setTimeout(function() {
-            // Fade out splash screen
-            splashContainer.style.opacity = '0';
-            splashContainer.style.transition = 'opacity 0.5s ease-in-out';
-            
-            setTimeout(function() {
-                splashContainer.style.display = 'none';
-                // Show main content
-                document.querySelector('.main-content').style.display = 'block';
-            }, 500);
-        }, 1500);
-    }, 3000);
+            const loadingText = document.querySelector('.loading-text');
+            if (loadingText) {
+                loadingText.textContent = "Almost ready...";
+            }
+        }, 2000);
+        
+        setTimeout(function() {
+            const loadingText = document.querySelector('.loading-text');
+            if (loadingText) {
+                loadingText.textContent = "Welcome to LASTPULSE!";
+            }
+        }, 2500);
+    }
+    
+    // Handle PWA standalone mode detection
+    if (window.matchMedia('(display-mode: standalone)').matches || 
+        window.navigator.standalone === true) {
+        // Running as PWA
+        document.body.classList.add('pwa-mode');
+    }
 });

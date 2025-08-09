@@ -3,12 +3,14 @@ const urlsToCache = [
   './',
   './index.html',
   './app.html',
+  './splash-screen.html',
   './platforms.html',
   './search.html',
   './styles.css',
   './home.css',
   './splash.css',
   './script.js',
+  './splash.js',
   './access-control.js',
   './pwa-handler.js',
   './app.webmanifest',
@@ -102,9 +104,20 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // For root requests, serve the app with splash screen
+  // For root requests, serve the splash screen first
   if (event.request.mode === 'navigate' && 
-      (url.pathname === '/' || url.pathname === '/index.html' || url.pathname === '/app.html')) {
+      (url.pathname === '/' || url.pathname === '/index.html')) {
+    event.respondWith(
+      caches.match('./splash-screen.html')
+        .then((response) => {
+          return response || fetch('./splash-screen.html');
+        })
+    );
+    return;
+  }
+
+  // For app.html requests, serve the main app
+  if (event.request.mode === 'navigate' && url.pathname === '/app.html') {
     event.respondWith(
       caches.match('./app.html')
         .then((response) => {
