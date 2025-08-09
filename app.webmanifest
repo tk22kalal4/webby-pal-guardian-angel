@@ -5,8 +5,8 @@
   "start_url": "./app.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#101826",  // Match splash screen background
-  "theme_color": "#101826",       // Match splash screen background
+  "background_color": "#101826",
+  "theme_color": "#101826",      
   "icons": [
     {
       "src": "./icon-192.png",
@@ -23,7 +23,7 @@
   ],
   "splash_screens": [
     {
-      "src": "./splash-screen.html",  // Point to splash screen HTML
+      "src": "./splash-screen.html", 
       "sizes": "1920x1080",
       "type": "text/html"
     }
