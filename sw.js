@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lastpulse-v3';
+const CACHE_NAME = 'lastpulse-v4';
 const urlsToCache = [
   './',
   './index.html',
