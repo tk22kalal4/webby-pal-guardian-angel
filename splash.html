@@ -26,6 +26,12 @@
 </head>
 <body>
   <div class="splash-container">
+    <script>
+      // Initialize access control for protected page
+      if (!accessControl.initProtectedPage()) {
+        throw new Error('Access denied - redirecting to index.html');
+      }
+    </script>
     <!-- Bubbles -->
     <div class="bubble"></div>
     <div class="bubble"></div>
