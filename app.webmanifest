@@ -2,7 +2,7 @@
   "name": "LASTPULSE - Medical Education",
   "short_name": "LASTPULSE",
   "description": "Latest medical education news and resources in India",
-  "start_url": "./",
+  "start_url": "./splash-screen.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#101826",

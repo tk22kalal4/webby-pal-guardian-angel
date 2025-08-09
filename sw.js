@@ -116,6 +116,17 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // For splash screen requests, serve splash screen
+  if (event.request.mode === 'navigate' && url.pathname === '/splash-screen.html') {
+    event.respondWith(
+      caches.match('./splash-screen.html')
+        .then((response) => {
+          return response || fetch('./splash-screen.html');
+        })
+    );
+    return;
+  }
+
   // For app.html requests, serve the main app
   if (event.request.mode === 'navigate' && url.pathname === '/app.html') {
     event.respondWith(

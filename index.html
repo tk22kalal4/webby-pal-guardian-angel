@@ -8,7 +8,15 @@
     <meta name="description" content="Latest medical education news in India">
     <title>LASTPULSE | Medical Education News</title>
     <link rel="manifest" href="./app.webmanifest">
-    <link rel="apple-touch-icon" href="./icon-192.png">
+    <link rel="apple-touch-icon" href="./icons-192.png">
+    
+    <!-- Auto-redirect to splash screen for PWA -->
+    <script>
+        // Redirect to splash screen immediately for PWA consistency
+        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+            window.location.replace('./splash-screen.html');
+        }
+    </script>
     
     <!-- PWA Splash Screen Configuration -->
     <meta name="apple-mobile-web-app-capable" content="yes">
