@@ -6,8 +6,8 @@
   "start_url": "./splash.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#4a6cf7",
-  "theme_color": "#4a6cf7",
+  "background_color": "#101826",
+  "theme_color": "#182434",
   "icons": [
     {
       "src": "./iconss-192.png",
