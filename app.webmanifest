@@ -1,6 +1,6 @@
 
 {
-  "name": "PWA Install Demo",
+  "name": "NEXTPULSE",
   "short_name": "PWA Demo",
   "description": "A complete Progressive Web App wit install prompt",
   "start_url": "./app.html",
