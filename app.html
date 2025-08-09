@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,34 +8,76 @@
   <meta name="keywords" content="NEET PG, medical entrance, video lectures, Marrow, DAMS, PrepLadder, medical preparation, NEET PG coaching">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./src/home/home.css">
+  <!-- New splash screen CSS -->
+  <link rel="stylesheet" href="./splash.css">
   <link rel="manifest" href="./app.webmanifest">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="./access-control.js"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5920367457745298"
      crossorigin="anonymous"></script>
   <style>
-      .title-row {
-          display: flex;
-          align-items: center;
-          gap: 0.6em; /* space between icon and text */
-        }
-        
-        .title-row .fa-heartbeat {
-          font-size: 2rem;   /* Adjust size as needed */
-          color: #4fd1c7;   /* Optional: red color for the heart */
-          vertical-align: middle;
-        }
+    .title-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6em; /* space between icon and text */
+    }
+    
+    .title-row .fa-heartbeat {
+        font-size: 2rem;   /* Adjust size as needed */
+        color: #4fd1c7;   /* Optional: red color for the heart */
+        vertical-align: middle;
+    }
+
+    /* Main content initially hidden */
+    .main-content {
+        display: none;
+    }
   </style>
 </head>
 <body>
-  <script>
-    // Initialize access control for protected page
-    if (!accessControl.initProtectedPage()) {
-      // Page will redirect, so we can stop execution here
-      throw new Error('Access denied - redirecting to index.html');
-    }
-  </script>
-  <header>
+  <!-- New Splash Screen -->
+ <!-- Updated Splash Screen -->
+<div class="splash-container">
+    <!-- Bubbles - Will adjust based on screen size -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    
+    <!-- Responsive Logo Container -->
+    <div class="logo-container">
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+        <svg class="pulse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" preserveAspectRatio="xMidYMid meet">
+            <circle cx="32" cy="32" r="30" fill="none" stroke="cyan" stroke-width="3" opacity="0.6"/>
+            <polyline points="8,32 16,32 22,20 28,44 34,28 40,40 48,32 56,32"
+                fill="none" stroke="cyan" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+    
+    <h1 class="app-name">LASTPULSE</h1>
+    <p class="tagline">Medical Education Platform</p>
+    
+    <div class="progress-container">
+        <div class="progress-bar"></div>
+    </div>
+    
+    <p class="loading-text">Initializing platform...</p>
+</div>
+  <div class="main-content">
+    <script>
+      // Initialize access control for protected page
+      if (!accessControl.initProtectedPage()) {
+        // Page will redirect, so we can stop execution here
+        throw new Error('Access denied - redirecting to index.html');
+      }
+    </script>
+    <header>
     <div class="header-content">
   <div class="title-row">
     <i class="fas fa-heartbeat"></i>
@@ -160,6 +201,11 @@
     <a href="./search.html"><i class="fas fa-search"></i><span>Search</span></a>
     <a href="./quiz/index.html"><i class="fas fa-question-circle"></i><span>Q Bank</span></a>
   </nav>
+  </div>
+
+  <!-- New splash screen JS -->
+  <script src="./splash.js"></script>
+  
   <script>
         // Register service worker for the installed app page as well
         if ('serviceWorker' in navigator) {
