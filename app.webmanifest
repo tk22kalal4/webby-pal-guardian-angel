@@ -1,4 +1,3 @@
-
 {
   "name": "LASTPULSE - Medical Education",
   "short_name": "LASTPULSE",
@@ -6,8 +5,8 @@
   "start_url": "./app.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#2c5282",
-  "theme_color": "#2c5282",
+  "background_color": "#101826",  // Match splash screen background
+  "theme_color": "#101826",       // Match splash screen background
   "icons": [
     {
       "src": "./icon-192.png",
@@ -22,11 +21,11 @@
       "purpose": "any maskable"
     }
   ],
-  "splash_pages": [
+  "splash_screens": [
     {
-      "src": "./splash-screen.png",
+      "src": "./splash-screen.html",  // Point to splash screen HTML
       "sizes": "1920x1080",
-      "type": "image/png"
+      "type": "text/html"
     }
   ]
 }
