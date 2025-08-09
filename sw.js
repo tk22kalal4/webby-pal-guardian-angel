@@ -3,6 +3,7 @@ const CACHE_NAME = 'nextpulse-v2';
 const urlsToCache = [
   './',
   './index.html',
+  './splash.html',
   './app.html',
   './platforms.html',
   './search.html',
