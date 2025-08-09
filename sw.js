@@ -1,21 +1,18 @@
-const CACHE_NAME = 'lastpulse-v4';
+
+const CACHE_NAME = 'nextpulse-v1';
 const urlsToCache = [
   './',
   './index.html',
   './app.html',
-  './splash-screen.html',
   './platforms.html',
   './search.html',
   './styles.css',
-  './home.css',
-  './splash.css',
   './script.js',
-  './splash.js',
   './access-control.js',
   './pwa-handler.js',
   './app.webmanifest',
-  './icons-192.png',
-  './icons-512.png',
+  './icon-192.png',
+  './icon-512.png',
   './platforms/marrow/marrow-subjects.html',
   './platforms/dams/dams-subjects.html',
   './platforms/prepladder/prepladder-subjects.html',
@@ -104,44 +101,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // For root requests, serve the splash screen first
-  if (event.request.mode === 'navigate' && 
-      (url.pathname === '/' || url.pathname === '/index.html')) {
-    event.respondWith(
-      caches.match('./splash-screen.html')
-        .then((response) => {
-          return response || fetch('./splash-screen.html');
-        })
-    );
-    return;
-  }
-
-  // For splash screen requests, serve splash screen
-  if (event.request.mode === 'navigate' && url.pathname === '/splash-screen.html') {
-    event.respondWith(
-      caches.match('./splash-screen.html')
-        .then((response) => {
-          return response || fetch('./splash-screen.html');
-        })
-    );
-    return;
-  }
-
-  // For app.html requests, serve the main app
-  if (event.request.mode === 'navigate' && url.pathname === '/app.html') {
-    event.respondWith(
-      caches.match('./app.html')
-        .then((response) => {
-          return response || fetch(event.request);
-        })
-    );
-    return;
-  }
-
-  // For all other requests, serve from cache first
+  // For PWA users, serve from cache first
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
+        // Return cached version or fetch from network
         return response || fetch(event.request);
       })
   );
