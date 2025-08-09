@@ -1,5 +1,4 @@
-
-const CACHE_NAME = 'nextpulse-v1';
+const CACHE_NAME = 'lastpulse-v3';
 const urlsToCache = [
   './',
   './index.html',
@@ -7,6 +6,8 @@ const urlsToCache = [
   './platforms.html',
   './search.html',
   './styles.css',
+  './home.css',
+  './splash.css',
   './script.js',
   './access-control.js',
   './pwa-handler.js',
@@ -101,11 +102,22 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // For PWA users, serve from cache first
+  // For root requests, serve the app with splash screen
+  if (event.request.mode === 'navigate' && 
+      (url.pathname === '/' || url.pathname === '/index.html' || url.pathname === '/app.html')) {
+    event.respondWith(
+      caches.match('./app.html')
+        .then((response) => {
+          return response || fetch(event.request);
+        })
+    );
+    return;
+  }
+
+  // For all other requests, serve from cache first
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Return cached version or fetch from network
         return response || fetch(event.request);
       })
   );
