@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'nextpulse-v2';
+const CACHE_NAME = 'nextpulse-v3';
 const urlsToCache = [
   './',
   './index.html',
