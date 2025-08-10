@@ -200,9 +200,24 @@
   }
 &lt;/style&gt;
 &lt;style&gt;
+      /* Add this to your CSS */
+      .overflow-x-auto table {
+          min-width: 100%;
+          border-collapse: collapse;
+      }
+      
+      .overflow-x-auto th, 
+      .overflow-x-auto td {
+          padding: 8px 12px;
+          border: 1px solid #ddd;
+          white-space: nowrap;
+      }
+      
+      .overflow-x-auto th {
+          background-color: #f8f8f8;
+          font-weight: bold;
+      }
         /* Custom styles for enhanced aesthetics and responsiveness */
-        &lt;style&gt;
-    /* Custom styles for enhanced aesthetics and responsiveness */
     .option-btn {
         transition: all 0.3s ease;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -10775,6 +10790,7 @@
 
 </body>
 </html>
+
 
 
 
