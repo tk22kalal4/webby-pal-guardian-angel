@@ -9,20 +9,20 @@
   <style>
   body {
     font-family: Arial, sans-serif;
-    padding: 0; /* Remove top gap */
-    margin: 0;   /* Also ensure browser default margin is reset */
+    padding: 0;
+    margin: 0;
   }
 
   button {
     margin: 5px;
     padding: 10px 15px;
     background: #ffffff;
-    border: 1px solid #2d3748; /* dark gray border */
+    border: 1px solid #2d3748;
     border-radius: 4px;
     cursor: pointer;
-    color: #000000; /* black text */
+    color: #000000;
     position: relative;
-    top: 5px; /* Push button slightly down */
+    top: 5px;
   }
 
   button:hover {
@@ -40,8 +40,8 @@
   }
 
   .dropdown-toggle {
-    background: #ffffff;
-    color: #000000;
+    background: #2c5281; /* Theme color */
+    color: white; /* White text for better contrast */
     border: 1px solid #2d3748;
   }
 
@@ -71,23 +71,60 @@
   }
 
   .dropdown-menu button:hover {
-    background: #4a6f9b; /* light gray hover */
+    background: #4a6f9b;
     color: #000000;
   }
-  /* This will make all images responsive with a maximum width */
+
   img {
-    max-width: 100%;  /* Never wider than its container */
-    max-height: 400px; /* Set maximum height you prefer */
-    width: auto;      /* Maintain aspect ratio */
-    height: auto;     /* Maintain aspect ratio */
-    display: block;   /* Remove extra space below image */
-    margin: 10px auto; /* Center the image */
+    max-width: 100%;
+    max-height: 400px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 10px auto;
   }
+
   body > section:last-child {
     margin-bottom: 0 !important;
   }
-</style>
 
+  /* Back button styling */
+  .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #2c5281; /* Theme color */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1001;
+    font-size: 20px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .back-button {
+      top: 10px;
+      left: 10px;
+    }
+    
+    .dropdown-wrapper {
+      top: 10px;
+      right: 10px;
+    }
+    
+    .dropdown-toggle {
+      padding: 8px 12px;
+    }
+  }
+</style>
 <script>
   function showTest(id) {
     document.querySelectorAll('.iframe-container').forEach(div => div.style.display = 'none');
@@ -111,7 +148,7 @@
 </script>
 
 
-<button onclick="history.back()" style="position: absolute; top: 20px; left: 20px; background: transparent; color: white; border: none; padding: 10px; cursor: pointer; z-index: 1001; font-size: 20px;">
+<button onclick="history.back()" class="back-button">
   <i class="fas fa-arrow-left"></i>
 </button>
   
@@ -10696,4 +10733,5 @@
 
 </body>
 </html>
+
 
