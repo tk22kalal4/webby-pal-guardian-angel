@@ -46,11 +46,19 @@
   }
 
   .iframe-container {
-    margin-top: 20px;
-  }
-  .iframe-container iframe {
-    display: block;
-  }
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
   /* Dropdown styling */
   .dropdown-wrapper {
@@ -1242,6 +1250,14 @@
             }
         }
 
+        function resizeIframe() {
+            const iframe = document.querySelector('.iframe-container iframe');
+            iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+        }
+        
+        window.addEventListener('resize', resizeIframe);
+        document.querySelector('.iframe-container iframe').onload = resizeIframe;
+
         // Load theme preference
         function loadTheme() {
             try {
@@ -1272,7 +1288,7 @@
         });
     &lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt;" frameborder="0" width="100%" height="2000px"></iframe>
+&lt;/html&gt;" frameborder="0" width="100%"></iframe>
 </div>
 
 <div id="test2" class="iframe-container" style="display:none;">
@@ -10790,6 +10806,7 @@
 
 </body>
 </html>
+
 
 
 
