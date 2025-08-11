@@ -84,14 +84,15 @@
     function goBack() {
       const urlParams = new URLSearchParams(window.location.search);
       const fromBookmarks = urlParams.get('fromBookmarks');
+      const bookmarkMode = urlParams.get('bookmarkMode');
+      const platform = urlParams.get('platform');
+      const subject = urlParams.get('subject');
       
-      if (fromBookmarks === 'true') {
-        // Go back to bookmarks page
-        window.location.href = 'bookmarks.html';
+      if (fromBookmarks === 'true' || bookmarkMode === 'true') {
+        // Go back to bookmark questions page for this platform/subject
+        window.location.href = `bookmark-questions.html?platform=${platform}&subject=${subject}`;
       } else {
         // Go back to chapters page
-        const platform = urlParams.get('platform');
-        const subject = urlParams.get('subject');
         window.location.href = `chapters.html?platform=${platform}&subject=${subject}`;
       }
     }
@@ -347,8 +348,49 @@
     // Check if this is a bookmarked question review
     function checkBookmarkMode() {
       const urlParams = new URLSearchParams(window.location.search);
-      const fromBookmarks = urlParams.get('fromBookmarks');
+      const bookmarkMode = urlParams.get('bookmarkMode');
+      const reviewIndex = urlParams.get('review');
+      const platform = urlParams.get('platform');
+      const subject = urlParams.get('subject');
       
+      if (bookmarkMode === 'true' && reviewIndex !== null && platform && subject) {
+        // Load bookmarked questions from localStorage
+        const saved = localStorage.getItem('quizBookmarks');
+        const allBookmarks = saved ? JSON.parse(saved) : [];
+        
+        // Filter questions for this platform/subject
+        const groupQuestions = allBookmarks.filter(bookmark => 
+          bookmark.platform === platform && bookmark.subject === subject
+        );
+        
+        if (groupQuestions.length === 0) {
+          showError('No bookmarked questions found for this group.');
+          return true;
+        }
+        
+        const questionIndex = parseInt(reviewIndex);
+        if (questionIndex < 0 || questionIndex >= groupQuestions.length) {
+          showError('Invalid question index.');
+          return true;
+        }
+        
+        // Set up the quiz with bookmarked questions
+        currentQuiz = groupQuestions;
+        currentQuestionIndex = questionIndex;
+        userAnswers = new Array(currentQuiz.length).fill(null);
+        score = 0;
+        
+        // Update page title for bookmark review
+        document.getElementById('pageTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} - Bookmark Review`;
+        document.getElementById('quizInfo').textContent = `${platform.charAt(0).toUpperCase() + platform.slice(1)} - ${subject.charAt(0).toUpperCase() + subject.slice(1)}`;
+        
+        // Load the bookmarked question
+        loadQuestion();
+        return true;
+      }
+      
+      // Check for modular system
+      const fromBookmarks = urlParams.get('fromBookmarks');
       if (fromBookmarks === 'true' && QuizState && QuizState.questions.length > 0) {
         // Convert QuizState data to local variables for compatibility
         currentQuiz = QuizState.questions;
@@ -366,6 +408,7 @@
         loadQuestion();
         return true;
       }
+      
       return false;
     }
 
