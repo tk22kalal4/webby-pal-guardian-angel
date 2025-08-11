@@ -162,7 +162,7 @@ header .header-content {
   line-height: 1.6;
   color: #374151;
   margin-bottom: 1.25rem;
-  padding: 2.5rem 3rem 0 0; /* Top padding for progress, right padding for bookmark */
+  padding: 2.5rem 2.5rem 0 0; /* Top padding for progress, right padding for bookmark */
   font-weight: 500;
 }
 
@@ -359,7 +359,7 @@ header .header-content {
 
   .quiz-container {
     padding: 0.75rem;
-    max-width: 100%;
+    max-width: 95%;
   }
 
   header .header-content {
@@ -419,7 +419,7 @@ header .header-content {
   }
 
   .question-text {
-    padding: 2rem 2.5rem 0 0;
+    padding: 2rem 2rem 0 0;
     font-size: 1rem;
     line-height: 1.5;
   }
@@ -447,7 +447,7 @@ header .header-content {
 @media (min-width: 769px) and (max-width: 1024px) {
   .quiz-container {
     padding: 1.5rem;
-    max-width: 90%;
+    max-width: 95%;
   }
 
   .question-container {
