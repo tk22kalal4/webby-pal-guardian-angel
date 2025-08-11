@@ -45,22 +45,27 @@
     transform: translateY(-1px);
   }
 
-  .iframe-container {
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        padding-bottom: 58%; /* Slightly more than 16:9 for extra space */
-        margin-bottom: 20px; /* Extra space below */
-    }
-    
-    .iframe-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
+  body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .iframe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
     
     /* Mobile optimization */
     
@@ -10810,6 +10815,7 @@
 
 </body>
 </html>
+
 
 
 
