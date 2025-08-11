@@ -1250,14 +1250,6 @@
             }
         }
 
-        function resizeIframe() {
-            const iframe = document.querySelector('.iframe-container iframe');
-            iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
-        }
-        
-        window.addEventListener('resize', resizeIframe);
-        document.querySelector('.iframe-container iframe').onload = resizeIframe;
-
         // Load theme preference
         function loadTheme() {
             try {
@@ -10806,6 +10798,7 @@
 
 </body>
 </html>
+
 
 
 
