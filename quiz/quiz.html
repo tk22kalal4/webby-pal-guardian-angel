@@ -83,9 +83,17 @@
 
     function goBack() {
       const urlParams = new URLSearchParams(window.location.search);
-      const platform = urlParams.get('platform');
-      const subject = urlParams.get('subject');
-      window.location.href = `chapters.html?platform=${platform}&subject=${subject}`;
+      const fromBookmarks = urlParams.get('fromBookmarks');
+      
+      if (fromBookmarks === 'true') {
+        // Go back to bookmarks page
+        window.location.href = 'bookmarks.html';
+      } else {
+        // Go back to chapters page
+        const platform = urlParams.get('platform');
+        const subject = urlParams.get('subject');
+        window.location.href = `chapters.html?platform=${platform}&subject=${subject}`;
+      }
     }
 
     async function loadQuiz() {
@@ -342,10 +350,20 @@
       const fromBookmarks = urlParams.get('fromBookmarks');
       
       if (fromBookmarks === 'true' && QuizState && QuizState.questions.length > 0) {
-        // Use the modular quiz system for bookmark reviews
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('quiz-container').style.display = 'block';
-        QuizManager.loadQuestion();
+        // Convert QuizState data to local variables for compatibility
+        currentQuiz = QuizState.questions;
+        currentQuestionIndex = QuizState.currentQuestionIndex;
+        userAnswers = QuizState.userAnswers.length > 0 ? QuizState.userAnswers : new Array(currentQuiz.length).fill(null);
+        score = QuizState.score;
+        
+        // Update page title for bookmark review
+        const platform = QuizState.selectedPlatform;
+        const subject = QuizState.selectedSubject;
+        document.getElementById('pageTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} - Bookmark Review`;
+        document.getElementById('quizInfo').textContent = `${platform.charAt(0).toUpperCase() + platform.slice(1)} - ${subject.charAt(0).toUpperCase() + subject.slice(1)}`;
+        
+        // Load the bookmarked question
+        loadQuestion();
         return true;
       }
       return false;
