@@ -357,17 +357,46 @@ header .header-content {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .qbank-main-container, .selection-container, .bookmarks-container, .questions-container {
-    padding: 1rem;
+  /* Reduce main container padding */
+  .qbank-main-container, .selection-container, 
+  .bookmarks-container, .questions-container {
+    padding: 0.5rem; /* Reduced from 1rem */
   }
 
+  /* Expand quiz container to full width */
   .quiz-container {
-    padding: 0.5rem;
-    max-width: 99%;
+    padding: 0.25rem; /* Reduced from 0.5rem */
+    max-width: 100%;  /* Full width instead of 99% */
   }
 
+  /* Question container adjustments */
+  .question-container {
+    padding: 0.75rem; /* Reduced from 1rem */
+    border-radius: 8px;
+    max-width: 100%;  /* Remove max-width restriction */
+    margin: 0 0 1rem; /* Remove auto margins */
+  }
+
+  /* Header padding reduction */
   header .header-content {
-    padding-left: 3rem;
+    padding-left: 2.5rem; /* Reduced from 3rem */
+  }
+
+  /* Progress indicator adjustment */
+  .question-container .quiz-progress {
+    top: 0.25rem; /* Reduced from 0.5rem */
+    left: 0.25rem; /* Reduced from 0.5rem */
+  }
+
+  /* Question text padding optimization */
+  .question-text {
+    padding: 1.75rem 1.25rem 0 0; /* Reduced top/right padding */
+    font-size: 1rem;
+  }
+
+  /* Explanation container padding */
+  .explanation-container {
+    padding: 1rem; /* Reduced from 1rem */
   }
 
   .back-button {
@@ -391,25 +420,7 @@ header .header-content {
   .quiz-actions {
     justify-content: center;
   }
-
-  .question-container {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-  }
-
-  .explanation-container {
-    padding: 1rem;
-    border-radius: 8px;
-  }
-
-  .question-container .quiz-progress {
-    top: 0.5rem;
-    left: 0.5rem;
-    padding: 0.3rem 0.5rem;
-    font-size: 0.75rem;
-  }
-
+ 
   .question-container .bookmark-question-btn {
     top: 0.5rem;
     right: 0.5rem;
@@ -420,12 +431,6 @@ header .header-content {
 
   .question-container .bookmark-question-btn i {
     font-size: 0.9rem;
-  }
-
-  .question-text {
-    padding: 2rem 2rem 0 0;
-    font-size: 1rem;
-    line-height: 1.5;
   }
 
   .option-btn {
@@ -450,12 +455,12 @@ header .header-content {
 /* Tablet specific adjustments */
 @media (min-width: 769px) and (max-width: 1024px) {
   .quiz-container {
+    max-width: 100%; /* Full width instead of 99% */
     padding: 0.5rem;
-    max-width: 99%;
   }
-
+  
   .question-container {
-    padding: 1.25rem;
+    max-width: 100%; /* Remove max-width restriction */
   }
 
   .question-text {
@@ -468,4 +473,53 @@ header .header-content {
     gap: 0.65rem;
     font-size: 0.97rem;
   }
+  /* Mobile View Adjustments */
+@media (max-width: 768px) {
+  /* Reduce main container padding */
+  .qbank-main-container, .selection-container, 
+  .bookmarks-container, .questions-container {
+    padding: 0.5rem; /* Reduced from 1rem */
+  }
+
+  /* Expand quiz container to full width */
+  .quiz-container {
+    padding: 0.25rem; /* Reduced from 0.5rem */
+    max-width: 100%;  /* Full width instead of 99% */
+  }
+
+  /* Question container adjustments */
+  .question-container {
+    padding: 0.75rem; /* Reduced from 1rem */
+    border-radius: 8px;
+    max-width: 100%;  /* Remove max-width restriction */
+    margin: 0 0 1rem; /* Remove auto margins */
+  }
+
+  /* Header padding reduction */
+  header .header-content {
+    padding-left: 2.5rem; /* Reduced from 3rem */
+  }
+
+  /* Progress indicator adjustment */
+  .question-container .quiz-progress {
+    top: 0.25rem; /* Reduced from 0.5rem */
+    left: 0.25rem; /* Reduced from 0.5rem */
+  }
+
+  /* Question text padding optimization */
+  .question-text {
+    padding: 1.75rem 1.25rem 0 0; /* Reduced top/right padding */
+    font-size: 1rem;
+  }
+
+  /* Explanation container padding */
+  .explanation-container {
+    padding: 1rem; /* Reduced from 1rem */
+  }
+}
+
+/* Tablet View Adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  
+}
 }
