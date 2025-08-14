@@ -123,7 +123,56 @@
 
     async function loadQuestionsFromJSON(platform, subject, chapter) {
       try {
-        const response = await fetch(`${platform}/${subject}/${chapter}`);
+        // Define subject mappings for different platforms (same as in chapters.html)
+        const subjectMappings = {
+          'prepladder': {
+            'anatomy': 'anatomy',
+            'physiology': 'physiology', 
+            'biochemistry': 'biochemistry',
+            'pathology': 'pathology',
+            'microbiology': 'microbiology',
+            'pharmacology': 'pharmacology',
+            'forensic medicine': 'fmt',
+            'ent': 'ent',
+            'ophthalmology': 'ophthalmology',
+            'psm': 'psm',
+            'general medicine': 'medicine',
+            'general surgery': 'surgery',
+            'obg': 'obgy',
+            'pediatrics': 'pediatrics',
+            'orthopedics': 'orthopedics',
+            'radio-diagnosis': 'radiology',
+            'anesthesia': 'anaesthesia',
+            'psychiatry': 'psychiatry'
+          },
+          'marrow': {
+            'anatomy': 'anatomy',
+            'physiology': 'physiology',
+            'biochemistry': 'biochemistry',
+            'pathology': 'pathology',
+            'microbiology': 'microbiology',
+            'pharmacology': 'pharmacology',
+            'forensic medicine': 'fmt',
+            'ent': 'ent',
+            'ophthalmology': 'ophthalmology',
+            'medicine': 'medicine',
+            'surgery': 'surgery',
+            'obstetrics': 'obgy',
+            'gynecology': 'obgy',
+            'pediatrics': 'pediatrics',
+            'orthopedics': 'orthopaedics',
+            'radiology': 'radiology',
+            'anesthesia': 'anaesthesia',
+            'psychiatry': 'psychiatry',
+            'dermatology': 'dermatology'
+          }
+        };
+
+        // Get the correct subject folder name for the platform
+        const platformSubjects = subjectMappings[platform.toLowerCase()];
+        const subjectFolder = platformSubjects ? platformSubjects[subject.toLowerCase()] : subject.toLowerCase();
+        
+        const response = await fetch(`${platform}/${subjectFolder}/${chapter}`);
         
         if (!response.ok) {
           throw new Error(`Failed to load questions: ${response.status}`);
