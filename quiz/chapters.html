@@ -89,26 +89,64 @@
 
       try {
         // Try to find JSON files in the platform/subject directory
-        const knownFiles = [
-          'PediAnatomy M8 Qbank_Pages_4-19.json',
-          // Add more known file patterns here as you upload them
+        const commonPatterns = [
+          '-Previous_Year_Questions.json',
+          '_Previous_Year_Questions.json',
+          '-Questions.json',
+          '_Questions.json'
         ];
+        
+        // Subject-specific chapters that are likely to exist
+        const subjectChapters = getSubjectChapters(subject);
         
         const availableChapters = [];
         
-        for (const filename of knownFiles) {
-          try {
-            const response = await fetch(`${platform}/${subject}/${filename}`);
-            if (response.ok) {
-              const data = await response.json();
-              availableChapters.push({
-                name: data.chapter || filename.replace('.json', ''),
-                filename: filename,
-                questionCount: data.questions ? data.questions.length : 0
-              });
+        // First try specific chapter files
+        for (const chapter of subjectChapters) {
+          for (const pattern of commonPatterns) {
+            const filename = chapter + pattern;
+            try {
+              const response = await fetch(`${platform}/${subject}/${filename}`);
+              if (response.ok) {
+                const data = await response.json();
+                if (data.questions && data.questions.length > 0) {
+                  availableChapters.push({
+                    name: data.chapter || chapter.replace(/_/g, ' '),
+                    filename: filename,
+                    questionCount: data.questions.length
+                  });
+                  break; // Found this chapter, move to next
+                }
+              }
+            } catch (error) {
+              // Continue to next pattern
             }
-          } catch (error) {
-            console.log(`File ${filename} not found or invalid`);
+          }
+        }
+        
+        // If no specific chapters found, try generic files
+        if (availableChapters.length === 0) {
+          const genericFiles = [
+            `${subject}-Previous_Year_Questions.json`,
+            `${subject.charAt(0).toUpperCase() + subject.slice(1)}-Previous_Year_Questions.json`
+          ];
+          
+          for (const filename of genericFiles) {
+            try {
+              const response = await fetch(`${platform}/${subject}/${filename}`);
+              if (response.ok) {
+                const data = await response.json();
+                if (data.questions && data.questions.length > 0) {
+                  availableChapters.push({
+                    name: data.chapter || filename.replace('.json', ''),
+                    filename: filename,
+                    questionCount: data.questions.length
+                  });
+                }
+              }
+            } catch (error) {
+              // Continue
+            }
           }
         }
 
@@ -159,6 +197,33 @@
       const subject = urlParams.get('subject');
       
       window.location.href = `quiz.html?platform=${platform}&subject=${subject}&chapter=${filename}`;
+    }
+
+    function getSubjectChapters(subject) {
+      // Define common chapters for each subject
+      const subjectChapters = {
+        anatomy: ['Introduction', 'Upper_Limb', 'Lower_Limb', 'Head_and_Neck', 'Thorax', 'Abdomen', 'Pelvis', 'Back', 'Neuroanatomy', 'Miscellaneous'],
+        physiology: ['General_Physiology', 'Blood', 'CVS', 'Respiratory', 'Renal', 'GIT', 'Endocrine', 'Reproductive', 'Nervous_System', 'Special_Senses'],
+        pathology: ['General_Pathology', 'Systemic_Pathology', 'Hematology', 'Clinical_Pathology'],
+        pharmacology: ['General_Pharmacology', 'ANS', 'CVS', 'CNS', 'Respiratory', 'GIT', 'Endocrine', 'Chemotherapy'],
+        microbiology: ['General_Microbiology', 'Bacteriology', 'Virology', 'Mycology', 'Parasitology', 'Immunology'],
+        biochemistry: ['Proteins', 'Carbohydrates', 'Lipids', 'Enzymes', 'Vitamins', 'Minerals', 'Metabolism', 'Molecular_Biology', 'Clinical_Biochemistry', 'Oxidative_Phosphorylation'],
+        anaesthesia: ['General_Anaesthesia', 'Regional_Anaesthesia', 'Pharmacology', 'Monitoring', 'Emergency_Medicine', 'Pain_Management', 'Central_Neuraxial_Blockade', 'Perioperative_Fluids', 'Anaesthesia_Circuits', 'Demonstration'],
+        dermatology: ['Basic_Dermatology', 'Inflammatory_Disorders', 'Infections', 'Tumors', 'Hair_Disorders', 'Nail_Disorders', 'Blistering_Disorders'],
+        ent: ['Ear', 'Nose', 'Throat', 'Head_and_Neck'],
+        fmt: ['Forensic_Medicine', 'Toxicology'],
+        medicine: ['Cardiology', 'Pulmonology', 'Gastroenterology', 'Nephrology', 'Endocrinology', 'Neurology', 'Hematology', 'Infectious_Diseases'],
+        obgy: ['Obstetrics', 'Gynecology', 'Reproductive_Endocrinology'],
+        ophthalmology: ['Basic_Ophthalmology', 'Anterior_Segment', 'Posterior_Segment', 'Glaucoma', 'Pediatric_Ophthalmology'],
+        orthopedics: ['Trauma', 'Spine', 'Upper_Limb', 'Lower_Limb', 'Pediatric_Orthopedics', 'Sports_Medicine'],
+        pediatrics: ['Neonatology', 'Growth_and_Development', 'Nutrition', 'Infections', 'Genetic_Disorders'],
+        psm: ['Epidemiology', 'Biostatistics', 'Health_Planning', 'Environmental_Health'],
+        psychiatry: ['General_Psychiatry', 'Child_Psychiatry', 'Substance_Abuse', 'Personality_Disorders'],
+        radiology: ['Plain_Radiography', 'CT', 'MRI', 'Ultrasound', 'Nuclear_Medicine'],
+        surgery: ['General_Surgery', 'GI_Surgery', 'Hepatobiliary_Surgery', 'Vascular_Surgery', 'Trauma_Surgery']
+      };
+      
+      return subjectChapters[subject] || ['General', 'Basic', 'Advanced', 'Clinical'];
     }
 
     window.addEventListener('load', loadChapters);
