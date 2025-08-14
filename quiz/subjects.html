@@ -64,51 +64,14 @@
       document.getElementById('platformName').textContent = `${platform.charAt(0).toUpperCase() + platform.slice(1)} Subjects`;
       document.getElementById('subjectTitle').textContent = `${platform.charAt(0).toUpperCase() + platform.slice(1)} Subjects`;
 
-      const platformSubjects = {
-        'prepladder': [
-          { name: 'Anatomy', icon: 'fas fa-skeleton', available: true },
-          { name: 'Physiology', icon: 'fas fa-heartbeat', available: true },
-          { name: 'Biochemistry', icon: 'fas fa-flask', available: true },
-          { name: 'Pathology', icon: 'fas fa-microscope', available: false },
-          { name: 'Microbiology', icon: 'fas fa-bacteria', available: true },
-          { name: 'Pharmacology', icon: 'fas fa-pills', available: true },
-          { name: 'Forensic Medicine', icon: 'fas fa-search', available: true },
-          { name: 'ENT', icon: 'fas fa-ear', available: true },
-          { name: 'Ophthalmology', icon: 'fas fa-eye', available: true },
-          { name: 'PSM', icon: 'fas fa-users', available: false },
-          { name: 'General Medicine', icon: 'fas fa-stethoscope', available: false },
-          { name: 'General Surgery', icon: 'fas fa-procedures', available: false },
-          { name: 'OBG', icon: 'fas fa-baby', available: true },
-          { name: 'Pediatrics', icon: 'fas fa-child', available: true },
-          { name: 'Orthopedics', icon: 'fas fa-bone', available: true },
-          { name: 'Radio-diagnosis', icon: 'fas fa-x-ray', available: true },
-          { name: 'Anesthesia', icon: 'fas fa-syringe', available: true },
-          { name: 'Psychiatry', icon: 'fas fa-brain', available: false }
-        ],
-        'marrow': [
-          { name: 'Anatomy', icon: 'fas fa-skeleton', available: true },
-          { name: 'Physiology', icon: 'fas fa-heartbeat', available: true },
-          { name: 'Biochemistry', icon: 'fas fa-flask', available: true },
-          { name: 'Pathology', icon: 'fas fa-microscope', available: true },
-          { name: 'Microbiology', icon: 'fas fa-bacteria', available: true },
-          { name: 'Pharmacology', icon: 'fas fa-pills', available: true },
-          { name: 'Forensic Medicine', icon: 'fas fa-search', available: true },
-          { name: 'ENT', icon: 'fas fa-ear', available: true },
-          { name: 'Ophthalmology', icon: 'fas fa-eye', available: true },
-          { name: 'Medicine', icon: 'fas fa-stethoscope', available: true },
-          { name: 'Surgery', icon: 'fas fa-procedures', available: true },
-          { name: 'Obstetrics', icon: 'fas fa-baby', available: true },
-          { name: 'Gynecology', icon: 'fas fa-female', available: true },
-          { name: 'Pediatrics', icon: 'fas fa-child', available: true },
-          { name: 'Orthopedics', icon: 'fas fa-bone', available: true },
-          { name: 'Radiology', icon: 'fas fa-x-ray', available: true },
-          { name: 'Anesthesia', icon: 'fas fa-syringe', available: true },
-          { name: 'Psychiatry', icon: 'fas fa-brain', available: true },
-          { name: 'Dermatology', icon: 'fas fa-hand-dots', available: true }
-        ]
-      };
-
-      const subjects = platformSubjects[platform] || [];
+      const subjects = [
+        { name: 'Anatomy', icon: 'fas fa-user', available: true },
+        { name: 'Physiology', icon: 'fas fa-heartbeat', available: true },
+        { name: 'Pathology', icon: 'fas fa-microscope', available: false },
+        { name: 'Pharmacology', icon: 'fas fa-pills', available: false },
+        { name: 'Microbiology', icon: 'fas fa-virus', available: false },
+        { name: 'Biochemistry', icon: 'fas fa-atom', available: false }
+      ];
 
       const subjectsGrid = document.getElementById('subjectsGrid');
       subjectsGrid.innerHTML = subjects.map(subject => `
