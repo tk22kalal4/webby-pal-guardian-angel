@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +12,7 @@
   
   <header>
     <div class="header-content">
-      <button onclick="window.location.href='app.html'" class="back-button">
+      <button onclick="window.location.href='../app.html'" class="back-button">
         <i class="fas fa-arrow-left"></i>
       </button>
       <h1 id="pageTitle">Select Platform</h1>
@@ -32,7 +31,7 @@
       </div>
 
       <div class="platforms-grid">
-        <div class="platform-card" onclick="window.location.href='marrow/chapters.html'">
+        <div class="platform-card" onclick="selectPlatform('marrow')">
           <div class="platform-icon">
             <i class="fas fa-graduation-cap"></i>
           </div>
@@ -65,7 +64,13 @@
   </nav>
 
   <script>
-
+    function selectPlatform(platform) {
+      // Save the selected platform to localStorage
+      localStorage.setItem('selectedPlatform', platform);
+      
+      // Redirect to subjects.html with platform parameter
+      window.location.href = `subjects.html?platform=${platform}`;
+    }
   </script>
 </body>
 </html>
