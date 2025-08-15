@@ -20,7 +20,7 @@
       <p class="header-subtitle" id="chapterInfo">Choose your chapter</p>
       <div class="search-bar">
         <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search chapters..." id="searchInput">
+        <input type="text" placeholder="Search chapters..." id="searchInput" oninput="filterChapters()">
       </div>
     </div>
   </header>
@@ -82,20 +82,38 @@
       document.getElementById('chapterTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} Chapters`;
 
       try {
-        // Get predefined chapters for this subject
-        const subjectChapters = getSubjectChapters(subject);
+        // Fetch all JSON files in the subject directory
+        const response = await fetch(`${platform}/${subject}/`);
+        const html = await response.text();
+        
+        // Parse HTML to extract JSON files
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const links = Array.from(doc.querySelectorAll('a[href$=".json"]'));
+        const jsonFiles = links.map(link => link.href.split('/').pop());
+        
+        if (jsonFiles.length === 0) {
+          showNoChapters();
+          return;
+        }
+
         const availableChapters = [];
         
-        // For Marrow platform, use direct chapter names
-        for (const chapter of subjectChapters) {
-          const filename = `${chapter}.json`;
+        // Process each JSON file
+        for (const filename of jsonFiles) {
           try {
             const fileResponse = await fetch(`${platform}/${subject}/${filename}`);
             if (fileResponse.ok) {
               const data = await fileResponse.json();
               if (data.questions && data.questions.length > 0) {
+                // Format chapter name: remove extension, replace underscores with spaces
+                const chapterName = filename
+                  .replace('.json', '')
+                  .replace(/_/g, ' ')
+                  .replace(/\b\w/g, l => l.toUpperCase());
+                
                 availableChapters.push({
-                  name: data.chapter || chapter.replace(/_/g, ' '),
+                  name: data.chapter || chapterName,
                   filename: filename,
                   questionCount: data.questions.length
                 });
@@ -106,6 +124,9 @@
           }
         }
 
+        // Sort chapters alphabetically
+        availableChapters.sort((a, b) => a.name.localeCompare(b.name));
+        
         displayChapters(availableChapters);
       } catch (error) {
         console.error('Error loading chapters:', error);
@@ -155,38 +176,18 @@
       window.location.href = `quiz.html?platform=${platform}&subject=${subject}&chapter=${filename}`;
     }
 
-    function getSubjectChapters(subject) {
-      // Return specific chapters for each subject
-      const subjectChapters = {
-        anaesthesia: ['ACLS'],
-        anatomy: ['Abdominal_cavity_and_Peritoneum'],
-        biochemistry: [], // Add actual chapter filenames here
-        dermatology: [], // Add actual chapter filenames here
-        ent: [], // Add actual chapter filenames here
-        fmt: [], // Add actual chapter filenames here
-        medicine: [], // Add actual chapter filenames here
-        microbiology: [], // Add actual chapter filenames here
-        obgy: [], // Add actual chapter filenames here
-        ophthalmology: [], // Add actual chapter filenames here
-        orthopedics: [], // Add actual chapter filenames here
-        pathology: [], // Add actual chapter filenames here
-        pediatrics: [], // Add actual chapter filenames here
-        pharmacology: [], // Add actual chapter filenames here
-        physiology: [], // Add actual chapter filenames here
-        psm: [], // Add actual chapter filenames here
-        psychiatry: [], // Add actual chapter filenames here
-        radiology: [], // Add actual chapter filenames here
-        surgery: [] // Add actual chapter filenames here
-
-        // Example for Anatomy (replace with actual filenames):
-        // anatomy: [
-        //   'Abdominal_cavity_and_Peritoneum',
-        //   'another_anatomy_chapter'
-        // ]
-      };
+    function filterChapters() {
+      const searchInput = document.getElementById('searchInput').value.toLowerCase();
+      const chapters = document.querySelectorAll('.subject-card');
       
-      // Return chapters for this subject or empty array
-      return subjectChapters[subject] || [];
+      chapters.forEach(chapter => {
+        const chapterName = chapter.querySelector('h3').textContent.toLowerCase();
+        if (chapterName.includes(searchInput)) {
+          chapter.style.display = 'flex';
+        } else {
+          chapter.style.display = 'none';
+        }
+      });
     }
 
     window.addEventListener('load', loadChapters);
