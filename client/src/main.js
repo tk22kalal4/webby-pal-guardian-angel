@@ -34,6 +34,10 @@ class App {
         <i class="fas fa-search"></i>
         <span>Search</span>
       </a>
+      <a href="quiz/index.html" target="_blank">
+        <i class="fas fa-question-circle"></i>
+        <span>Quiz</span>
+      </a>
     `;
 
     document.body.appendChild(nav);

@@ -1,0 +1,40 @@
+{
+  "chapters": [
+    {
+      "id": "intro",
+      "title": "Introduction to Anatomy",
+      "description": "Basic anatomical terms and body systems overview",
+      "icon": "fas fa-user",
+      "questions": 15,
+      "timeLimit": 20,
+      "difficulty": "Easy"
+    },
+    {
+      "id": "skeletal",
+      "title": "Skeletal System",
+      "description": "Bones, joints, and skeletal structure",
+      "icon": "fas fa-bone",
+      "questions": 20,
+      "timeLimit": 25,
+      "difficulty": "Medium"
+    },
+    {
+      "id": "muscular",
+      "title": "Muscular System",
+      "description": "Muscle types, functions, and anatomy",
+      "icon": "fas fa-dumbbell",
+      "questions": 18,
+      "timeLimit": 22,
+      "difficulty": "Medium"
+    },
+    {
+      "id": "cardiovascular",
+      "title": "Cardiovascular System",
+      "description": "Heart, blood vessels, and circulation",
+      "icon": "fas fa-heart",
+      "questions": 25,
+      "timeLimit": 30,
+      "difficulty": "Hard"
+    }
+  ]
+}

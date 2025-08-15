@@ -1,0 +1,40 @@
+{
+  "chapters": [
+    {
+      "id": "cellular",
+      "title": "Cell Physiology",
+      "description": "Basic cellular processes and functions",
+      "icon": "fas fa-microscope",
+      "questions": 12,
+      "timeLimit": 18,
+      "difficulty": "Easy"
+    },
+    {
+      "id": "respiratory",
+      "title": "Respiratory Physiology",
+      "description": "Breathing mechanisms and gas exchange",
+      "icon": "fas fa-lungs",
+      "questions": 22,
+      "timeLimit": 28,
+      "difficulty": "Medium"
+    },
+    {
+      "id": "renal",
+      "title": "Renal Physiology",
+      "description": "Kidney function and fluid balance",
+      "icon": "fas fa-tint",
+      "questions": 20,
+      "timeLimit": 25,
+      "difficulty": "Medium"
+    },
+    {
+      "id": "nervous",
+      "title": "Nervous System",
+      "description": "Neural transmission and brain functions",
+      "icon": "fas fa-brain",
+      "questions": 30,
+      "timeLimit": 35,
+      "difficulty": "Hard"
+    }
+  ]
+}

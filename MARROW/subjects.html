@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marrow Quiz - Subject Chapters | LASTPULSE</title>
+    <meta name="description" content="Access Marrow quiz chapters for medical subjects. Practice with comprehensive questions from expert faculty.">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google AdSense Auto Ads Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+            crossorigin="anonymous"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #e53e3e;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 1;
+        }
+
+        .breadcrumb span {
+            color: white;
+            margin: 0 1rem;
+        }
+
+        .ad-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .chapter-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 5px solid #e53e3e;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #e53e3e, #f56565);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .chapter-card h3 {
+            color: #2d3748;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-card p {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .chapter-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .start-chapter-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #e53e3e, #f56565);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-chapter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(229, 62, 62, 0.4);
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            padding: 3rem;
+        }
+
+        .error {
+            background: rgba(229, 62, 62, 0.1);
+            border: 1px solid rgba(229, 62, 62, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            color: #e53e3e;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header {
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .chapters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../quiz/index.html"><i class="fas fa-home"></i> Quiz Home</a>
+            <span>></span>
+            <span id="currentPath">Marrow > Loading...</span>
+        </div>
+
+        <div class="header">
+            <h1><i class="fas fa-stethoscope"></i> Marrow Quiz Chapters</h1>
+            <p id="subjectDescription">Loading subject chapters...</p>
+        </div>
+
+        <!-- AdSense Auto Ad Placement -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="4444555566"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <div id="chaptersContainer" class="chapters-grid">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading chapters...
+            </div>
+        </div>
+
+        <!-- AdSense Auto Ad Placement -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="5555666677"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const subject = urlParams.get('subject');
+        const platform = urlParams.get('platform');
+
+        // Update breadcrumb and header
+        document.getElementById('currentPath').textContent = `Marrow > ${subject ? subject.charAt(0).toUpperCase() + subject.slice(1) : 'Subject'}`;
+        
+        const subjectDescriptions = {
+            anatomy: 'Study the structure of the human body with comprehensive anatomy questions',
+            physiology: 'Understand body functions and processes through physiology challenges'
+        };
+        
+        document.getElementById('subjectDescription').textContent = subjectDescriptions[subject] || 'Quiz chapters for medical subjects';
+
+        // Load chapters for the selected subject
+        async function loadChapters() {
+            if (!subject || !platform) {
+                showError('Invalid subject or platform specified');
+                return;
+            }
+
+            try {
+                // Try to load chapters from JSON file
+                const response = await fetch(`../quiz/marrow/${subject}/chapters.json`);
+                
+                if (!response.ok) {
+                    throw new Error('Chapters not found');
+                }
+                
+                const chaptersData = await response.json();
+                displayChapters(chaptersData.chapters || []);
+                
+            } catch (error) {
+                console.error('Error loading chapters:', error);
+                
+                // Fallback: Display default chapters
+                displayDefaultChapters();
+            }
+        }
+
+        function displayChapters(chapters) {
+            const container = document.getElementById('chaptersContainer');
+            
+            if (chapters.length === 0) {
+                displayDefaultChapters();
+                return;
+            }
+
+            container.innerHTML = chapters.map((chapter, index) => `
+                <div class="chapter-card" onclick="startQuiz('${subject}', '${chapter.id || 'chapter' + (index + 1)}')">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">
+                            <i class="${chapter.icon || 'fas fa-book'}"></i>
+                        </div>
+                        <div>
+                            <h3>${chapter.title}</h3>
+                        </div>
+                    </div>
+                    <p>${chapter.description || 'Test your knowledge on this topic'}</p>
+                    <div class="chapter-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-question-circle"></i>
+                            <span>${chapter.questions || 10} Questions</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-clock"></i>
+                            <span>${chapter.timeLimit || 15} mins</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-star"></i>
+                            <span>${chapter.difficulty || 'Medium'}</span>
+                        </div>
+                    </div>
+                    <button class="start-chapter-btn">
+                        <i class="fas fa-play"></i> Start Quiz
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function displayDefaultChapters() {
+            const container = document.getElementById('chaptersContainer');
+            
+            const defaultChapters = {
+                anatomy: [
+                    { id: 'intro', title: 'Introduction to Anatomy', description: 'Basic anatomical terms and body systems overview', icon: 'fas fa-user', questions: 15, timeLimit: 20, difficulty: 'Easy' },
+                    { id: 'skeletal', title: 'Skeletal System', description: 'Bones, joints, and skeletal structure', icon: 'fas fa-bone', questions: 20, timeLimit: 25, difficulty: 'Medium' },
+                    { id: 'muscular', title: 'Muscular System', description: 'Muscle types, functions, and anatomy', icon: 'fas fa-dumbbell', questions: 18, timeLimit: 22, difficulty: 'Medium' },
+                    { id: 'cardiovascular', title: 'Cardiovascular System', description: 'Heart, blood vessels, and circulation', icon: 'fas fa-heart', questions: 25, timeLimit: 30, difficulty: 'Hard' }
+                ],
+                physiology: [
+                    { id: 'cellular', title: 'Cell Physiology', description: 'Basic cellular processes and functions', icon: 'fas fa-microscope', questions: 12, timeLimit: 18, difficulty: 'Easy' },
+                    { id: 'respiratory', title: 'Respiratory Physiology', description: 'Breathing mechanisms and gas exchange', icon: 'fas fa-lungs', questions: 22, timeLimit: 28, difficulty: 'Medium' },
+                    { id: 'renal', title: 'Renal Physiology', description: 'Kidney function and fluid balance', icon: 'fas fa-tint', questions: 20, timeLimit: 25, difficulty: 'Medium' },
+                    { id: 'nervous', title: 'Nervous System', description: 'Neural transmission and brain functions', icon: 'fas fa-brain', questions: 30, timeLimit: 35, difficulty: 'Hard' }
+                ]
+            };
+
+            const chapters = defaultChapters[subject] || [];
+            
+            if (chapters.length === 0) {
+                showError('No chapters available for this subject');
+                return;
+            }
+
+            displayChapters(chapters);
+        }
+
+        function showError(message) {
+            const container = document.getElementById('chaptersContainer');
+            container.innerHTML = `
+                <div class="error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Error Loading Chapters</h3>
+                    <p>${message}</p>
+                    <button onclick="loadChapters()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #e53e3e; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        <i class="fas fa-redo"></i> Retry
+                    </button>
+                </div>
+            `;
+        }
+
+        function startQuiz(subject, chapterId) {
+            // Redirect to chapter-specific quiz page
+            window.location.href = `chapters.html?subject=${subject}&chapter=${chapterId}&platform=marrow`;
+        }
+
+        // Load chapters when page loads
+        window.addEventListener('load', function() {
+            loadChapters();
+            
+            // Initialize AdSense ads
+            if (window.adsbygoogle) {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }
+        });
+    </script>
+</body>
+</html>

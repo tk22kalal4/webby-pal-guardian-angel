@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LASTPULSE Quiz Mode - Medical Education Platform</title>
+    <meta name="description" content="Test your medical knowledge with interactive quizzes from top platforms like Marrow and PrepLadder. Practice anatomy, physiology and more.">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google AdSense Auto Ads Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+            crossorigin="anonymous"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* AdSense Ad Container */
+        .ad-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .platform-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .platform-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+            border-color: #667eea;
+        }
+
+        .platform-card.marrow {
+            border-left: 5px solid #e53e3e;
+        }
+
+        .platform-card.prepladder {
+            border-left: 5px solid #38a169;
+        }
+
+        .platform-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .marrow .platform-icon {
+            background: #e53e3e;
+        }
+
+        .prepladder .platform-icon {
+            background: #38a169;
+        }
+
+        .platform-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .platform-card p {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .platform-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 0.75rem;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c5282;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #718096;
+            text-transform: uppercase;
+        }
+
+        .start-quiz-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .features {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2d3748;
+            font-size: 2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .feature-item h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item p {
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        /* Subject Selection Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: #2d3748;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #718096;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .close-btn:hover {
+            color: #2d3748;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .subject-card {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .subject-card:hover {
+            border-color: #667eea;
+            background: #ebf4ff;
+            transform: translateY(-2px);
+        }
+
+        .subject-card i {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .subject-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .subject-card p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .platform-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .platform-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AdSense Auto Ad Placement -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="1111222233"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-brain"></i> LASTPULSE Quiz Mode</h1>
+            <p>Challenge Your Medical Knowledge with Interactive Quizzes</p>
+        </div>
+
+        <div class="platform-selector">
+            <div class="platform-card marrow" data-platform="marrow">
+                <div class="platform-icon">
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+                <h2>Marrow Quiz</h2>
+                <p>Test your knowledge with comprehensive medical questions from Marrow's expert faculty. Perfect for NEET PG preparation.</p>
+                
+                <div class="platform-stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Questions</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">15</span>
+                        <span class="stat-label">Subjects</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                </div>
+                
+                <button class="start-quiz-btn">
+                    <i class="fas fa-play"></i> Start Marrow Quiz
+                </button>
+            </div>
+
+            <div class="platform-card prepladder" data-platform="prepladder">
+                <div class="platform-icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <h2>PrepLadder Quiz</h2>
+                <p>Practice with PrepLadder's extensive question bank. Enhance your preparation with targeted medical quizzes.</p>
+                
+                <div class="platform-stats">
+                    <div class="stat">
+                        <span class="stat-number">750+</span>
+                        <span class="stat-label">Questions</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">18</span>
+                        <span class="stat-label">Subjects</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">92%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                </div>
+                
+                <button class="start-quiz-btn">
+                    <i class="fas fa-play"></i> Start PrepLadder Quiz
+                </button>
+            </div>
+        </div>
+
+        <!-- AdSense Auto Ad Placement -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="2222333344"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <div class="features">
+            <h2>Quiz Features</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>Timed Questions</h3>
+                    <p>Practice with realistic time constraints to improve your speed and accuracy</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Progress Tracking</h3>
+                    <p>Monitor your performance and identify areas that need improvement</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Detailed Explanations</h3>
+                    <p>Learn from comprehensive explanations for every question</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Achievements</h3>
+                    <p>Earn badges and achievements as you progress through quizzes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subject Selection Modal -->
+    <div id="subjectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Select Subject</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="subject-grid" id="subjectGrid">
+                <!-- Subjects will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- AdSense Auto Ad Placement -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="3333444455"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+
+    <script>
+        let currentPlatform = '';
+
+        // Platform selection
+        document.querySelectorAll('.platform-card').forEach(card => {
+            card.addEventListener('click', function() {
+                currentPlatform = this.dataset.platform;
+                showSubjectModal(currentPlatform);
+            });
+        });
+
+        function showSubjectModal(platform) {
+            const modal = document.getElementById('subjectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const subjectGrid = document.getElementById('subjectGrid');
+
+            modalTitle.textContent = `${platform.toUpperCase()} - Select Subject`;
+            
+            // Load subjects for the selected platform
+            loadSubjects(platform, subjectGrid);
+            
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('subjectModal').style.display = 'none';
+        }
+
+        function loadSubjects(platform, container) {
+            const subjects = [
+                { id: 'anatomy', name: 'Anatomy', icon: 'fas fa-bone', description: 'Study of body structure' },
+                { id: 'physiology', name: 'Physiology', icon: 'fas fa-heartbeat', description: 'Study of body functions' }
+            ];
+
+            container.innerHTML = subjects.map(subject => `
+                <div class="subject-card" onclick="selectSubject('${platform}', '${subject.id}')">
+                    <i class="${subject.icon}"></i>
+                    <h3>${subject.name}</h3>
+                    <p>${subject.description}</p>
+                </div>
+            `).join('');
+        }
+
+        function selectSubject(platform, subject) {
+            closeModal();
+            // Redirect to platform-specific subject page
+            window.location.href = `../${platform.toUpperCase()}/subjects.html?subject=${subject}&platform=${platform}`;
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('subjectModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Initialize AdSense ads
+        window.addEventListener('load', function() {
+            if (window.adsbygoogle) {
+                (adsbygoogle = window.adsbygoogle || []).push({
+                    google_ad_client: "ca-pub-XXXXXXXXXXXXXXXX",
+                    enable_page_level_ads: true
+                });
+            }
+        });
+
+        // Load AdSense ads
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

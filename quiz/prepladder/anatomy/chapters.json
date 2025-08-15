@@ -1,0 +1,40 @@
+{
+  "chapters": [
+    {
+      "id": "intro",
+      "title": "Basic Anatomy Concepts",
+      "description": "Fundamental anatomical terms and orientation",
+      "icon": "fas fa-compass",
+      "questions": 12,
+      "timeLimit": 18,
+      "difficulty": "Easy"
+    },
+    {
+      "id": "skeletal",
+      "title": "Bone Structure & Function",
+      "description": "Detailed study of skeletal system",
+      "icon": "fas fa-bone",
+      "questions": 22,
+      "timeLimit": 28,
+      "difficulty": "Medium"
+    },
+    {
+      "id": "joints",
+      "title": "Joints & Movement",
+      "description": "Types of joints and body movements",
+      "icon": "fas fa-running",
+      "questions": 18,
+      "timeLimit": 22,
+      "difficulty": "Medium"
+    },
+    {
+      "id": "circulatory",
+      "title": "Circulatory System",
+      "description": "Heart anatomy and blood circulation",
+      "icon": "fas fa-heart",
+      "questions": 25,
+      "timeLimit": 30,
+      "difficulty": "Hard"
+    }
+  ]
+}

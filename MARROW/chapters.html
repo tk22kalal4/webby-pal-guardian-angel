@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marrow Quiz - Chapter Questions | LASTPULSE</title>
+    <meta name="description" content="Take interactive medical quizzes from Marrow. Test your knowledge with expert-designed questions.">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google AdSense Auto Ads Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+            crossorigin="anonymous"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .quiz-header {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .quiz-info h1 {
+            color: #e53e3e;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-info p {
+            color: #718096;
+        }
+
+        .quiz-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e53e3e;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #718096;
+            text-transform: uppercase;
+        }
+
+        .timer {
+            background: linear-gradient(135deg, #e53e3e, #f56565);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .ad-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .question-card.active {
+            display: block;
+        }
+
+        .question-number {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            color: #2d3748;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #ebf4ff;
+        }
+
+        .option.selected {
+            border-color: #e53e3e;
+            background: #fed7d7;
+        }
+
+        .option.correct {
+            border-color: #48bb78;
+            background: #c6f6d5;
+        }
+
+        .option.incorrect {
+            border-color: #e53e3e;
+            background: #fed7d7;
+        }
+
+        .option-letter {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-letter,
+        .option.correct .option-letter {
+            background: #48bb78;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53e3e;
+        }
+
+        .question-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: #5a5fcf;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn {
+            background: #e53e3e;
+        }
+
+        .submit-btn:hover {
+            background: #c53030;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #e53e3e, #f56565);
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .explanation {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation h4 {
+            color: #22543d;
+            margin-bottom: 0.5rem;
+        }
+
+        .explanation p {
+            color: #276749;
+            line-height: 1.6;
+        }
+
+        .results-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .results-card.show {
+            display: block;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #48bb78, #68d391);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 2rem;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .result-stat {
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .result-stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .result-stat-label {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            padding: 3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .quiz-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .quiz-stats {
+                justify-content: center;
+            }
+
+            .question-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Quiz Header -->
+        <div class="quiz-header">
+            <div class="quiz-info">
+                <h1 id="quizTitle">Loading Quiz...</h1>
+                <p id="quizDescription">Preparing questions...</p>
+            </div>
+            <div class="quiz-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="currentQuestion">1</span>
+                    <span class="stat-label">Question</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalQuestions">10</span>
+                    <span class="stat-label">Total</span>
+                </div>
+                <div class="timer" id="timer">15:00</div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 10%"></div>
+        </div>
+
+        <!-- AdSense Auto Ad Placement -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="6666777788"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <!-- Question Cards Container -->
+        <div id="questionsContainer">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading questions...
+            </div>
+        </div>
+
+        <!-- Results Card -->
+        <div id="resultsCard" class="results-card">
+            <div class="score-circle" id="scoreCircle">0%</div>
+            <h2>Quiz Complete!</h2>
+            <p>Here's how you performed:</p>
+            
+            <div class="results-stats">
+                <div class="result-stat">
+                    <div class="result-stat-number" id="correctAnswers">0</div>
+                    <div class="result-stat-label">Correct</div>
+                </div>
+                <div class="result-stat">
+                    <div class="result-stat-number" id="incorrectAnswers">0</div>
+                    <div class="result-stat-label">Incorrect</div>
+                </div>
+                <div class="result-stat">
+                    <div class="result-stat-number" id="timeSpent">0:00</div>
+                    <div class="result-stat-label">Time Spent</div>
+                </div>
+                <div class="result-stat">
+                    <div class="result-stat-number" id="accuracy">0%</div>
+                    <div class="result-stat-label">Accuracy</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="nav-btn" onclick="retakeQuiz()">
+                    <i class="fas fa-redo"></i> Retake Quiz
+                </button>
+                <button class="nav-btn" onclick="goBackToSubjects()">
+                    <i class="fas fa-arrow-left"></i> Back to Subjects
+                </button>
+                <button class="nav-btn" onclick="goToQuizHome()">
+                    <i class="fas fa-home"></i> Quiz Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const subject = urlParams.get('subject');
+        const chapter = urlParams.get('chapter');
+        const platform = urlParams.get('platform');
+
+        // Quiz state
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+        let timer;
+        let timeRemaining = 900; // 15 minutes in seconds
+        let quizStartTime = Date.now();
+
+        // Load quiz questions
+        async function loadQuiz() {
+            if (!subject || !chapter || !platform) {
+                showError('Invalid quiz parameters');
+                return;
+            }
+
+            try {
+                // Try to load questions from JSON file
+                const response = await fetch(`../quiz/${platform}/${subject}/${chapter}.json`);
+                
+                if (!response.ok) {
+                    throw new Error('Questions not found');
+                }
+                
+                const questionsData = await response.json();
+                questions = questionsData.questions || [];
+                
+                if (questions.length === 0) {
+                    throw new Error('No questions available');
+                }
+                
+                initializeQuiz();
+                
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                
+                // Fallback: Generate sample questions
+                generateSampleQuestions();
+                initializeQuiz();
+            }
+        }
+
+        function generateSampleQuestions() {
+            // Sample questions for different subjects/chapters
+            const sampleQuestions = [
+                {
+                    question: "Which of the following is the largest bone in the human body?",
+                    options: ["Tibia", "Femur", "Humerus", "Radius"],
+                    correct: 1,
+                    explanation: "The femur (thigh bone) is the longest and strongest bone in the human body."
+                },
+                {
+                    question: "What is the normal resting heart rate for adults?",
+                    options: ["40-60 bpm", "60-100 bpm", "100-120 bpm", "120-140 bpm"],
+                    correct: 1,
+                    explanation: "The normal resting heart rate for adults ranges from 60 to 100 beats per minute."
+                },
+                {
+                    question: "Which chamber of the heart receives oxygenated blood from the lungs?",
+                    options: ["Right atrium", "Right ventricle", "Left atrium", "Left ventricle"],
+                    correct: 2,
+                    explanation: "The left atrium receives oxygenated blood from the pulmonary veins returning from the lungs."
+                }
+            ];
+
+            questions = sampleQuestions;
+        }
+
+        function initializeQuiz() {
+            // Update UI
+            document.getElementById('quizTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} - ${chapter.charAt(0).toUpperCase() + chapter.slice(1)}`;
+            document.getElementById('quizDescription').textContent = `Test your knowledge with ${questions.length} questions`;
+            document.getElementById('totalQuestions').textContent = questions.length;
+            
+            // Initialize answers array
+            selectedAnswers = new Array(questions.length).fill(null);
+            
+            // Create question cards
+            createQuestionCards();
+            
+            // Start timer
+            startTimer();
+            
+            // Show first question
+            showQuestion(0);
+        }
+
+        function createQuestionCards() {
+            const container = document.getElementById('questionsContainer');
+            
+            container.innerHTML = questions.map((q, index) => `
+                <div class="question-card" id="question-${index}">
+                    <div class="question-number">Question ${index + 1} of ${questions.length}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((option, optionIndex) => `
+                            <div class="option" onclick="selectOption(${index}, ${optionIndex})">
+                                <div class="option-letter">${String.fromCharCode(65 + optionIndex)}</div>
+                                <span>${option}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <h4><i class="fas fa-lightbulb"></i> Explanation</h4>
+                        <p>${q.explanation || 'Explanation not available.'}</p>
+                    </div>
+                    <div class="question-actions">
+                        <button class="nav-btn" onclick="previousQuestion()" ${index === 0 ? 'style="visibility: hidden"' : ''}>
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <span></span>
+                        <button class="nav-btn" onclick="nextQuestion()" id="next-btn-${index}">
+                            ${index === questions.length - 1 ? '<i class="fas fa-check"></i> Finish Quiz' : '<i class="fas fa-arrow-right"></i> Next'}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showQuestion(index) {
+            // Hide all questions
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Show current question
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            // Update progress
+            updateProgress();
+            
+            // Update current question number
+            document.getElementById('currentQuestion').textContent = index + 1;
+            
+            currentQuestionIndex = index;
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            selectedAnswers[questionIndex] = optionIndex;
+            
+            // Update option styling
+            const questionCard = document.getElementById(`question-${questionIndex}`);
+            const options = questionCard.querySelectorAll('.option');
+            
+            options.forEach((option, index) => {
+                option.classList.remove('selected');
+                if (index === optionIndex) {
+                    option.classList.add('selected');
+                }
+            });
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                showQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                showQuestion(currentQuestionIndex + 1);
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                timeRemaining--;
+                
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timer);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function finishQuiz() {
+            clearInterval(timer);
+            
+            // Calculate results
+            const results = calculateResults();
+            
+            // Show results
+            showResults(results);
+        }
+
+        function calculateResults() {
+            let correct = 0;
+            let incorrect = 0;
+            
+            selectedAnswers.forEach((answer, index) => {
+                if (answer === questions[index].correct) {
+                    correct++;
+                } else if (answer !== null) {
+                    incorrect++;
+                }
+            });
+            
+            const unanswered = questions.length - correct - incorrect;
+            const percentage = Math.round((correct / questions.length) * 100);
+            const timeSpent = Math.round((Date.now() - quizStartTime) / 1000);
+            
+            return {
+                correct,
+                incorrect,
+                unanswered,
+                percentage,
+                timeSpent
+            };
+        }
+
+        function showResults(results) {
+            // Hide questions
+            document.getElementById('questionsContainer').style.display = 'none';
+            
+            // Show results card
+            const resultsCard = document.getElementById('resultsCard');
+            resultsCard.classList.add('show');
+            
+            // Update results display
+            document.getElementById('scoreCircle').textContent = `${results.percentage}%`;
+            document.getElementById('correctAnswers').textContent = results.correct;
+            document.getElementById('incorrectAnswers').textContent = results.incorrect;
+            document.getElementById('accuracy').textContent = `${results.percentage}%`;
+            
+            const minutes = Math.floor(results.timeSpent / 60);
+            const seconds = results.timeSpent % 60;
+            document.getElementById('timeSpent').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Update score circle color based on performance
+            const scoreCircle = document.getElementById('scoreCircle');
+            if (results.percentage >= 80) {
+                scoreCircle.style.background = 'linear-gradient(135deg, #48bb78, #68d391)';
+            } else if (results.percentage >= 60) {
+                scoreCircle.style.background = 'linear-gradient(135deg, #ed8936, #f6ad55)';
+            } else {
+                scoreCircle.style.background = 'linear-gradient(135deg, #e53e3e, #f56565)';
+            }
+        }
+
+        function retakeQuiz() {
+            location.reload();
+        }
+
+        function goBackToSubjects() {
+            window.location.href = `subjects.html?subject=${subject}&platform=${platform}`;
+        }
+
+        function goToQuizHome() {
+            window.location.href = '../quiz/index.html';
+        }
+
+        function showError(message) {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = `
+                <div style="background: white; border-radius: 16px; padding: 2rem; text-align: center; color: #e53e3e;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <h3>Error Loading Quiz</h3>
+                    <p>${message}</p>
+                    <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #e53e3e; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        <i class="fas fa-redo"></i> Retry
+                    </button>
+                </div>
+            `;
+        }
+
+        // Load quiz when page loads
+        window.addEventListener('load', function() {
+            loadQuiz();
+            
+            // Initialize AdSense ads
+            if (window.adsbygoogle) {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{
+  "questions": [
+    {
+      "question": "Which plane divides the body into anterior and posterior parts?",
+      "options": [
+        "Sagittal plane",
+        "Transverse plane",
+        "Frontal plane",
+        "Oblique plane"
+      ],
+      "correct": 2,
+      "explanation": "The frontal (coronal) plane divides the body into anterior (front) and posterior (back) parts."
+    },
+    {
+      "question": "What does 'superior' mean in anatomical directional terms?",
+      "options": [
+        "Below or lower",
+        "Above or higher",
+        "Toward the midline",
+        "Away from the midline"
+      ],
+      "correct": 1,
+      "explanation": "Superior means above or higher in position, while inferior means below or lower in position."
+    },
+    {
+      "question": "The study of tissues is called:",
+      "options": [
+        "Cytology",
+        "Histology",
+        "Pathology",
+        "Embryology"
+      ],
+      "correct": 1,
+      "explanation": "Histology is the study of tissues. Cytology studies cells, pathology studies disease, and embryology studies development."
+    },
+    {
+      "question": "Which term describes the palm side of the hand?",
+      "options": [
+        "Dorsal",
+        "Ventral",
+        "Palmar",
+        "Plantar"
+      ],
+      "correct": 2,
+      "explanation": "Palmar refers to the palm side of the hand, while dorsal refers to the back of the hand. Plantar refers to the sole of the foot."
+    },
+    {
+      "question": "The basic structural and functional unit of life is:",
+      "options": [
+        "Tissue",
+        "Organ",
+        "Cell",
+        "System"
+      ],
+      "correct": 2,
+      "explanation": "The cell is the basic structural and functional unit of all living organisms."
+    }
+  ]
+}

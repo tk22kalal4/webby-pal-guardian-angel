@@ -1,0 +1,40 @@
+{
+  "chapters": [
+    {
+      "id": "homeostasis",
+      "title": "Homeostasis Basics",
+      "description": "Body's regulatory mechanisms",
+      "icon": "fas fa-balance-scale",
+      "questions": 15,
+      "timeLimit": 20,
+      "difficulty": "Easy"
+    },
+    {
+      "id": "cardiac",
+      "title": "Cardiac Physiology",
+      "description": "Heart function and cardiac cycle",
+      "icon": "fas fa-heartbeat",
+      "questions": 20,
+      "timeLimit": 25,
+      "difficulty": "Medium"
+    },
+    {
+      "id": "pulmonary",
+      "title": "Pulmonary Function",
+      "description": "Breathing and gas exchange",
+      "icon": "fas fa-lungs",
+      "questions": 18,
+      "timeLimit": 22,
+      "difficulty": "Medium"
+    },
+    {
+      "id": "endocrine",
+      "title": "Endocrine System",
+      "description": "Hormones and glandular functions",
+      "icon": "fas fa-flask",
+      "questions": 28,
+      "timeLimit": 35,
+      "difficulty": "Hard"
+    }
+  ]
+}

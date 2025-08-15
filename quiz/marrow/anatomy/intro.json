@@ -1,0 +1,59 @@
+{
+  "questions": [
+    {
+      "question": "What is the anatomical position?",
+      "options": [
+        "Standing upright, arms at sides, palms facing forward",
+        "Lying down, arms crossed over chest",
+        "Sitting upright, arms at sides",
+        "Standing upright, arms raised above head"
+      ],
+      "correct": 0,
+      "explanation": "The anatomical position is the standard reference position where the body is standing upright, arms at the sides, and palms facing forward."
+    },
+    {
+      "question": "Which term describes a structure closer to the midline of the body?",
+      "options": [
+        "Lateral",
+        "Medial",
+        "Superior",
+        "Inferior"
+      ],
+      "correct": 1,
+      "explanation": "Medial refers to structures that are closer to the midline of the body, while lateral refers to structures farther from the midline."
+    },
+    {
+      "question": "The sagittal plane divides the body into:",
+      "options": [
+        "Upper and lower parts",
+        "Front and back parts",
+        "Left and right parts",
+        "Internal and external parts"
+      ],
+      "correct": 2,
+      "explanation": "The sagittal plane divides the body into left and right parts. The midsagittal plane divides it into equal left and right halves."
+    },
+    {
+      "question": "Which body cavity contains the heart and lungs?",
+      "options": [
+        "Abdominal cavity",
+        "Pelvic cavity",
+        "Thoracic cavity",
+        "Cranial cavity"
+      ],
+      "correct": 2,
+      "explanation": "The thoracic cavity contains the heart, lungs, and other structures in the chest region."
+    },
+    {
+      "question": "What does 'proximal' mean in anatomical terms?",
+      "options": [
+        "Away from the point of attachment",
+        "Closer to the point of attachment",
+        "Toward the head",
+        "Toward the feet"
+      ],
+      "correct": 1,
+      "explanation": "Proximal means closer to the point of attachment or origin, while distal means farther away from the point of attachment."
+    }
+  ]
+}

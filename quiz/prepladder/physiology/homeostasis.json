@@ -1,0 +1,37 @@
+{
+  "questions": [
+    {
+      "question": "What is homeostasis?",
+      "options": [
+        "Cell division process",
+        "Maintenance of stable internal conditions",
+        "Energy production in cells",
+        "Waste elimination from body"
+      ],
+      "correct": 1,
+      "explanation": "Homeostasis is the body's ability to maintain stable internal conditions despite external changes."
+    },
+    {
+      "question": "Which system primarily controls body temperature?",
+      "options": [
+        "Digestive system",
+        "Nervous system",
+        "Respiratory system",
+        "Circulatory system"
+      ],
+      "correct": 1,
+      "explanation": "The nervous system, particularly the hypothalamus, plays the primary role in controlling body temperature."
+    },
+    {
+      "question": "What is the normal pH range of human blood?",
+      "options": [
+        "6.8-7.0",
+        "7.35-7.45",
+        "7.5-7.8",
+        "8.0-8.5"
+      ],
+      "correct": 1,
+      "explanation": "The normal pH range of human blood is 7.35-7.45, which is slightly alkaline."
+    }
+  ]
+}

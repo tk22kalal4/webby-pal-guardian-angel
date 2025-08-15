@@ -1,0 +1,37 @@
+{
+  "questions": [
+    {
+      "question": "What is the primary function of the cell membrane?",
+      "options": [
+        "Energy production",
+        "Protein synthesis",
+        "Selective permeability",
+        "DNA storage"
+      ],
+      "correct": 2,
+      "explanation": "The cell membrane's primary function is selective permeability - controlling what enters and exits the cell."
+    },
+    {
+      "question": "Which organelle is known as the powerhouse of the cell?",
+      "options": [
+        "Nucleus",
+        "Mitochondria",
+        "Endoplasmic reticulum",
+        "Golgi apparatus"
+      ],
+      "correct": 1,
+      "explanation": "Mitochondria are called the powerhouse of the cell because they produce ATP through cellular respiration."
+    },
+    {
+      "question": "What process allows water to move across cell membranes?",
+      "options": [
+        "Active transport",
+        "Facilitated diffusion",
+        "Osmosis",
+        "Endocytosis"
+      ],
+      "correct": 2,
+      "explanation": "Osmosis is the passive movement of water molecules across a semipermeable membrane from high to low water concentration."
+    }
+  ]
+}
