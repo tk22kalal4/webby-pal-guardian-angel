@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Select Chapter - Q Bank</title>
-  <link rel="stylesheet" href="../../styles.css">
-  <link rel="stylesheet" href="../qbank-main.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="qbank-main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="../../access-control.js"></script>
+  <script src="../access-control.js"></script>
 </head>
 <body>
   
@@ -55,10 +55,10 @@
   </main>
 
   <nav class="bottom-nav">
-    <a href="../../app.html"><i class="fas fa-lightbulb"></i><span>Home</span></a>
-    <a href="../../platforms.html"><i class="fas fa-play-circle"></i><span>Videos</span></a>
-    <a href="../../search.html"><i class="fas fa-search"></i><span>Search</span></a>
-    <a href="../index.html" class="active"><i class="fas fa-question-circle"></i><span>Q Bank</span></a>
+    <a href="../app.html"><i class="fas fa-lightbulb"></i><span>Home</span></a>
+    <a href="../platforms.html"><i class="fas fa-play-circle"></i><span>Videos</span></a>
+    <a href="../search.html"><i class="fas fa-search"></i><span>Search</span></a>
+    <a href="index.html" class="active"><i class="fas fa-question-circle"></i><span>Q Bank</span></a>
   </nav>
 
   <script>
@@ -82,105 +82,27 @@
       document.getElementById('chapterTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} Chapters`;
 
       try {
-        // Try to find JSON files in the platform/subject directory
-        const commonPatterns = platform === 'marrow' ? 
-          ['.json'] : // For marrow, look for direct .json files
-          ['-Previous_Year_Questions.json', '_Previous_Year_Questions.json', '-Questions.json', '_Questions.json']; // For prepladder
-        
-        // Subject-specific chapters that are likely to exist
+        // Get predefined chapters for this subject
         const subjectChapters = getSubjectChapters(subject);
-        
         const availableChapters = [];
         
-        // First try specific chapter files
-        if (platform === 'marrow') {
-          // For marrow platform, directly list files from the directory
+        // For Marrow platform, use direct chapter names
+        for (const chapter of subjectChapters) {
+          const filename = `${chapter}.json`;
           try {
-            const response = await fetch(`${platform}/${subject}/`);
-            if (response.ok) {
-              const directoryListing = await response.text();
-              // Try to parse directory listing (this might not work on all servers)
-              // Alternative: try known files directly
-              for (const chapter of subjectChapters) {
-                const filename = `${chapter}.json`;
-                try {
-                  console.log(`Trying to fetch: ${platform}/${subject}/${filename}`);
-                  const fileResponse = await fetch(`${platform}/${subject}/${filename}`);
-                  if (fileResponse.ok) {
-                    const data = await fileResponse.json();
-                    if (data.questions && data.questions.length > 0) {
-                      availableChapters.push({
-                        name: data.chapter || chapter.replace(/_/g, ' '),
-                        filename: filename,
-                        questionCount: data.questions.length
-                      });
-                    }
-                  }
-                } catch (error) {
-                  console.error(`Error loading ${filename}:`, error);
-                }
+            const fileResponse = await fetch(`${platform}/${subject}/${filename}`);
+            if (fileResponse.ok) {
+              const data = await fileResponse.json();
+              if (data.questions && data.questions.length > 0) {
+                availableChapters.push({
+                  name: data.chapter || chapter.replace(/_/g, ' '),
+                  filename: filename,
+                  questionCount: data.questions.length
+                });
               }
             }
           } catch (error) {
-            console.error('Error accessing marrow directory:', error);
-          }
-        } else {
-          // For prepladder platform, use the original pattern-based approach
-          for (const chapter of subjectChapters) {
-            for (const pattern of commonPatterns) {
-              const filename = chapter + pattern;
-              try {
-                console.log(`Trying to fetch: ${platform}/${subject}/${filename}`);
-                const response = await fetch(`${platform}/${subject}/${filename}`);
-                if (response.ok) {
-                  const data = await response.json();
-                  if (data.questions && data.questions.length > 0) {
-                    availableChapters.push({
-                      name: data.chapter || chapter.replace(/_/g, ' '),
-                      filename: filename,
-                      questionCount: data.questions.length
-                    });
-                    break; // Found this chapter, move to next
-                  }
-                } else {
-                  console.log(`File not found: ${filename} (${response.status})`);
-                }
-              } catch (error) {
-                console.error(`Error loading ${filename}:`, error);
-                // Continue to next pattern
-              }
-            }
-          }
-        }
-        
-        // If no specific chapters found, try generic files
-        if (availableChapters.length === 0) {
-          const genericFiles = [
-            `${subject}-Previous_Year_Questions.json`,
-            `${subject.charAt(0).toUpperCase() + subject.slice(1)}-Previous_Year_Questions.json`,
-            'Questions.json'
-          ];
-          
-          for (const filename of genericFiles) {
-            try {
-              console.log(`Trying to fetch: ${platform}/${subject}/${filename}`);
-              const response = await fetch(`${platform}/${subject}/${filename}`);
-              if (response.ok) {
-                const data = await response.json();
-                if (data.questions && data.questions.length > 0) {
-                  availableChapters.push({
-                    name: data.chapter || filename.replace('.json', ''),
-                    filename: filename,
-                    questionCount: data.questions.length
-                  });
-                }
-              } else {
-                console.log(`File not found: ${filename} (${response.status})`);
-              }
-            } catch (error) {
-              console.error(`Error loading ${filename}:`, error);
-              // Continue
-            }
+            console.error(`Error loading ${filename}:`, error);
           }
         }
 
@@ -234,44 +156,14 @@
     }
 
     function getSubjectChapters(subject) {
-      // Define common chapters for each subject
+      // Return specific chapters for each subject
       const subjectChapters = {
-        anatomy: ['Introduction', 'Upper_Limb', 'Lower_Limb', 'Head_and_Neck', 'Thorax', 'Abdomen', 'Pelvis', 'Back', 'Neuroanatomy', 'Miscellaneous'],
-        physiology: ['General_Physiology', 'Blood', 'CVS', 'Respiratory', 'Renal', 'GIT', 'Endocrine', 'Reproductive', 'Nervous_System', 'Special_Senses'],
-        pathology: ['General_Pathology', 'Systemic_Pathology', 'Hematology', 'Clinical_Pathology'],
-        pharmacology: ['General_Pharmacology', 'ANS', 'CVS', 'CNS', 'Respiratory', 'GIT', 'Endocrine', 'Chemotherapy'],
-        microbiology: ['General_Microbiology', 'Bacteriology', 'Virology', 'Mycology', 'Parasitology', 'Immunology', 'Helminthology'],
-        biochemistry: ['Proteins', 'Carbohydrates', 'Lipids', 'Enzymes', 'Vitamins', 'Minerals', 'Metabolism', 'Molecular_Biology', 'Clinical_Biochemistry', 'Oxidative_Phosphorylation'],
-        anaesthesia: ['General_Anaesthesia', 'Regional_Anaesthesia', 'Pharmacology', 'Monitoring', 'Emergency_Medicine', 'Pain_Management', 'Central_Neuraxial_Blockade', 'Perioperative_Fluids', 'Anaesthesia_Circuits', 'Demonstration'],
-        dermatology: ['Basic_Dermatology', 'Inflammatory_Disorders', 'Infections', 'Tumors', 'Hair_Disorders', 'Nail_Disorders', 'Blistering_Disorders'],
-        ent: ['Ear', 'Nose', 'Throat', 'Head_and_Neck'],
-        fmt: ['Forensic_Medicine', 'Toxicology', 'Violent_Asphyxia_Deaths', 'Infanticide', 'Previous_Year_Questions_6'],
-        medicine: ['Cardiology', 'Pulmonology', 'Gastroenterology', 'Nephrology', 'Endocrinology', 'Neurology', 'Hematology', 'Infectious_Diseases'],
-        obgy: ['Obstetrics', 'Gynecology', 'Reproductive_Endocrinology'],
-        ophthalmology: ['Basic_Ophthalmology', 'Anterior_Segment', 'Posterior_Segment', 'Glaucoma', 'Pediatric_Ophthalmology', 'Vitreous'],
-        orthopedics: ['Trauma', 'Spine', 'Upper_Limb', 'Lower_Limb', 'Pediatric_Orthopedics', 'Sports_Medicine', 'Images_And_Instruments'],
-        pediatrics: ['Neonatology', 'Growth_and_Development', 'Nutrition', 'Infections', 'Genetic_Disorders', 'Clinical_Essentials', 'Miscellaneous'],
-        psm: ['Epidemiology', 'Biostatistics', 'Health_Planning', 'Environmental_Health'],
-        psychiatry: ['General_Psychiatry', 'Child_Psychiatry', 'Substance_Abuse', 'Personality_Disorders'],
-        radiology: ['Plain_Radiography', 'CT', 'MRI', 'Ultrasound', 'Nuclear_Medicine', 'Ct_Scan'],
-        surgery: ['General_Surgery', 'GI_Surgery', 'Hepatobiliary_Surgery', 'Vascular_Surgery', 'Trauma_Surgery', 'High_Yield_Topics']
+        anaesthesia: ['ACLS'],
+        anatomy: ['Abdominal_cavity_and_Peritoneum']
       };
       
-      // For marrow platform, add more specific chapters based on actual files
-      if (window.location.search.includes('platform=marrow') && subject === 'anatomy') {
-        return [
-          'Heart', 'Lungs_and_Pleura', 'Mediastinum', 'General_Anatomy_of_Thorax', 'Thoracic_Wall',
-          'Abdominal_cavity_and_Peritoneum', 'Anterior_Abdominal_Wall', 'Diaphragm', 'GI_Tract',
-          'Hepatobiliary_system__Spleen___Pancreas', 'KUB___Adrenal_Gland', 'Pelvis___Perineum',
-          'Upper_Limb_Bones_and_Joints', 'Muscles_-_Upper_Limb', 'Vessels-Upper_limb', 'Brachial_Plexus_and_Nerves',
-          'Bones_of_the_Lower_Limb', 'Joints_of_the_Lower_Limb', 'Muscles_of_the_Lower_Limb', 'Nerves___Vessels_of_Lower_Limb',
-          'Osteology__Scalp_and_Face', 'Muscles__Neurovascular_Anatomy_of_Head___Neck', 'Pharynx', 'Larynx',
-          'Face__Nose___Palate__Eye__Ear', 'Glands_of_the_Head_and_Neck', 'Deep_fascia_and_Triangles_of_the_neck',
-          'Spinal_Cord', 'Brainstem', 'Cerebellum', 'Cerebrum', 'Cranial_Nerves', 'Vertebral_Column'
-        ];
-      }
-      
-      return subjectChapters[subject] || ['General', 'Basic', 'Advanced', 'Clinical'];
+      // Return chapters for this subject or empty array
+      return subjectChapters[subject] || [];
     }
 
     window.addEventListener('load', loadChapters);
