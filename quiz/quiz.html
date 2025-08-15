@@ -4,16 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quiz - Q Bank</title>
-  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="quiz-styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
   <script>
-    
-    if (!accessControl.initProtectedPage()) {
-      // Page will redirect, so we can stop execution here
-      throw new Error('Access denied - redirecting to index.html');
+    // Access control - simplified version
+    if (!localStorage.getItem('accessGranted')) {
+      window.location.href = '../../index.html';
     }
   </script>
   <header>
@@ -75,12 +74,15 @@
     </div>
   </main>
 
-  <!-- Include modular quiz system -->
-  <script src="js/state.js"></script>
-  <script src="js/bookmarks.js"></script>
-  <script src="js/navigation.js"></script>
-  <script src="js/results.js"></script>
-  <script src="js/quiz.js"></script>
+  <!-- Navigation controls at the bottom -->
+  <div class="quiz-navigation">
+    <button id="prev-btn" onclick="prevQuestion()" class="nav-btn" disabled>
+      <i class="fas fa-arrow-left"></i> Previous
+    </button>
+    <button id="next-btn" onclick="nextQuestion()" class="nav-btn">
+      Next <i class="fas fa-arrow-right"></i>
+    </button>
+  </div>
 
   <script>
     let currentQuiz = null;
@@ -90,18 +92,10 @@
 
     function goBack() {
       const urlParams = new URLSearchParams(window.location.search);
-      const fromBookmarks = urlParams.get('fromBookmarks');
-      const bookmarkMode = urlParams.get('bookmarkMode');
       const platform = urlParams.get('platform');
       const subject = urlParams.get('subject');
       
-      if (fromBookmarks === 'true' || bookmarkMode === 'true') {
-        // Go back to bookmark questions page for this platform/subject
-        window.location.href = `bookmark-questions.html?platform=${platform}&subject=${subject}`;
-      } else {
-        // Go back to chapters page
-        window.location.href = `chapters.html?platform=${platform}&subject=${subject}`;
-      }
+      window.location.href = `${platform}/chapters.html?platform=${platform}&subject=${subject}`;
     }
 
     async function loadQuiz() {
@@ -123,7 +117,8 @@
 
     async function loadQuestionsFromJSON(platform, subject, chapter) {
       try {
-        const response = await fetch(`${platform}/${subject}/${chapter}`);
+        // Corrected path to match your repository structure
+        const response = await fetch(`../../data/${platform}/${subject}/${chapter}`);
         
         if (!response.ok) {
           throw new Error(`Failed to load questions: ${response.status}`);
@@ -199,6 +194,9 @@
       // Hide explanation initially
       document.getElementById('explanation-container').style.display = 'none';
       updateBookmarkButton();
+      
+      // Update navigation buttons
+      document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
     }
 
     function selectOption(selectedOption, buttonElement) {
@@ -253,25 +251,13 @@
       }
       
       explanationContainer.style.display = 'block';
-      
-      // Clear existing buttons
-      const existingButtons = explanationContainer.querySelectorAll('.next-btn, .finish-btn');
-      existingButtons.forEach(btn => btn.remove());
-      
-      // Add next/finish button
-      const buttonContainer = document.createElement('div');
-      buttonContainer.style.cssText = 'text-align: center; margin-top: 2rem;';
-      
-      const nextBtn = document.createElement('button');
-      nextBtn.className = currentQuestionIndex === currentQuiz.length - 1 ? 'finish-btn' : 'next-btn';
-      nextBtn.style.cssText = 'background: #16a34a; color: white; border: none; padding: 1rem 2rem; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.3s ease;';
-      nextBtn.innerHTML = currentQuestionIndex === currentQuiz.length - 1 ? 
-        '<i class="fas fa-check"></i> Finish Quiz' : 
-        '<i class="fas fa-arrow-right"></i> Next Question';
-      nextBtn.onclick = nextQuestion;
-      
-      buttonContainer.appendChild(nextBtn);
-      explanationContainer.appendChild(buttonContainer);
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
+      }
     }
 
     function nextQuestion() {
@@ -355,12 +341,11 @@
     // Check if this is a bookmarked question review
     function checkBookmarkMode() {
       const urlParams = new URLSearchParams(window.location.search);
-      const bookmarkMode = urlParams.get('bookmarkMode');
       const reviewIndex = urlParams.get('review');
       const platform = urlParams.get('platform');
       const subject = urlParams.get('subject');
       
-      if (bookmarkMode === 'true' && reviewIndex !== null && platform && subject) {
+      if (reviewIndex !== null && platform && subject) {
         // Load bookmarked questions from localStorage
         const saved = localStorage.getItem('quizBookmarks');
         const allBookmarks = saved ? JSON.parse(saved) : [];
@@ -388,26 +373,6 @@
         score = 0;
         
         // Update page title for bookmark review
-        document.getElementById('pageTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} - Bookmark Review`;
-        document.getElementById('quizInfo').textContent = `${platform.charAt(0).toUpperCase() + platform.slice(1)} - ${subject.charAt(0).toUpperCase() + subject.slice(1)}`;
-        
-        // Load the bookmarked question
-        loadQuestion();
-        return true;
-      }
-      
-      // Check for modular system
-      const fromBookmarks = urlParams.get('fromBookmarks');
-      if (fromBookmarks === 'true' && QuizState && QuizState.questions.length > 0) {
-        // Convert QuizState data to local variables for compatibility
-        currentQuiz = QuizState.questions;
-        currentQuestionIndex = QuizState.currentQuestionIndex;
-        userAnswers = QuizState.userAnswers.length > 0 ? QuizState.userAnswers : new Array(currentQuiz.length).fill(null);
-        score = QuizState.score;
-        
-        // Update page title for bookmark review
-        const platform = QuizState.selectedPlatform;
-        const subject = QuizState.selectedSubject;
         document.getElementById('pageTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} - Bookmark Review`;
         document.getElementById('quizInfo').textContent = `${platform.charAt(0).toUpperCase() + platform.slice(1)} - ${subject.charAt(0).toUpperCase() + subject.slice(1)}`;
         
