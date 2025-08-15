@@ -1,4 +1,3 @@
-
 const CACHE_NAME = 'nextpulse-v4';
 const urlsToCache = [
   './',
