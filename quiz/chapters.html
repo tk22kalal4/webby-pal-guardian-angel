@@ -83,12 +83,9 @@
 
       try {
         // Try to find JSON files in the platform/subject directory
-        const commonPatterns = [
-          '-Previous_Year_Questions.json',
-          '_Previous_Year_Questions.json',
-          '-Questions.json',
-          '_Questions.json'
-        ];
+        const commonPatterns = platform === 'marrow' ? 
+          ['.json'] : // For marrow, look for direct .json files
+          ['-Previous_Year_Questions.json', '_Previous_Year_Questions.json', '-Questions.json', '_Questions.json']; // For prepladder
         
         // Subject-specific chapters that are likely to exist
         const subjectChapters = getSubjectChapters(subject);
@@ -96,28 +93,62 @@
         const availableChapters = [];
         
         // First try specific chapter files
-        for (const chapter of subjectChapters) {
-          for (const pattern of commonPatterns) {
-            const filename = chapter + pattern;
-            try {
-              console.log(`Trying to fetch: ${platform}/${subject}/${filename}`);
-              const response = await fetch(`${platform}/${subject}/${filename}`);
-              if (response.ok) {
-                const data = await response.json();
-                if (data.questions && data.questions.length > 0) {
-                  availableChapters.push({
-                    name: data.chapter || chapter.replace(/_/g, ' '),
-                    filename: filename,
-                    questionCount: data.questions.length
-                  });
-                  break; // Found this chapter, move to next
+        if (platform === 'marrow') {
+          // For marrow platform, directly list files from the directory
+          try {
+            const response = await fetch(`${platform}/${subject}/`);
+            if (response.ok) {
+              const directoryListing = await response.text();
+              // Try to parse directory listing (this might not work on all servers)
+              // Alternative: try known files directly
+              for (const chapter of subjectChapters) {
+                const filename = `${chapter}.json`;
+                try {
+                  console.log(`Trying to fetch: ${platform}/${subject}/${filename}`);
+                  const fileResponse = await fetch(`${platform}/${subject}/${filename}`);
+                  if (fileResponse.ok) {
+                    const data = await fileResponse.json();
+                    if (data.questions && data.questions.length > 0) {
+                      availableChapters.push({
+                        name: data.chapter || chapter.replace(/_/g, ' '),
+                        filename: filename,
+                        questionCount: data.questions.length
+                      });
+                    }
+                  }
+                } catch (error) {
+                  console.error(`Error loading ${filename}:`, error);
                 }
-              } else {
-                console.log(`File not found: ${filename} (${response.status})`);
               }
-            } catch (error) {
-              console.error(`Error loading ${filename}:`, error);
-              // Continue to next pattern
+            }
+          } catch (error) {
+            console.error('Error accessing marrow directory:', error);
+          }
+        } else {
+          // For prepladder platform, use the original pattern-based approach
+          for (const chapter of subjectChapters) {
+            for (const pattern of commonPatterns) {
+              const filename = chapter + pattern;
+              try {
+                console.log(`Trying to fetch: ${platform}/${subject}/${filename}`);
+                const response = await fetch(`${platform}/${subject}/${filename}`);
+                if (response.ok) {
+                  const data = await response.json();
+                  if (data.questions && data.questions.length > 0) {
+                    availableChapters.push({
+                      name: data.chapter || chapter.replace(/_/g, ' '),
+                      filename: filename,
+                      questionCount: data.questions.length
+                    });
+                    break; // Found this chapter, move to next
+                  }
+                } else {
+                  console.log(`File not found: ${filename} (${response.status})`);
+                }
+              } catch (error) {
+                console.error(`Error loading ${filename}:`, error);
+                // Continue to next pattern
+              }
             }
           }
         }
@@ -225,6 +256,20 @@
         radiology: ['Plain_Radiography', 'CT', 'MRI', 'Ultrasound', 'Nuclear_Medicine', 'Ct_Scan'],
         surgery: ['General_Surgery', 'GI_Surgery', 'Hepatobiliary_Surgery', 'Vascular_Surgery', 'Trauma_Surgery', 'High_Yield_Topics']
       };
+      
+      // For marrow platform, add more specific chapters based on actual files
+      if (window.location.search.includes('platform=marrow') && subject === 'anatomy') {
+        return [
+          'Heart', 'Lungs_and_Pleura', 'Mediastinum', 'General_Anatomy_of_Thorax', 'Thoracic_Wall',
+          'Abdominal_cavity_and_Peritoneum', 'Anterior_Abdominal_Wall', 'Diaphragm', 'GI_Tract',
+          'Hepatobiliary_system__Spleen___Pancreas', 'KUB___Adrenal_Gland', 'Pelvis___Perineum',
+          'Upper_Limb_Bones_and_Joints', 'Muscles_-_Upper_Limb', 'Vessels-Upper_limb', 'Brachial_Plexus_and_Nerves',
+          'Bones_of_the_Lower_Limb', 'Joints_of_the_Lower_Limb', 'Muscles_of_the_Lower_Limb', 'Nerves___Vessels_of_Lower_Limb',
+          'Osteology__Scalp_and_Face', 'Muscles__Neurovascular_Anatomy_of_Head___Neck', 'Pharynx', 'Larynx',
+          'Face__Nose___Palate__Eye__Ear', 'Glands_of_the_Head_and_Neck', 'Deep_fascia_and_Triangles_of_the_neck',
+          'Spinal_Cord', 'Brainstem', 'Cerebellum', 'Cerebrum', 'Cranial_Nerves', 'Vertebral_Column'
+        ];
+      }
       
       return subjectChapters[subject] || ['General', 'Basic', 'Advanced', 'Clinical'];
     }
