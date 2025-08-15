@@ -65,7 +65,7 @@
     function goBack() {
       const urlParams = new URLSearchParams(window.location.search);
       const platform = urlParams.get('platform');
-      window.location.href = `subjects.html?platform=${platform}`;
+      window.location.href = `../subjects.html?platform=${platform}`;
     }
 
     async function loadChapters() {
@@ -74,7 +74,7 @@
       const subject = urlParams.get('subject');
       
       if (!platform || !subject) {
-        window.location.href = 'platforms.html';
+        window.location.href = '../../platforms.html';
         return;
       }
 
@@ -82,45 +82,39 @@
       document.getElementById('chapterTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} Chapters`;
 
       try {
-        // Fetch all JSON files in the subject directory
-        const response = await fetch(`${platform}/${subject}/`);
-        const html = await response.text();
+        // Get chapters from a manifest file instead of directory listing
+        const manifestResponse = await fetch(`../../data/${platform}/${subject}/manifest.json`);
+        if (!manifestResponse.ok) {
+          showNoChapters();
+          return;
+        }
         
-        // Parse HTML to extract JSON files
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const links = Array.from(doc.querySelectorAll('a[href$=".json"]'));
-        const jsonFiles = links.map(link => link.href.split('/').pop());
+        const manifest = await manifestResponse.json();
+        const chapters = manifest.chapters;
         
-        if (jsonFiles.length === 0) {
+        if (!chapters || chapters.length === 0) {
           showNoChapters();
           return;
         }
 
         const availableChapters = [];
         
-        // Process each JSON file
-        for (const filename of jsonFiles) {
+        // Process each chapter
+        for (const chapter of chapters) {
           try {
-            const fileResponse = await fetch(`${platform}/${subject}/${filename}`);
+            const fileResponse = await fetch(`../../data/${platform}/${subject}/${chapter.filename}`);
             if (fileResponse.ok) {
               const data = await fileResponse.json();
               if (data.questions && data.questions.length > 0) {
-                // Format chapter name: remove extension, replace underscores with spaces
-                const chapterName = filename
-                  .replace('.json', '')
-                  .replace(/_/g, ' ')
-                  .replace(/\b\w/g, l => l.toUpperCase());
-                
                 availableChapters.push({
-                  name: data.chapter || chapterName,
-                  filename: filename,
+                  name: data.chapter || chapter.name,
+                  filename: chapter.filename,
                   questionCount: data.questions.length
                 });
               }
             }
           } catch (error) {
-            console.error(`Error loading ${filename}:`, error);
+            console.error(`Error loading ${chapter.filename}:`, error);
           }
         }
 
