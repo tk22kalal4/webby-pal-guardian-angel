@@ -127,7 +127,7 @@
     async function loadQuestionsFromJSON() {
       try {
         // Corrected path to match your data structure
-        const response = await fetch(`../../data/${currentPlatform}/${currentSubject}/${currentChapter}`);
+        const response = await fetch(`../../data/${platform}/${subject}/${chapter}`);
         
         if (!response.ok) {
           throw new Error(`Failed to load questions: ${response.status}`);
