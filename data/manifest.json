@@ -7,8 +7,5 @@
     "physiology": [
       {"name": "Nerve Physiology", "file": "Nerve_Physiology.json"}
     ]
-  },
-  "prepladder": {
-    // Similar structure
   }
 }
