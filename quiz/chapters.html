@@ -106,6 +106,7 @@
           for (const pattern of commonPatterns) {
             const filename = chapter + pattern;
             try {
+              console.log(`Trying to fetch: ${platform}/${subject}/${filename}`);
               const response = await fetch(`${platform}/${subject}/${filename}`);
               if (response.ok) {
                 const data = await response.json();
@@ -117,8 +118,11 @@
                   });
                   break; // Found this chapter, move to next
                 }
+              } else {
+                console.log(`File not found: ${filename} (${response.status})`);
               }
             } catch (error) {
+              console.error(`Error loading ${filename}:`, error);
               // Continue to next pattern
             }
           }
@@ -128,11 +132,13 @@
         if (availableChapters.length === 0) {
           const genericFiles = [
             `${subject}-Previous_Year_Questions.json`,
-            `${subject.charAt(0).toUpperCase() + subject.slice(1)}-Previous_Year_Questions.json`
+            `${subject.charAt(0).toUpperCase() + subject.slice(1)}-Previous_Year_Questions.json`,
+            'Questions.json'
           ];
           
           for (const filename of genericFiles) {
             try {
+              console.log(`Trying to fetch: ${platform}/${subject}/${filename}`);
               const response = await fetch(`${platform}/${subject}/${filename}`);
               if (response.ok) {
                 const data = await response.json();
@@ -143,8 +149,11 @@
                     questionCount: data.questions.length
                   });
                 }
+              } else {
+                console.log(`File not found: ${filename} (${response.status})`);
               }
             } catch (error) {
+              console.error(`Error loading ${filename}:`, error);
               // Continue
             }
           }
@@ -206,21 +215,21 @@
         physiology: ['General_Physiology', 'Blood', 'CVS', 'Respiratory', 'Renal', 'GIT', 'Endocrine', 'Reproductive', 'Nervous_System', 'Special_Senses'],
         pathology: ['General_Pathology', 'Systemic_Pathology', 'Hematology', 'Clinical_Pathology'],
         pharmacology: ['General_Pharmacology', 'ANS', 'CVS', 'CNS', 'Respiratory', 'GIT', 'Endocrine', 'Chemotherapy'],
-        microbiology: ['General_Microbiology', 'Bacteriology', 'Virology', 'Mycology', 'Parasitology', 'Immunology'],
+        microbiology: ['General_Microbiology', 'Bacteriology', 'Virology', 'Mycology', 'Parasitology', 'Immunology', 'Helminthology'],
         biochemistry: ['Proteins', 'Carbohydrates', 'Lipids', 'Enzymes', 'Vitamins', 'Minerals', 'Metabolism', 'Molecular_Biology', 'Clinical_Biochemistry', 'Oxidative_Phosphorylation'],
         anaesthesia: ['General_Anaesthesia', 'Regional_Anaesthesia', 'Pharmacology', 'Monitoring', 'Emergency_Medicine', 'Pain_Management', 'Central_Neuraxial_Blockade', 'Perioperative_Fluids', 'Anaesthesia_Circuits', 'Demonstration'],
         dermatology: ['Basic_Dermatology', 'Inflammatory_Disorders', 'Infections', 'Tumors', 'Hair_Disorders', 'Nail_Disorders', 'Blistering_Disorders'],
         ent: ['Ear', 'Nose', 'Throat', 'Head_and_Neck'],
-        fmt: ['Forensic_Medicine', 'Toxicology'],
+        fmt: ['Forensic_Medicine', 'Toxicology', 'Violent_Asphyxia_Deaths', 'Infanticide', 'Previous_Year_Questions_6'],
         medicine: ['Cardiology', 'Pulmonology', 'Gastroenterology', 'Nephrology', 'Endocrinology', 'Neurology', 'Hematology', 'Infectious_Diseases'],
         obgy: ['Obstetrics', 'Gynecology', 'Reproductive_Endocrinology'],
-        ophthalmology: ['Basic_Ophthalmology', 'Anterior_Segment', 'Posterior_Segment', 'Glaucoma', 'Pediatric_Ophthalmology'],
-        orthopedics: ['Trauma', 'Spine', 'Upper_Limb', 'Lower_Limb', 'Pediatric_Orthopedics', 'Sports_Medicine'],
-        pediatrics: ['Neonatology', 'Growth_and_Development', 'Nutrition', 'Infections', 'Genetic_Disorders'],
+        ophthalmology: ['Basic_Ophthalmology', 'Anterior_Segment', 'Posterior_Segment', 'Glaucoma', 'Pediatric_Ophthalmology', 'Vitreous'],
+        orthopedics: ['Trauma', 'Spine', 'Upper_Limb', 'Lower_Limb', 'Pediatric_Orthopedics', 'Sports_Medicine', 'Images_And_Instruments'],
+        pediatrics: ['Neonatology', 'Growth_and_Development', 'Nutrition', 'Infections', 'Genetic_Disorders', 'Clinical_Essentials', 'Miscellaneous'],
         psm: ['Epidemiology', 'Biostatistics', 'Health_Planning', 'Environmental_Health'],
         psychiatry: ['General_Psychiatry', 'Child_Psychiatry', 'Substance_Abuse', 'Personality_Disorders'],
-        radiology: ['Plain_Radiography', 'CT', 'MRI', 'Ultrasound', 'Nuclear_Medicine'],
-        surgery: ['General_Surgery', 'GI_Surgery', 'Hepatobiliary_Surgery', 'Vascular_Surgery', 'Trauma_Surgery']
+        radiology: ['Plain_Radiography', 'CT', 'MRI', 'Ultrasound', 'Nuclear_Medicine', 'Ct_Scan'],
+        surgery: ['General_Surgery', 'GI_Surgery', 'Hepatobiliary_Surgery', 'Vascular_Surgery', 'Trauma_Surgery', 'High_Yield_Topics']
       };
       
       return subjectChapters[subject] || ['General', 'Basic', 'Advanced', 'Clinical'];
