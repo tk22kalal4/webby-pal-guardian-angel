@@ -9,8 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="../../access-control.js"></script>
 </head>
-<body>
-  
+<body>  
   <header>
     <div class="header-content">
       <button onclick="goBack()" class="back-button">
@@ -82,27 +81,28 @@
       document.getElementById('chapterTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} Chapters`;
 
       try {
-        // Fetch the manifest file from the platform directory
-        const manifestResponse = await fetch(`../${platform}/manifest.json`);
+        // Fetch the central manifest file
+        const manifestResponse = await fetch('../../data/manifest.json');
         if (!manifestResponse.ok) {
           showNoChapters();
           return;
         }
         
         const manifest = await manifestResponse.json();
-        const subjectChapters = manifest[subject];
+        const platformData = manifest[platform];
         
-        if (!subjectChapters || subjectChapters.length === 0) {
+        if (!platformData || !platformData[subject]) {
           showNoChapters();
           return;
         }
 
+        const chapters = platformData[subject];
         const availableChapters = [];
         
         // Process each chapter
-        for (const chapter of subjectChapters) {
+        for (const chapter of chapters) {
           try {
-            const fileResponse = await fetch(`../${platform}/${subject}/${chapter.file}`);
+            const fileResponse = await fetch(`../../data/${platform}/${subject}/${chapter.file}`);
             if (fileResponse.ok) {
               const data = await fileResponse.json();
               if (data.questions && data.questions.length > 0) {
