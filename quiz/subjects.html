@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,7 +97,9 @@
     function selectSubject(subject) {
       const platform = new URLSearchParams(window.location.search).get('platform') || localStorage.getItem('selectedPlatform');
       localStorage.setItem('selectedSubject', subject);
-      window.location.href = `chapters.html?platform=${platform}&subject=${subject}`;
+      
+      // Fixed: Navigate to marrow/chapters.html instead of just chapters.html
+      window.location.href = `${platform}/chapters.html?platform=${platform}&subject=${subject}`;
     }
 
     window.addEventListener('load', loadSubjects);
