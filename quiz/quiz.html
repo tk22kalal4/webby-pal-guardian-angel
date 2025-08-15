@@ -7,15 +7,9 @@
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="quiz-styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="../access-control.js"></script>
 </head>
 <body>
-  <script>
-    if (!accessControl.initProtectedPage()) {
-      // Page will redirect, so we can stop execution here
-      throw new Error('Access denied - redirecting to index.html');
-    }
-  </script>
+  
   <header>
     <div class="header-content">
       <button onclick="goBack()" class="back-button">
@@ -87,9 +81,6 @@
     let currentQuestionIndex = 0;
     let userAnswers = [];
     let score = 0;
-    let currentPlatform = null;
-    let currentSubject = null;
-    let currentChapter = null;
 
     function goBack() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -103,30 +94,29 @@
         window.location.href = `bookmark-questions.html?platform=${platform}&subject=${subject}`;
       } else {
         // Go back to chapters page
-        window.location.href = `../${platform}/chapters.html?platform=${platform}&subject=${subject}`;
+        window.location.href = `chapters.html?platform=${platform}&subject=${subject}`;
       }
     }
 
     async function loadQuiz() {
       const urlParams = new URLSearchParams(window.location.search);
-      currentPlatform = urlParams.get('platform');
-      currentSubject = urlParams.get('subject');
-      currentChapter = urlParams.get('chapter');
+      const platform = urlParams.get('platform');
+      const subject = urlParams.get('subject');
+      const chapter = urlParams.get('chapter');
 
-      if (!currentPlatform || !currentSubject || !currentChapter) {
+      if (!platform || !subject || !chapter) {
         showError('Missing platform, subject, or chapter information.');
         return;
       }
 
-      document.getElementById('pageTitle').textContent = `${currentSubject.charAt(0).toUpperCase() + currentSubject.slice(1)} Quiz`;
-      document.getElementById('quizInfo').textContent = `${currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1)} - ${currentSubject.charAt(0).toUpperCase() + currentSubject.slice(1)}`;
+      document.getElementById('pageTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} Quiz`;
+      document.getElementById('quizInfo').textContent = `${platform.charAt(0).toUpperCase() + platform.slice(1)} - ${subject.charAt(0).toUpperCase() + subject.slice(1)}`;
 
-      await loadQuestionsFromJSON();
+      await loadQuestionsFromJSON(platform, subject, chapter);
     }
 
-    async function loadQuestionsFromJSON() {
+    async function loadQuestionsFromJSON(platform, subject, chapter) {
       try {
-        // Corrected path to match your data structure
         const response = await fetch(`../../data/${platform}/${subject}/${chapter}`);
         
         if (!response.ok) {
@@ -148,7 +138,7 @@
 
       } catch (error) {
         console.error('Error loading questions:', error);
-        showError(`Failed to load questions from ${currentChapter}. Please check if the file exists and is valid.`);
+        showError(`Failed to load questions from ${chapter}. Please check if the file exists and is valid.`);
       }
     }
 
@@ -177,8 +167,7 @@
       const questionImageDiv = document.getElementById('question-image');
       const questionImg = document.getElementById('question-img');
       if (question.image) {
-        // Corrected image path to match your data structure
-        questionImg.src = `../../data/${currentPlatform}/${currentSubject}/${question.image}`;
+        questionImg.src = question.image;
         questionImageDiv.style.display = 'block';
       } else {
         questionImageDiv.style.display = 'none';
@@ -251,8 +240,7 @@
       explanationText.textContent = question.explanation || 'No explanation available.';
       
       if (question.explanation_image) {
-        // Corrected image path to match your data structure
-        explanationImg.src = `../../data/${currentPlatform}/${currentSubject}/${question.explanation_image}`;
+        explanationImg.src = question.explanation_image;
         explanationImageDiv.style.display = 'block';
       } else {
         explanationImageDiv.style.display = 'none';
@@ -299,21 +287,24 @@
       if (!currentQuiz) return;
       
       const question = currentQuiz[currentQuestionIndex];
+      const urlParams = new URLSearchParams(window.location.search);
+      const platform = urlParams.get('platform');
+      const subject = urlParams.get('subject');
       
       const saved = localStorage.getItem('quizBookmarks');
       let bookmarks = saved ? JSON.parse(saved) : [];
       
       const bookmarkData = {
         ...question,
-        platform: currentPlatform,
-        subject: currentSubject,
+        platform: platform,
+        subject: subject,
         bookmarkedAt: new Date().toISOString()
       };
       
       const existingIndex = bookmarks.findIndex(bookmark => 
         bookmark.q_no === question.q_no && 
-        bookmark.platform === currentPlatform && 
-        bookmark.subject === currentSubject
+        bookmark.platform === platform && 
+        bookmark.subject === subject
       );
       
       const bookmarkBtn = document.getElementById('bookmark-btn');
@@ -334,14 +325,17 @@
       if (!currentQuiz) return;
       
       const question = currentQuiz[currentQuestionIndex];
+      const urlParams = new URLSearchParams(window.location.search);
+      const platform = urlParams.get('platform');
+      const subject = urlParams.get('subject');
       
       const saved = localStorage.getItem('quizBookmarks');
       const bookmarks = saved ? JSON.parse(saved) : [];
       
       const isBookmarked = bookmarks.some(bookmark => 
         bookmark.q_no === question.q_no && 
-        bookmark.platform === currentPlatform && 
-        bookmark.subject === currentSubject
+        bookmark.platform === platform && 
+        bookmark.subject === subject
       );
       
       const bookmarkIcon = document.getElementById('bookmark-btn').querySelector('i');
@@ -386,8 +380,6 @@
         currentQuestionIndex = questionIndex;
         userAnswers = new Array(currentQuiz.length).fill(null);
         score = 0;
-        currentPlatform = platform;
-        currentSubject = subject;
         
         // Update page title for bookmark review
         document.getElementById('pageTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} - Bookmark Review`;
@@ -406,12 +398,12 @@
         currentQuestionIndex = QuizState.currentQuestionIndex;
         userAnswers = QuizState.userAnswers.length > 0 ? QuizState.userAnswers : new Array(currentQuiz.length).fill(null);
         score = QuizState.score;
-        currentPlatform = QuizState.selectedPlatform;
-        currentSubject = QuizState.selectedSubject;
         
         // Update page title for bookmark review
-        document.getElementById('pageTitle').textContent = `${currentSubject.charAt(0).toUpperCase() + currentSubject.slice(1)} - Bookmark Review`;
-        document.getElementById('quizInfo').textContent = `${currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1)} - ${currentSubject.charAt(0).toUpperCase() + currentSubject.slice(1)}`;
+        const platform = QuizState.selectedPlatform;
+        const subject = QuizState.selectedSubject;
+        document.getElementById('pageTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} - Bookmark Review`;
+        document.getElementById('quizInfo').textContent = `${platform.charAt(0).toUpperCase() + platform.slice(1)} - ${subject.charAt(0).toUpperCase() + subject.slice(1)}`;
         
         // Load the bookmarked question
         loadQuestion();
