@@ -4,6 +4,12 @@
   padding: 0;
 }
 
+* {
+  -webkit-user-select: none;  /* Safari */
+  -ms-user-select: none;      /* IE 10 and IE 11 */
+  user-select: none;          /* Standard syntax */
+}
+
 body {
   font-family: system-ui, sans-serif;
   line-height: 1.6;
