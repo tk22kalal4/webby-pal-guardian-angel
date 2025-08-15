@@ -3,12 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    
+    <!-- SEO Meta Tags for Better AdSense Performance -->
+    <title>LASTPULSE - Ultimate Medical Education Platform | Video Lectures & Study Materials</title>
+    <meta name="description" content="Access thousands of medical education video lectures from top platforms like Marrow, DAMS, and PrepLadder. Study anatomy, physiology and more with expert teachers." />
+    <meta name="keywords" content="medical education, video lectures, NEET PG, medical study, anatomy, physiology, Marrow, DAMS, PrepLadder" />
+    <meta name="author" content="LASTPULSE" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="LASTPULSE - Ultimate Medical Education Platform" />
+    <meta property="og:description" content="Access thousands of medical education video lectures from top platforms" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <title>LASTPULSE</title>
+    
+    <!-- Google AdSense Auto Ads Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+            crossorigin="anonymous"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/src/styles/main.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <!-- Header for better SEO -->
+    <header class="app-header">
+      <h1>LASTPULSE Medical Education</h1>
+      <p>Your Ultimate Hub for Medical Video Lectures and Study Materials</p>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="root" class="main-content">
+      <!-- Content will be loaded here -->
+    </main>
+
+    <!-- Footer for better SEO -->
+    <footer class="app-footer">
+      <p>&copy; 2024 LASTPULSE. All rights reserved. | Medical Education Platform</p>
+      <div class="footer-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="#contact">Contact Us</a>
+      </div>
+    </footer>
+
+    <!-- Application Scripts -->
+    <script type="module" src="/src/main.js"></script>
+    
+    <!-- AdSense Initialization Script -->
+    <script>
+      window.addEventListener('load', function() {
+        if (window.adsbygoogle) {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-XXXXXXXXXXXXXXXX",
+            enable_page_level_ads: true
+          });
+        }
+      });
+    </script>
+    
     <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
   </body>
