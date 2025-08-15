@@ -1,14 +1,17 @@
-
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  root: '.',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
     rollupOptions: {
       input: {
-        main: 'app.html',
-        page2: 'page2.html'
+        main: 'index.html',
+        quiz: 'quiz/quiz.html',
+        subjects: 'quiz/subjects.html',
+        chapters: 'quiz/chapters.html',
+        platforms: 'quiz/platforms.html'
       }
     }
   },
