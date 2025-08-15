@@ -98,8 +98,7 @@
       const platform = new URLSearchParams(window.location.search).get('platform') || localStorage.getItem('selectedPlatform');
       localStorage.setItem('selectedSubject', subject);
       
-      // Fixed: Navigate to marrow/chapters.html instead of just chapters.html
-      window.location.href = `${platform}/chapters.html?platform=${platform}&subject=${subject}`;
+      window.location.href = `marrow/chapters.html?platform=${platform}&subject=${subject}`;
     }
 
     window.addEventListener('load', loadSubjects);
