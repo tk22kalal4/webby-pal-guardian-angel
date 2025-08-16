@@ -160,6 +160,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 1rem; /* Adjust the value as needed */
+  margin-right: 1rem; /* Adjust the value as needed */
   gap: 0.5rem;
 }
 
