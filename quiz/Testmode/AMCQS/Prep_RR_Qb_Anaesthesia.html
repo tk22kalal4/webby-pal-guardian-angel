@@ -33,7 +33,6 @@
     border-radius: 4px;
     cursor: pointer;
     color: #000000;
-    position: static;
     top: 5px;
     font-size: 14px;
     transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
@@ -44,12 +43,7 @@
     color: #000000;
     transform: translateY(-1px);
   }
-  button[onclick="history.back()"] {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1001;
-  }
+  
   body, html {
             margin: 0;
             padding: 0;
@@ -81,7 +75,6 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    z-index: 1100;
   }
 
   .dropdown-toggle {
@@ -177,7 +170,7 @@
 </script>
 </head>
 <body>
-  <button onclick="history.back()" style="position: fixed; top: 20px; left: 20px; background: transparent; color: white; border: none; padding: 10px; cursor: pointer; z-index: 1001; font-size: 20px;">
+  <button onclick="history.back()" style="position: STATIC; top: 20px; left: 20px; background: transparent; color: white; border: none; padding: 10px; cursor: pointer; font-size: 20px;">
   <i class="fas fa-arrow-left"></i>
 </button>
 
@@ -11197,6 +11190,7 @@
 
 </body>
 </html>
+
 
 
 
