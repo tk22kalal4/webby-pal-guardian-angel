@@ -1,10 +1,6 @@
 {
   "anatomy": [
     {
-      "name": "Abdominal Cavity and Peritoneum",
-      "file": "Abdominal_cavity_and_Peritoneum.json"
-    },
-    {
       "name": "Brainstem",
       "file": "Brainstem.json"
     }
