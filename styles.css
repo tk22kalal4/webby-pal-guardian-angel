@@ -96,7 +96,8 @@ main {
   margin: 2rem 0;
 }
 
-.platform-selector button {
+.platform-selector button,
+.platform-card {
   padding: 2.5rem;
   border: none;
   border-radius: 16px;
@@ -113,23 +114,27 @@ main {
   gap: 1rem;
 }
 
-.platform-selector button i {
+.platform-selector button i,
+.platform-card i {
   font-size: 2.5rem;
   color: #2c5282;
 }
 
-.platform-selector button .platform-name {
+.platform-selector button .platform-name,
+.platform-card .platform-name {
   font-size: 1.2rem;
   font-weight: 600;
 }
 
-.platform-selector button .platform-description {
+.platform-selector button .platform-description,
+.platform-card .platform-description {
   font-size: 0.9rem;
   color: #718096;
   font-weight: normal;
 }
 
-.platform-selector button:hover {
+.platform-selector button:hover,
+.platform-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
   background: #2c5282;
@@ -137,7 +142,9 @@ main {
 }
 
 .platform-selector button:hover i,
-.platform-selector button:hover .platform-description {
+.platform-selector button:hover .platform-description,
+.platform-card:hover i,
+.platform-card:hover .platform-description {
   color: white;
 }
 
