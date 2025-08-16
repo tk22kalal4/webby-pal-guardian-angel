@@ -5,195 +5,208 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prep RR Qb Anaesthesia - Combined Tests</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-  /* Fix for table overflow in results */
-  #results-content {
-    overflow-x: auto;
-    max-width: 100%;
-  }
-  
-  #results-content table {
-    min-width: 100%;
-    white-space: nowrap;
-  }
-</style>
-  <style>
-  body {
-    font-family: Arial, sans-serif;
-    padding: 0;
-    margin: 0;
-    margin-bottom: 30px;
-}
-
-  }
-
-  button {
-    margin: 5px;
-    padding: 10px 15px;
-    background: #ffffff;
-    border: 1px solid #2d3748;
-    border-radius: 4px;
-    cursor: pointer;
-    color: #000000;
-    position: fixed;
-    top: 5px;
-    font-size: 14px;
-    transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
-  }
-
-  button:hover {
-    background: #f3f4f6;
-    color: #000000;
-    transform: translateY(-1px);
-  }
-
-  body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-        .iframe-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .iframe-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-    
-    /* Mobile optimization */
-    
-
-  /* Dropdown styling */
-  .dropdown-wrapper {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1100;
-  }
-
-  .dropdown-toggle {
-    background: #2c5281;
-    color: white;
-    border: none;
-    font-size: 14px;
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-  }
-
-  .dropdown-toggle:hover {
-    background: #24466c;
-  }
-
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    margin-top: 6px;
-    background: white;
-    border: 1px solid #cbd5e0;
-    border-radius: 8px;
-    max-height: 350px;
-    overflow-y: auto;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    min-width: 250px;
-    animation: fadeIn 0.2s ease-in-out;
-  }
-
-  .dropdown-menu button {
-    display: block;
-    width: 100%;
-    text-align: left;
-    margin: 0;
-    padding: 10px 15px;
-    border-radius: 0;
-    background: transparent;
-    color: #2d3748;
-    border: none;
-    border-bottom: 1px solid #edf2f7;
-    font-size: 13px;
-  }
-
-  .dropdown-menu button:hover {
-    background: #ebf4ff;
-    color: #1a365d;
-  }
-
-  .dropdown-menu button:last-child {
-    border-bottom: none;
-  }
-
-   fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  img {
-    max-width: 100%;
-    max-height: 400px;
-    width: auto;
-    height: auto;
-    display: block;
-    margin: 10px auto;
-  }
-
-  
-  
-</style>
-  <script>
-  function showTest(id) {
-    document.querySelectorAll('.iframe-container').forEach(div => div.style.display = 'none');
-    document.getElementById(id).style.display = 'block';
-    document.getElementById('dropdownMenu').style.display = 'none';
-    window.scrollTo(0, 0);
-  }
-
-  function toggleDropdown() {
-    const menu = document.getElementById('dropdownMenu');
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-  }
-
-  document.addEventListener('click', function (event) {
-    const toggle = document.getElementById('dropdownToggle');
-    const menu = document.getElementById('dropdownMenu');
-    if (!toggle.contains(event.target) && !menu.contains(event.target)) {
-      menu.style.display = 'none';
+    /* Fix for table overflow in results */
+    #results-content {
+      overflow-x: auto;
+      max-width: 100%;
     }
-  });
-</script>
+    
+    #results-content table {
+      min-width: 100%;
+      white-space: nowrap;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      padding: 0;
+      margin: 0;
+      margin-bottom: 30px;
+    }
+
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      background: #ffffff;
+      border: 1px solid #2d3748;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #000000;
+      position: fixed;
+      top: 5px;
+      font-size: 14px;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    }
+
+    button:hover {
+      background: #f3f4f6;
+      color: #000000;
+      transform: translateY(-1px);
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    
+    .iframe-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    
+    /* Dropdown styling */
+    .dropdown-wrapper {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1100;
+    }
+
+    .dropdown-toggle {
+      background: #2c5281;
+      color: white;
+      border: none;
+      font-size: 14px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+    }
+
+    .dropdown-toggle:hover {
+      background: #24466c;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      margin-top: 6px;
+      background: white;
+      border: 1px solid #cbd5e0;
+      border-radius: 8px;
+      max-height: 70vh;
+      overflow-y: auto;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      min-width: 280px;
+      animation: fadeIn 0.2s ease-in-out;
+      z-index: 1100;
+    }
+
+    .dropdown-menu button {
+      position: static;
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin: 0;
+      padding: 12px 15px;
+      border-radius: 0;
+      background: transparent;
+      color: #2d3748;
+      border: none;
+      border-bottom: 1px solid #edf2f7;
+      font-size: 14px;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+
+    .dropdown-menu button:hover {
+      background: #ebf4ff;
+      color: #1a365d;
+    }
+
+    .dropdown-menu button:last-child {
+      border-bottom: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 400px;
+      width: auto;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+    }
+    
+    /* Back button styling */
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: transparent;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1001;
+      font-size: 20px;
+    }
+  </style>
+   <script>
+    function showTest(id) {
+      document.querySelectorAll('.iframe-container').forEach(div => div.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+      document.getElementById('dropdownMenu').style.display = 'none';
+      window.scrollTo(0, 0);
+    }
+
+    function toggleDropdown() {
+      const menu = document.getElementById('dropdownMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    document.addEventListener('click', function (event) {
+      const toggle = document.getElementById('dropdownToggle');
+      const menu = document.getElementById('dropdownMenu');
+      if (!toggle.contains(event.target) && !(menu && menu.contains(event.target))) {
+        menu.style.display = 'none';
+      }
+    });
+  </script>
 </head>
 <body>
-  <button onclick="history.back()" style="position: fixed; top: 20px; left: 20px; background: transparent; color: white; border: none; padding: 10px; cursor: pointer; z-index: 1001; font-size: 20px;">
-  <i class="fas fa-arrow-left"></i>
-</button>
+  <button class="back-button" onclick="history.back()">
+    <i class="fas fa-arrow-left"></i>
+  </button>
 
-<div class="dropdown-wrapper">
-  <button class="dropdown-toggle" id="dropdownToggle" onclick="toggleDropdown()">☰ INDEX</button>
-  <div class="dropdown-menu" id="dropdownMenu">
-<button onclick="showTest('test1')">Anaesthesia_Machine</button>
-<button onclick="showTest('test2')">Cardiopulmonary_Cerebral_Resuscitation</button>
-<button onclick="showTest('test3')">Difficult_airway_management___Ventilators</button>
-<button onclick="showTest('test4')">Inhalational_Anaesthetics</button>
-<button onclick="showTest('test5')">Intravenous_Anaesthetic_Agents</button>
-<button onclick="showTest('test6')">Introduction_and_PAC</button>
-<button onclick="showTest('test7')">Local_Anaesthetics</button>
-<button onclick="showTest('test8')">Monitoring_during_anaesthesia</button>
-<button onclick="showTest('test9')">Muscle_Relaxants</button>
-<button onclick="showTest('test10')">Regional_Anaesthesia__Spinal__Epidural___Caudal</button>
-</div>
+  <div class="dropdown-wrapper">
+    <button class="dropdown-toggle" id="dropdownToggle" onclick="toggleDropdown()">☰ INDEX</button>
+    <div class="dropdown-menu" id="dropdownMenu">
+      <button onclick="showTest('test1')">Anaesthesia_Machine</button>
+      <button onclick="showTest('test2')">Cardiopulmonary_Cerebral_Resuscitation</button>
+      <button onclick="showTest('test3')">Difficult_airway_management___Ventilators</button>
+      <button onclick="showTest('test4')">Inhalational_Anaesthetics</button>
+      <button onclick="showTest('test5')">Intravenous_Anaesthetic_Agents</button>
+      <button onclick="showTest('test6')">Introduction_and_PAC</button>
+      <button onclick="showTest('test7')">Local_Anaesthetics</button>
+      <button onclick="showTest('test8')">Monitoring_during_anaesthesia</button>
+      <button onclick="showTest('test9')">Muscle_Relaxants</button>
+      <button onclick="showTest('test10')">Regional_Anaesthesia__Spinal__Epidural___Caudal</button>
+    </div>
   </div>
+
+ 
     
 <div id="test1" class="iframe-container" style="display:block;">
     <iframe srcdoc="&lt;!DOCTYPE html&gt;
