@@ -25,6 +25,9 @@
     margin: 0;
     margin-bottom: 30px;
 }
+
+  }
+
   button {
     margin: 5px;
     padding: 10px 15px;
@@ -33,6 +36,7 @@
     border-radius: 4px;
     cursor: pointer;
     color: #000000;
+    position: fixed;
     top: 5px;
     font-size: 14px;
     transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
@@ -43,7 +47,7 @@
     color: #000000;
     transform: translateY(-1px);
   }
-  
+
   body, html {
             margin: 0;
             padding: 0;
@@ -75,7 +79,7 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    z-index: 1000;
+    z-index: 1100;
   }
 
   .dropdown-toggle {
@@ -172,7 +176,9 @@
 </head>
 <body>
   <button onclick="history.back()" style="position: fixed; top: 20px; left: 20px; background: transparent; color: white; border: none; padding: 10px; cursor: pointer; z-index: 1001; font-size: 20px;">
-    
+  <i class="fas fa-arrow-left"></i>
+</button>
+
 <div class="dropdown-wrapper">
   <button class="dropdown-toggle" id="dropdownToggle" onclick="toggleDropdown()">☰ INDEX</button>
   <div class="dropdown-menu" id="dropdownMenu">
@@ -188,7 +194,7 @@
 <button onclick="showTest('test10')">Regional_Anaesthesia__Spinal__Epidural___Caudal</button>
 </div>
   </div>
-  
+    
 <div id="test1" class="iframe-container" style="display:block;">
     <iframe srcdoc="&lt;!DOCTYPE html&gt;
 
@@ -11190,6 +11196,7 @@
 
 </body>
 </html>
+
 
 
 
