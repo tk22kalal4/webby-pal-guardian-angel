@@ -81,28 +81,28 @@
       document.getElementById('chapterTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} Chapters`;
 
       try {
-        // Fetch the central manifest file
-        const manifestResponse = await fetch('../../data/manifest.json');
+        // Fetch the platform-specific manifest file
+        const manifestResponse = await fetch(`./manifest.json`);
         if (!manifestResponse.ok) {
           showNoChapters();
           return;
         }
         
         const manifest = await manifestResponse.json();
-        const platformData = manifest[platform];
         
-        if (!platformData || !platformData[subject]) {
+        // Check if the subject exists in the manifest
+        if (!manifest[subject]) {
           showNoChapters();
           return;
         }
 
-        const chapters = platformData[subject];
+        const chapters = manifest[subject];
         const availableChapters = [];
         
         // Process each chapter
         for (const chapter of chapters) {
           try {
-            const fileResponse = await fetch(`../../data/${platform}/${subject}/${chapter.file}`);
+            const fileResponse = await fetch(`./${subject}/${chapter.file}`);
             if (fileResponse.ok) {
               const data = await fileResponse.json();
               if (data.questions && data.questions.length > 0) {
