@@ -9,8 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="../../access-control.js"></script>
 </head>
-<body>
-  
+<body>  
   <header>
     <div class="header-content">
       <button onclick="goBack()" class="back-button">
@@ -20,7 +19,7 @@
       <p class="header-subtitle" id="chapterInfo">Choose your chapter</p>
       <div class="search-bar">
         <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search chapters..." id="searchInput">
+        <input type="text" placeholder="Search chapters..." id="searchInput" oninput="filterChapters()">
       </div>
     </div>
   </header>
@@ -65,7 +64,7 @@
     function goBack() {
       const urlParams = new URLSearchParams(window.location.search);
       const platform = urlParams.get('platform');
-      window.location.href = `subjects.html?platform=${platform}`;
+      window.location.href = `../subjects.html?platform=${platform}`;
     }
 
     async function loadChapters() {
@@ -74,7 +73,7 @@
       const subject = urlParams.get('subject');
       
       if (!platform || !subject) {
-        window.location.href = 'platforms.html';
+        window.location.href = '../../platforms.html';
         return;
       }
 
@@ -82,30 +81,46 @@
       document.getElementById('chapterTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} Chapters`;
 
       try {
-        // Get predefined chapters for this subject
-        const subjectChapters = getSubjectChapters(subject);
+        // Fetch the platform-specific manifest file
+        const manifestResponse = await fetch(`./manifest.json`);
+        if (!manifestResponse.ok) {
+          showNoChapters();
+          return;
+        }
+        
+        const manifest = await manifestResponse.json();
+        
+        // Check if the subject exists in the manifest
+        if (!manifest[subject]) {
+          showNoChapters();
+          return;
+        }
+
+        const chapters = manifest[subject];
         const availableChapters = [];
         
-        // For Marrow platform, use direct chapter names
-        for (const chapter of subjectChapters) {
-          const filename = `${chapter}.json`;
+        // Process each chapter
+        for (const chapter of chapters) {
           try {
-            const fileResponse = await fetch(`${platform}/${subject}/${filename}`);
+            const fileResponse = await fetch(`./${subject}/${chapter.file}`);
             if (fileResponse.ok) {
               const data = await fileResponse.json();
               if (data.questions && data.questions.length > 0) {
                 availableChapters.push({
-                  name: data.chapter || chapter.replace(/_/g, ' '),
-                  filename: filename,
+                  name: chapter.name,
+                  filename: chapter.file,
                   questionCount: data.questions.length
                 });
               }
             }
           } catch (error) {
-            console.error(`Error loading ${filename}:`, error);
+            console.error(`Error loading ${chapter.file}:`, error);
           }
         }
 
+        // Sort chapters alphabetically
+        availableChapters.sort((a, b) => a.name.localeCompare(b.name));
+        
         displayChapters(availableChapters);
       } catch (error) {
         console.error('Error loading chapters:', error);
@@ -152,18 +167,21 @@
       const platform = urlParams.get('platform');
       const subject = urlParams.get('subject');
       
-      window.location.href = `quiz.html?platform=${platform}&subject=${subject}&chapter=${filename}`;
+      window.location.href = `../quiz.html?platform=${platform}&subject=${subject}&chapter=${filename}`;
     }
 
-    function getSubjectChapters(subject) {
-      // Return specific chapters for each subject
-      const subjectChapters = {
-        anaesthesia: ['ACLS'],
-        anatomy: ['Abdominal_cavity_and_Peritoneum']
-      };
+    function filterChapters() {
+      const searchInput = document.getElementById('searchInput').value.toLowerCase();
+      const chapters = document.querySelectorAll('.subject-card');
       
-      // Return chapters for this subject or empty array
-      return subjectChapters[subject] || [];
+      chapters.forEach(chapter => {
+        const chapterName = chapter.querySelector('h3').textContent.toLowerCase();
+        if (chapterName.includes(searchInput)) {
+          chapter.style.display = 'flex';
+        } else {
+          chapter.style.display = 'none';
+        }
+      });
     }
 
     window.addEventListener('load', loadChapters);
