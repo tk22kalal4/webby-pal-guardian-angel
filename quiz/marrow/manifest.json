@@ -1,9 +1,18 @@
 {
   "anatomy": [
-    {"name": "Abdominal Cavity and Peritoneum"},
-    {"name": "Cardiovascular System"}
+    {
+      "name": "Abdominal Cavity and Peritoneum",
+      "file": "Abdominal_cavity_and_Peritoneum.json"
+    },
+    {
+      "name": "Cardiovascular System",
+      "file": "Cardiovascular_System.json"
+    }
   ],
   "physiology": [
-    {"name": "Nerve Physiology"}
+    {
+      "name": "Nerve Physiology",
+      "file": "Nerve_Physiology.json"
+    }
   ]
 }
