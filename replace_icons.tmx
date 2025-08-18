@@ -1,0 +1,45 @@
+ # replace_icons.tmx
+let medical_icons = [
+    "fas fa-ambulance", "fas fa-clinic-medical", "fas fa-heartbeat",
+    "fas fa-heart", "fas fa-lungs", "fas fa-brain", "fas fa-bone",
+    "fas fa-allergies", "fas fa-band-aid", "fas fa-biohazard",
+    "fas fa-book-medical", "fas fa-capsules", "fas fa-clipboard-check",
+    "fas fa-dna", "fas fa-eye-dropper", "fas fa-file-medical",
+    "fas fa-file-prescription", "fas fa-hospital", "fas fa-hospital-user",
+    "fas fa-hospital-symbol", "fas fa-id-card-alt", "fas fa-microscope",
+    "fas fa-mortar-pestle", "fas fa-pills", "fas fa-prescription",
+    "fas fa-prescription-bottle", "fas fa-procedures", "fas fa-radiation",
+    "fas fa-radiation-alt", "fas fa-syringe", "fas fa-tablets",
+    "fas fa-teeth", "fas fa-teeth-open", "fas fa-thermometer",
+    "fas fa-user-md", "fas fa-vial", "fas fa-vials", "fas fa-virus",
+    "fas fa-virus-slash", "fas fa-weight", "fas fa-x-ray"
+]
+func replace_icons(content) {
+    let matches = content.find_all(/<i class="fas fa-[^"]+"/)
+    let old_icons = matches.map(m => m.match(/fas fa-[^"]+/)[0]).unique()
+    
+    if old_icons.is_empty() return content
+
+    let icon_map = {}
+    for (i, old) in old_icons.enumerate() {
+        icon_map[old] = medical_icons[i % medical_icons.length]
+    }
+
+    for (old, new) in icon_map {
+        content = content.replace(`class="${old}"`, `class="${new}"`)
+    }
+    return content
+}
+
+func main() {
+    let files = find_files("./platforms", "**/subjects.html")
+    for file in files {
+        let content = read_file(file)
+        let new_content = replace_icons(content)
+        write_file(file, new_content)
+        echo "Updated: ${file}"
+    }
+    echo "Done. Processed ${files.length} files."
+}
+
+main()
